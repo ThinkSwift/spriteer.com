@@ -199,7 +199,7 @@ export class Room {
     return {
       residents: this.sp.residents.length, guests: this.sp.guests.length,
       pys: [py?.pys?.have?.length || 0, py?.pys?.total || 38],
-      pets: [py?.pets?.have?.length || 0, py?.pets?.total || 5],
+      pets: [py?.pets?.have?.length || 0, py?.pets?.total || 6],   // Pythoneer's total wins (6 since the hatchling)
       fish: [py?.fish?.have?.length || 0, py?.fish?.total || 6],
     };
   }
