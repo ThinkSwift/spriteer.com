@@ -1,5 +1,6 @@
-// spriteer.com — fill four dots, watch it walk, win a duel, it moves into your house.
-// The same loop as the app's first run (SPRITEER.md, founder 2026-10-06).
+// spriteer.com — a finished character that already walks; add your own mark, it shows in all three frames;
+// play the duel; it moves into your house. The same loop as the app's first run (SPRITEER.md, founder 2026-10-06:
+// nothing is required — the first example works untouched, and whatever you change stands out).
 import { sprite, character, hasSprite, drawFrame, hex, isEmpty } from "./pixels.js";
 import { Duel, RULES } from "./duel.js";
 import { Room, member, moveIn, addGuest, framesOf, spHalf, doorToPythoneer, receiveDoor } from "./house.js";
@@ -10,47 +11,63 @@ import { t, tn, applyI18n } from "./i18n.js";
 const APP_STORE = "https://apps.apple.com/app/id6796374506";
 const SKETCHES = ["hero", "slime", "ghost", "duck", "goblin", "skeleton", "bat", "crab", "zombie", "monkey", "snake", "spider", "mole", "bee", "jelly"];
 const RIVALS = ["goblin", "skeleton", "zombie", "slime", "ghost", "spider"];
-const EXTRA = [0xffffffff, 0x211f40ff, 0xde5c33ff, 0xf7c230ff, 0x3882d9ff, 0x559e3dff, 0x7870dbff].map((v) => v >>> 0);
-const TARGETS = 4;
+const RED = 0xd81e2cff >>> 0;
+const EXTRA = [RED, 0xffffffff, 0x211f40ff, 0xf7c230ff, 0x3882d9ff, 0x559e3dff, 0x7870dbff].map((v) => v >>> 0);
 const $ = (s) => document.querySelector(s);
 const cap = (s) => s.replace(/^u\//, "").replace(/^npc_/, "").replace(/^\w/, (c) => c.toUpperCase());
 
 const state = {
-  base: "hero", frames: null, targets: [], color: 0, painted: false, done: false,
-  name: "Hero", challenger: null, duel: null, room: null, autoStart: null,
+  base: "hero", frames: null, shift: {}, hint: null, marks: [], color: RED, painted: false,
+  name: "Hero", challenger: null, duel: null, room: null,
 };
 
-// ---------------------------------------------------------------- sketch: Walk with dots missing
+// ---------------------------------------------------------------- the sketch: finished, yours to mark
 
-/** The dots that make the walk: pixels where Walk differs from Idle, lowest rows first. */
-function walkDots(idle, walk) {
-  const diff = [];
-  for (let i = 63; i >= 0; i--) if ((walk[i] & 0xff) && walk[i] !== idle[i]) diff.push(i);
-  const pick = diff.slice(0, TARGETS);
-  for (let i = 63; pick.length < TARGETS && i >= 0; i--) if ((walk[i] & 0xff) && !pick.includes(i)) pick.push(i);
-  return pick;
+/** How a frame sits relative to Idle (a walk often steps a pixel over): the shift that lines most pixels up. */
+function align(idle, other) {
+  let best = [0, 0], score = -1;
+  for (let dy = -2; dy <= 2; dy++) for (let dx = -2; dx <= 2; dx++) {
+    let n = 0;
+    for (let y = 0; y < 8; y++) for (let x = 0; x < 8; x++) {
+      const v = idle[y * 8 + x]; if (!(v & 0xff)) continue;
+      const X = x + dx, Y = y + dy;
+      if (X >= 0 && X < 8 && Y >= 0 && Y < 8 && other[Y * 8 + X] === v) n++;
+    }
+    if (n > score || (n === score && Math.abs(dx) + Math.abs(dy) < Math.abs(best[0]) + Math.abs(best[1]))) { score = n; best = [dx, dy]; }
+  }
+  return best;
+}
+
+/** A suggestion, never a requirement: the pixel just under the mouth (the lowest dark run in the face). */
+function mouthHint(idle) {
+  const dark = (v) => (v & 0xff) && ((v >>> 24) + ((v >>> 16) & 0xff) + ((v >>> 8) & 0xff)) < 120;
+  for (let y = 6; y >= 3; y--) {
+    for (let x = 0; x < 8; x++) {
+      if (!dark(idle[y * 8 + x])) continue;
+      const below = (y + 1) * 8 + x;
+      if (y + 1 < 8 && (idle[below] & 0xff) && !dark(idle[below])) return { x, y: y + 1 };
+    }
+  }
+  return null;
 }
 
 function startSketch(base) {
   state.base = base;
-  const c = character(base);
-  state.targets = walkDots(c.idle, c.walk).map((i) => ({ i, hint: c.walk[i] }));
-  for (const t of state.targets) c.walk[t.i] = 0;
-  state.frames = c;
-  state.done = false; state.painted = false;
+  state.frames = character(base);
+  state.shift = { idle: [0, 0], walk: align(state.frames.idle, state.frames.walk), die: align(state.frames.idle, state.frames.die) };
+  state.hint = mouthHint(state.frames.idle);
+  state.marks = []; state.painted = false;
   state.name = cap(base);
   $("#name").value = state.name;
-  buildPalette();
-  state.color = state.targets[0]?.hint ?? EXTRA[0];
-  markPalette();
-  updateGoal();
+  state.color = RED;
+  buildPalette(); markPalette();
+  $("#goal-note").textContent = t(state.hint ? "mk_hint" : "mk_hint_free");
   drawEditor();
 }
 
 function paletteColors() {
-  const seen = new Set();
+  const seen = new Set(EXTRA.slice(0, 1));
   for (const k of ["idle", "walk", "die"]) for (const v of state.frames[k]) if (v & 0xff) seen.add(v >>> 0);
-  for (const t of state.targets) seen.add(t.hint >>> 0);
   for (const v of EXTRA) seen.add(v);
   return [...seen].slice(0, 14);
 }
@@ -72,80 +89,68 @@ function markPalette() {
   for (const b of document.querySelectorAll(".swatch")) b.classList.toggle("on", Number(b.dataset.v) === state.color);
 }
 
-function filled() { return state.targets.filter((t) => state.frames.walk[t.i] & 0xff).length; }
-
-function updateGoal() {
-  const n = filled();
-  $("#goal-count").textContent = `${n}/${state.targets.length}`;
-  $("#goal").classList.toggle("done", n === state.targets.length);
-  $("#play").disabled = n < state.targets.length;
-}
-
-// ---------------------------------------------------------------- editor
+// ---------------------------------------------------------------- editor: one big canvas, three frames follow
 
 const CELLS = ["idle", "walk", "die"];
-function drawEditor() {
-  for (const k of CELLS) {
-    const c = document.getElementById("cell-" + k), ctx = c.getContext("2d");
-    const size = c.clientWidth * (window.devicePixelRatio || 1);
-    if (c.width !== size) { c.width = size; c.height = size; }
-    const s = size / 8;
-    ctx.clearRect(0, 0, size, size);
-    for (let y = 0; y < 8; y++) for (let x = 0; x < 8; x++) {
-      ctx.fillStyle = (x + y) % 2 ? "#f1f4fa" : "#ffffff";
-      ctx.fillRect(x * s, y * s, s, s);
-    }
-    drawFrame(ctx, state.frames[k], 0, 0, s);
-    if (k === "walk") {
-      const blink = Math.floor(performance.now() / 450) % 2;
-      for (const t of state.targets) {
-        if (state.frames.walk[t.i] & 0xff) continue;
-        const x = (t.i % 8) * s, y = ((t.i / 8) | 0) * s;
-        ctx.globalAlpha = 0.35; ctx.fillStyle = hex(t.hint); ctx.fillRect(x, y, s, s); ctx.globalAlpha = 1;
-        ctx.setLineDash([s / 5, s / 6]); ctx.lineWidth = Math.max(2, s / 10);
-        ctx.strokeStyle = blink ? "#de5c33" : "#211f40";
-        ctx.strokeRect(x + ctx.lineWidth / 2, y + ctx.lineWidth / 2, s - ctx.lineWidth, s - ctx.lineWidth);
-        ctx.setLineDash([]);
-      }
-    }
+function paintCanvas(c, f, k, now) {
+  const ctx = c.getContext("2d");
+  // Size from the laid-out box, capped — a canvas without its CSS (a stale cache) must not grow itself every frame.
+  const size = Math.min(1024, Math.round(c.getBoundingClientRect().width * (window.devicePixelRatio || 1))) || 256;
+  if (c.width !== size) { c.width = size; c.height = size; }
+  const s = size / 8;
+  ctx.clearRect(0, 0, size, size);
+  for (let y = 0; y < 8; y++) for (let x = 0; x < 8; x++) { ctx.fillStyle = (x + y) % 2 ? "#f1f4fa" : "#ffffff"; ctx.fillRect(x * s, y * s, s, s); }
+  drawFrame(ctx, f, 0, 0, s);
+  // Your marks glow for a moment in every frame they landed in.
+  const [dx, dy] = state.shift[k] || [0, 0];
+  for (const m of state.marks) {
+    const age = now - m.at; if (age > 1400) continue;
+    const X = m.x + dx, Y = m.y + dy; if (X < 0 || X > 7 || Y < 0 || Y > 7) continue;
+    ctx.strokeStyle = `rgba(247,194,48,${1 - age / 1400})`; ctx.lineWidth = Math.max(2, s / 6);
+    ctx.strokeRect(X * s + ctx.lineWidth / 2, Y * s + ctx.lineWidth / 2, s - ctx.lineWidth, s - ctx.lineWidth);
   }
-  // the preview walks as soon as there is a walk
+  return { ctx, s };
+}
+
+function drawEditor() {
+  const now = performance.now();
+  const { ctx, s } = paintCanvas($("#big"), state.frames.idle, "idle", now);
+  if (state.hint && !state.painted && Math.floor(now / 600) % 2) {     // a soft blink where the suggestion is
+    ctx.fillStyle = "rgba(216,30,44,0.45)"; ctx.fillRect(state.hint.x * s, state.hint.y * s, s, s);
+  }
+  for (const k of CELLS) paintCanvas(document.getElementById("cell-" + k), state.frames[k], k, now);
   const p = $("#preview"), pc = p.getContext("2d");
-  const ps = p.clientWidth * (window.devicePixelRatio || 1);
+  const ps = Math.min(512, Math.round(p.getBoundingClientRect().width * (window.devicePixelRatio || 1))) || 128;
   if (p.width !== ps) { p.width = ps; p.height = ps; }
   pc.clearRect(0, 0, ps, ps);
-  const step = Math.floor(performance.now() / 260) % 2;
+  const step = Math.floor(now / 260) % 2;
   drawFrame(pc, step ? state.frames.walk : state.frames.idle, ps * 0.1, ps * 0.1, (ps * 0.8) / 8);
 }
 
-function paintAt(k, ev) {
-  const c = document.getElementById("cell-" + k), r = c.getBoundingClientRect();
+function setPixel(f, x, y, v) { if (x >= 0 && x < 8 && y >= 0 && y < 8) f[y * 8 + x] = v; }
+
+function paintAt(ev) {
+  const c = $("#big"), r = c.getBoundingClientRect();
   const x = Math.floor(((ev.clientX - r.left) / r.width) * 8), y = Math.floor(((ev.clientY - r.top) / r.height) * 8);
   if (x < 0 || y < 0 || x > 7 || y > 7) return;
-  const i = y * 8 + x, before = state.frames[k][i];
-  if (before === state.color) return;
-  state.frames[k][i] = state.color;
-  if (!state.painted) { state.painted = true; track("first_stroke", { base: state.base }, { onlyOnce: true }); }
-  if (state.autoStart) { clearTimeout(state.autoStart); state.autoStart = null; $("#goal-note").textContent = t("goal_ready"); }
-  const wasDone = state.done;
-  updateGoal();
-  if (!wasDone && filled() === state.targets.length) {
-    state.done = true;
-    track("walk_done", { base: state.base });
-    $("#goal-note").textContent = t("goal_walks");
-    state.autoStart = setTimeout(() => startDuel(), 1600);
+  if (state.frames.idle[y * 8 + x] === state.color) return;
+  for (const k of CELLS) { const [dx, dy] = state.shift[k]; setPixel(state.frames[k], x + dx, y + dy, state.color); }
+  state.marks.push({ x, y, at: performance.now() });
+  if (!state.painted) {
+    state.painted = true;
+    track("first_stroke", { base: state.base }, { onlyOnce: true });
+    track("first_mark", { base: state.base, hint: state.hint && state.hint.x === x && state.hint.y === y ? "1" : "0" }, { onlyOnce: true });
+    $("#goal-note").textContent = t("mk_done");
   }
 }
 
 function bindEditor() {
-  for (const k of CELLS) {
-    const c = document.getElementById("cell-" + k);
-    let down = false;
-    c.addEventListener("pointerdown", (e) => { down = true; c.setPointerCapture(e.pointerId); paintAt(k, e); e.preventDefault(); });
-    c.addEventListener("pointermove", (e) => { if (down) paintAt(k, e); });
-    c.addEventListener("pointerup", () => { down = false; });
-    c.addEventListener("pointercancel", () => { down = false; });
-  }
+  const c = $("#big");
+  let down = false;
+  c.addEventListener("pointerdown", (e) => { down = true; c.setPointerCapture(e.pointerId); paintAt(e); e.preventDefault(); });
+  c.addEventListener("pointermove", (e) => { if (down) paintAt(e); });
+  c.addEventListener("pointerup", () => { down = false; });
+  c.addEventListener("pointercancel", () => { down = false; });
   $("#name").addEventListener("input", (e) => { state.name = e.target.value.trim().slice(0, 24) || cap(state.base); });
   $("#play").onclick = () => startDuel();
   $("#another").onclick = () => {
@@ -166,7 +171,6 @@ function rivalFrames() {
 }
 
 function startDuel(fighter) {
-  if (state.autoStart) { clearTimeout(state.autoStart); state.autoStart = null; }
   const you = fighter || state.frames;
   if (isEmpty(you.idle) || isEmpty(you.walk) || isEmpty(you.die)) return;
   show("duel");
@@ -176,7 +180,7 @@ function startDuel(fighter) {
   const fresh = !fighter;
   state.duel = new Duel($("#arena"), you, rivalFrames(), (r) => endDuel(r, fresh ? you : null));
   state.duel.onClose = () => { state.duel?.stop(); show(fresh ? "draw" : "house"); };
-  track("arcade_play", { base: state.base, challenge: state.challenger ? "1" : "0" });
+  track("arcade_play", { base: state.base, challenge: state.challenger ? "1" : "0", marked: state.painted ? "1" : "0" });
   $("#duel").scrollIntoView({ behavior: "smooth", block: "start" });
 }
 

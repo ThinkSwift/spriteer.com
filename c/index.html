@@ -15,7 +15,7 @@
   <meta property="og:description" content="Fill four dots. Watch it walk.">
   <meta property="og:image" content="https://spriteer.com/og.png">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="stylesheet" href="/css/site.css">
+  <link rel="stylesheet" href="/css/site.css?v=3">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"SoftwareApplication","name":"Spriteer","operatingSystem":"iOS, iPadOS, macOS",
    "applicationCategory":"GameApplication","url":"https://apps.apple.com/app/id6796374506","image":"https://spriteer.com/icon-app.png",
@@ -40,18 +40,24 @@
 
     <section id="draw" class="panel">
       <h1 data-i18n="h1">Three frames. Every game.</h1>
-      <p class="lede" data-i18n="lede">Every character is Idle · Walk · Die. Fill the four dots on Walk and watch it walk.</p>
-      <div class="frames">
-        <div class="frame"><span class="label" data-i18n="idle">Idle</span><canvas id="cell-idle" data-i18n-aria="idle"></canvas></div>
-        <div class="frame walk"><span class="label" data-i18n="walk">Walk</span><canvas id="cell-walk" data-i18n-aria="walk"></canvas></div>
-        <div class="frame"><span class="label" data-i18n="die">Die</span><canvas id="cell-die" data-i18n-aria="die"></canvas></div>
-        <div class="frame preview"><span class="label" data-i18n="live">Live</span><canvas id="preview" data-i18n-aria="live"></canvas></div>
+      <h2 class="mk-title" data-i18n="mk_title">Make it yours.</h2>
+      <p class="lede" data-i18n="mk_sub">Tap to paint. Your mark shows up in all three frames — standing, walking, falling.</p>
+      <div class="maker">
+        <canvas id="big" data-i18n-aria="mk_title"></canvas>
+        <div class="side">
+          <div class="frame preview"><span class="label" data-i18n="live">Live</span><canvas id="preview" data-i18n-aria="live"></canvas></div>
+          <div class="minis">
+            <div class="frame"><span class="label" data-i18n="idle">Idle</span><canvas id="cell-idle" data-i18n-aria="idle"></canvas></div>
+            <div class="frame"><span class="label" data-i18n="walk">Walk</span><canvas id="cell-walk" data-i18n-aria="walk"></canvas></div>
+            <div class="frame"><span class="label" data-i18n="die">Die</span><canvas id="cell-die" data-i18n-aria="die"></canvas></div>
+          </div>
+        </div>
       </div>
-      <div id="goal"><span id="goal-count">0/4</span><span id="goal-note" data-i18n="goal_tap">Tap the blinking dots on Walk.</span></div>
+      <div id="goal"><span class="hint-dot" aria-hidden="true"></span><span id="goal-note" data-i18n="mk_hint">Try a drop of red under the mouth — or paint anything you like.</span></div>
       <div id="palette" aria-label="Colors"></div>
       <div class="row">
         <input id="name" maxlength="24" data-i18n-aria="name_label" value="Hero">
-        <button id="play" disabled data-i18n="play">Play ▶</button>
+        <button id="play" class="gold btn" data-i18n="play">Play ▶</button>
         <button id="another" class="ghost" data-i18n="another">Another sketch</button>
       </div>
     </section>
@@ -103,6 +109,6 @@
   </div>
   <div id="toast" hidden></div>
   <script type="module" src="/js/track.js"></script>
-  <script type="module" src="/js/main.js"></script>
+  <script type="module" src="/js/main.js?v=3"></script>
 </body>
 </html>
