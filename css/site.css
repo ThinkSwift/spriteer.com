@@ -46,7 +46,7 @@ h2 { font: 900 20px/1.2 ui-monospace, Menlo, monospace; margin: 0 0 8px; }
 .swatch.eraser { background: repeating-linear-gradient(45deg, #fff 0 6px, #e5e9f2 6px 12px); }
 .row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
 input#name { font: 700 15px ui-monospace, Menlo, monospace; padding: 9px 10px; border: 3px solid var(--line); border-radius: 4px; background: var(--panel); color: var(--ink); width: 11em; }
-#draw.dim { opacity: 0.55; }
+#draw.dim { opacity: 0.55; pointer-events: none; }   /* the result is up: Play here would move the same character in twice */
 
 /* duel */
 #arena { width: 100%; max-width: 720px; display: block; margin: 0 auto; border: 3px solid var(--line); image-rendering: pixelated; touch-action: none; }

@@ -194,7 +194,7 @@ function monsterFrames() {
 
 // A resident fights a monster; a guest is the rival and your newest resident fights it — never the friend's
 // character as your own fighter (UX sim 2026-10-07, same rule as the app's DuelSheet).
-function startDuel(fighter, guest) {
+function startDuel(fighter, guest, mine) {
   const you = fighter || state.frames;
   if (isEmpty(you.idle) || isEmpty(you.walk) || isEmpty(you.die)) return;
   show("duel");
@@ -204,7 +204,10 @@ function startDuel(fighter, guest) {
   state.duel?.stop();
   const fresh = !fighter;
   const rival = guest ? guest.frames : fresh ? rivalFrames() : monsterFrames();
-  state.lastDuel = { fighter, guest };
+  state.lastDuel = { fighter, guest, mine };
+  if (mine) state.last = mine;                       // a guest duel: the resident who fought is the one to share
+  state.reply = null;
+  $("#share-last").textContent = t("challenge_friend");
   state.duel = new Duel($("#arena"), you, rival, (r) => endDuel(r, fresh ? you : null));
   state.duel.onClose = () => { state.duel?.stop(); show(fresh ? "draw" : "house"); };
   track("duel_start", { base: state.base, vs: guest ? "guest" : fresh && state.challenger ? "challenge" : "monster", marked: state.painted ? "1" : "0" });
@@ -222,6 +225,12 @@ function endDuel(r, newcomer) {
     newSketchAfter();
   }
   if (state.challenger && addGuest(state.challenger.member)) line += " " + t("guest_stays", { name: state.challenger.name });
+  // Against a friend's character the share answers with the score — the friend gets your character back (the reply loop).
+  const friend = state.lastDuel?.guest || (newcomer && state.challenger ? state.challenger : null);
+  if (friend && state.last) {
+    state.reply = { me: state.last.id, name: friend.name, won: r.won, draw: r.draw, a: r.you, b: r.rival };
+    $("#share-last").textContent = t("challenge_back");
+  }
   $("#result-line").textContent = line;
   $("#result").hidden = false;
   state.room?.refresh();
@@ -245,14 +254,42 @@ async function linkFor(m) {
   return "https://spriteer.com/c/#" + Skin.toBase64Url(png);
 }
 
+/** The character as a picture (Idle · Walk · Die, 12×): what the friend sees in the thread before the link. */
+function previewBlob(m) {
+  const f = framesOf(m), S = 12, pad = 8;
+  const c = document.createElement("canvas");
+  c.width = pad * 2 + 3 * 8 * S + 2 * S; c.height = pad * 2 + 8 * S;
+  const ctx = c.getContext("2d"); ctx.imageSmoothingEnabled = false;
+  ctx.fillStyle = "#fbf7ef"; ctx.fillRect(0, 0, c.width, c.height);
+  [f.idle, f.walk, f.die].forEach((fr, i) => drawFrame(ctx, fr, pad + i * (8 * S + S), pad, S));
+  return new Promise((r) => c.toBlob(r, "image/png"));
+}
+
+/** What the link says. After a duel against a friend's character it answers with the score (the reply loop). */
+function shareText(m) {
+  const r = state.reply;
+  if (r && r.me === m.id) return t(r.draw ? "reply_draw" : r.won ? "reply_won" : "reply_lost", { me: m.name, name: r.name, a: r.a, b: r.b });
+  return t("share_text", { name: m.name });
+}
+
 async function share(m) {
   const url = await linkFor(m);
-  const text = t("share_text", { name: m.name });
-  track("link_share", { n: String(spHalf().residents.length) });
+  const text = shareText(m);
+  track("link_share", { n: String(spHalf().residents.length), reply: state.reply && state.reply.me === m.id ? "1" : "0" });
   if (navigator.share) {
-    try { await navigator.share({ title: "Spriteer", text, url }); return; } catch (e) { if (e?.name === "AbortError") return; }
+    // With a picture attached the url can be dropped by some targets, so it rides in the text as well.
+    let files = [];
+    try {
+      const blob = await previewBlob(m);
+      const file = blob && new File([blob], "spriteer-" + (m.name || "character").toLowerCase().replace(/[^a-z0-9]+/g, "-") + ".png", { type: "image/png" });
+      if (file && navigator.canShare && navigator.canShare({ files: [file] })) files = [file];
+    } catch {}
+    try {
+      await navigator.share(files.length ? { title: "Spriteer", text: text + "\n" + url, files } : { title: "Spriteer", text, url });
+      return;
+    } catch (e) { if (e?.name === "AbortError") return; }
   }
-  try { await navigator.clipboard.writeText(url); toast(t("link_copied")); } catch { prompt(t("copy_prompt"), url); }
+  try { await navigator.clipboard.writeText(text + "\n" + url); toast(t("link_copied")); } catch { prompt(t("copy_prompt"), url); }
 }
 
 async function downloadHouse() {
@@ -289,6 +326,8 @@ async function readChallenge() {
     const name = (skin.assets.find((a) => strip[0].startsWith(a.key))?.display) || skin.name;
     state.challenger = { name, frames: fr, member: member("guest:" + m[1].slice(-24), name, fr, skin.name) };
     track("link_open", {});
+    // The Smart App Banner's "Open" hands this very link to the app, so the challenge survives the hop.
+    document.querySelector('meta[name="apple-itunes-app"]')?.setAttribute("content", "app-id=6796374506, app-argument=" + location.href);
     $("#challenge").hidden = false;
     $("#challenge-name").textContent = t("challenge_name", { name });
     const c = $("#challenge-art"), ctx = c.getContext("2d");
@@ -322,7 +361,7 @@ function renderHouse() {
     const tag = document.createElement("div"); tag.className = "rtag"; tag.textContent = t(guest ? "tag_guest" : "tag_resident");
     const row = document.createElement("div"); row.className = "ractions";
     const duel = document.createElement("button"); duel.textContent = t("btn_duel");
-    duel.onclick = () => guest ? startDuel(myFighter(), { name: m.name, frames: framesOf(m) }) : startDuel(framesOf(m));
+    duel.onclick = () => guest ? startDuel(myFighter(), { name: m.name, frames: framesOf(m) }, myResident()) : startDuel(framesOf(m), null, m);
     const sh = document.createElement("button"); sh.textContent = t("btn_challenge"); sh.onclick = () => share(m);
     row.append(duel, sh);
     if (!guest && APPLE) {
@@ -339,10 +378,13 @@ function renderHouse() {
 
 const APPLE = /iPhone|iPad|Macintosh/.test(navigator.userAgent);
 
-function myFighter() {
+function myResident() {
   const h = spHalf();
-  const last = h.residents[h.residents.length - 1];
-  return last ? framesOf(last) : state.frames;
+  return h.residents[h.residents.length - 1] || null;
+}
+function myFighter() {
+  const r = myResident();
+  return r ? framesOf(r) : state.frames;
 }
 
 async function openInApp(m) {
@@ -381,7 +423,7 @@ function bindDuelControls() {
   }
   $("#rematch").onclick = () => {
     const d = state.lastDuel || {};
-    startDuel(d.guest ? d.fighter : state.last ? framesOf(state.last) : d.fighter, d.guest);
+    startDuel(d.guest ? d.fighter : state.last ? framesOf(state.last) : d.fighter, d.guest, d.mine);
   };
   $("#share-last").onclick = () => state.last && share(state.last);
   $("#draw-next").onclick = () => { show("draw"); $("#draw").scrollIntoView({ behavior: "smooth" }); };

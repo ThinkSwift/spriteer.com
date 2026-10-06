@@ -67,7 +67,11 @@ export const STRINGS = {
   "mk_sub": "Tap to paint. Your mark shows up in all three frames — standing, walking, falling.",
   "mk_hint": "Try a drop of red under the mouth — or paint anything you like.",
   "mk_hint_free": "Paint anything you like — or just press Play.",
-  "mk_done": "That's yours now. Press Play when you're ready."
+  "mk_done": "That's yours now. Press Play when you're ready.",
+  "reply_won": "{me} beat {name} {a}–{b}. Your turn: stomp it 3 times in 30 seconds.",
+  "reply_lost": "{me} lost to {name} {a}–{b}. Your turn: stomp it 3 times in 30 seconds.",
+  "reply_draw": "{me} and {name} drew {a}–{b}. Your turn: stomp it 3 times in 30 seconds.",
+  "challenge_back": "Challenge back"
  },
  "ar": {
   "page_title": "Spriteer — ثلاثة إطارات. كل لعبة.",
@@ -136,7 +140,11 @@ export const STRINGS = {
   "mk_sub": "اضغط لترسم. ما ترسمه يظهر في الإطارات الثلاثة: ساكن، مشي، الموت.",
   "mk_hint": "ما رأيك بقطرة حمراء تحت الفم؟ أو ارسم ما يحلو لك.",
   "mk_hint_free": "ارسم ما يحلو لك — أو اضغط «العب» مباشرةً.",
-  "mk_done": "صارت لك الآن. اضغط «العب» متى شئت."
+  "mk_done": "صارت لك الآن. اضغط «العب» متى شئت.",
+  "reply_won": "هزم {me} {name} بنتيجة {a}–{b}. دورك: اقفز على رأسه 3 مرات خلال 30 ثانية.",
+  "reply_lost": "خسر {me} أمام {name} بنتيجة {a}–{b}. دورك: اقفز على رأسه 3 مرات خلال 30 ثانية.",
+  "reply_draw": "تعادل {me} و{name} بنتيجة {a}–{b}. دورك: اقفز على رأسه 3 مرات خلال 30 ثانية.",
+  "challenge_back": "ردّ التحدي"
  },
  "de": {
   "page_title": "Spriteer — Drei Bilder. Jedes Spiel.",
@@ -205,7 +213,11 @@ export const STRINGS = {
   "mk_sub": "Tippe, um zu malen. Was du malst, erscheint in allen drei Bildern – Stehen, Gehen, Umfallen.",
   "mk_hint": "Wie wär’s mit einem roten Tropfen unterm Mund? Oder mal einfach, was du willst.",
   "mk_hint_free": "Mal, was du willst – oder drück einfach auf Spielen.",
-  "mk_done": "Jetzt gehört sie dir. Drück auf Spielen, wenn du so weit bist."
+  "mk_done": "Jetzt gehört sie dir. Drück auf Spielen, wenn du so weit bist.",
+  "reply_won": "{me} hat {name} {a}–{b} geschlagen. Du bist dran: Spring in 30 Sekunden 3-mal drauf.",
+  "reply_lost": "{me} hat {a}–{b} gegen {name} verloren. Du bist dran: Spring in 30 Sekunden 3-mal drauf.",
+  "reply_draw": "{me} und {name} haben {a}–{b} unentschieden gespielt. Du bist dran: Spring in 30 Sekunden 3-mal drauf.",
+  "challenge_back": "Revanche fordern"
  },
  "es": {
   "page_title": "Spriteer — Tres fotogramas. Cada juego.",
@@ -274,7 +286,11 @@ export const STRINGS = {
   "mk_sub": "Toca para pintar. Lo que pintes aparece en los tres fotogramas: Quieto, Caminar y Caer.",
   "mk_hint": "¿Qué tal una gota de rojo bajo la boca? O pinta lo que quieras.",
   "mk_hint_free": "Pinta lo que quieras… o dale a Jugar sin más.",
-  "mk_done": "Ya es tuyo. Dale a Jugar cuando quieras."
+  "mk_done": "Ya es tuyo. Dale a Jugar cuando quieras.",
+  "reply_won": "{me} venció a {name} {a}–{b}. Te toca: pisotéalo 3 veces en 30 segundos.",
+  "reply_lost": "{me} perdió contra {name} {a}–{b}. Te toca: pisotéalo 3 veces en 30 segundos.",
+  "reply_draw": "{me} y {name} empataron {a}–{b}. Te toca: pisotéalo 3 veces en 30 segundos.",
+  "challenge_back": "Devolver el reto"
  },
  "fr": {
   "page_title": "Spriteer — Trois images. Tous les jeux.",
@@ -343,7 +359,11 @@ export const STRINGS = {
   "mk_sub": "Touche pour peindre. Ce que tu peins apparaît sur les trois images : Immobile, Marche et K.O.",
   "mk_hint": "Et si tu ajoutais une goutte de rouge sous la bouche ? Ou peins ce qui te plaît.",
   "mk_hint_free": "Peins ce qui te plaît… ou appuie directement sur Jouer.",
-  "mk_done": "Maintenant, il est à toi. Appuie sur Jouer quand tu veux."
+  "mk_done": "Maintenant, il est à toi. Appuie sur Jouer quand tu veux.",
+  "reply_won": "{me} a battu {name} {a}–{b}. À vous : sautez-lui dessus 3 fois en 30 secondes.",
+  "reply_lost": "{me} a perdu contre {name} {a}–{b}. À vous : sautez-lui dessus 3 fois en 30 secondes.",
+  "reply_draw": "{me} et {name} ont fait match nul {a}–{b}. À vous : sautez-lui dessus 3 fois en 30 secondes.",
+  "challenge_back": "Relancer le défi"
  },
  "hi": {
   "page_title": "Spriteer — तीन फ़्रेम। हर गेम।",
@@ -412,7 +432,11 @@ export const STRINGS = {
   "mk_sub": "रंगने के लिए टैप करो। जो भी रंगोगे, वो तीनों फ़्रेम में दिखेगा — स्थिर, चलो, मरना।",
   "mk_hint": "मुँह के नीचे लाल रंग की एक बूँद लगाकर देखो — या जो मन करे, वो बनाओ।",
   "mk_hint_free": "जो मन करे, वो बनाओ — या सीधे “खेलो” दबा दो।",
-  "mk_done": "अब ये तुम्हारा है। जब मन हो, “खेलो” दबाओ।"
+  "mk_done": "अब ये तुम्हारा है। जब मन हो, “खेलो” दबाओ।",
+  "reply_won": "{me} ने {name} को {a}–{b} से हराया। आपकी बारी: 30 सेकंड में इस पर 3 बार कूदें।",
+  "reply_lost": "{me} {name} के हाथों {a}–{b} से हारा। आपकी बारी: 30 सेकंड में इस पर 3 बार कूदें।",
+  "reply_draw": "{me} और {name} का मुक़ाबला {a}–{b} से बराबर रहा। आपकी बारी: 30 सेकंड में इस पर 3 बार कूदें।",
+  "challenge_back": "जवाबी चुनौती दें"
  },
  "id": {
   "page_title": "Spriteer — Tiga frame. Semua game.",
@@ -481,7 +505,11 @@ export const STRINGS = {
   "mk_sub": "Ketuk untuk mewarnai. Coretanmu muncul di ketiga frame — Diam, Jalan, Mati.",
   "mk_hint": "Coba setetes merah di bawah mulut — atau gambar apa saja sesukamu.",
   "mk_hint_free": "Gambar apa saja sesukamu — atau langsung tekan Main.",
-  "mk_done": "Sekarang ini milikmu. Tekan Main kalau sudah siap."
+  "mk_done": "Sekarang ini milikmu. Tekan Main kalau sudah siap.",
+  "reply_won": "{me} mengalahkan {name} {a}–{b}. Giliranmu: injak dia 3 kali dalam 30 detik.",
+  "reply_lost": "{me} kalah dari {name} {a}–{b}. Giliranmu: injak dia 3 kali dalam 30 detik.",
+  "reply_draw": "{me} dan {name} seri {a}–{b}. Giliranmu: injak dia 3 kali dalam 30 detik.",
+  "challenge_back": "Tantang balik"
  },
  "it": {
   "page_title": "Spriteer — Tre fotogrammi. Ogni gioco.",
@@ -550,7 +578,11 @@ export const STRINGS = {
   "mk_sub": "Tocca per dipingere. Quello che dipingi compare in tutti e tre i fotogrammi: Fermo, Cammina, Muori.",
   "mk_hint": "Che ne dici di una goccia di rosso sotto la bocca? O dipingi quello che vuoi.",
   "mk_hint_free": "Dipingi quello che vuoi… o premi subito Gioca.",
-  "mk_done": "Ora è tuo. Premi Gioca quando vuoi."
+  "mk_done": "Ora è tuo. Premi Gioca quando vuoi.",
+  "reply_won": "{me} ha battuto {name} {a}–{b}. Tocca a te: schiaccialo 3 volte in 30 secondi.",
+  "reply_lost": "{me} ha perso contro {name} {a}–{b}. Tocca a te: schiaccialo 3 volte in 30 secondi.",
+  "reply_draw": "{me} e {name} hanno pareggiato {a}–{b}. Tocca a te: schiaccialo 3 volte in 30 secondi.",
+  "challenge_back": "Rilancia la sfida"
  },
  "ja": {
   "page_title": "Spriteer — 3コマで、どのゲームにも。",
@@ -619,7 +651,11 @@ export const STRINGS = {
   "mk_sub": "タップで塗れる。塗ったところは、じっと・あるく・やられの3コマぜんぶに入る。",
   "mk_hint": "口の下に赤をひとしずく、なんてどう？ もちろん好きに塗ってもいい。",
   "mk_hint_free": "好きに塗ってみて。そのまま「プレイ」を押してもOK。",
-  "mk_done": "これでもうあなたのキャラ。準備ができたら「プレイ」へ。"
+  "mk_done": "これでもうあなたのキャラ。準備ができたら「プレイ」へ。",
+  "reply_won": "{me}が{name}に{a}–{b}で勝ちました。次はあなたの番。30秒以内に3回踏みつけてください。",
+  "reply_lost": "{me}が{name}に{a}–{b}で負けました。次はあなたの番。30秒以内に3回踏みつけてください。",
+  "reply_draw": "{me}と{name}は{a}–{b}で引き分けました。次はあなたの番。30秒以内に3回踏みつけてください。",
+  "challenge_back": "挑戦し返す"
  },
  "ko": {
   "page_title": "Spriteer — 세 장이면, 모든 게임.",
@@ -688,7 +724,11 @@ export const STRINGS = {
   "mk_sub": "탭해서 칠해 보세요. 칠한 곳은 가만히 · 걷기 · 쓰러지기 세 칸 모두에 나타나요.",
   "mk_hint": "입 아래에 빨간 점 하나 어때요? 아니면 마음대로 칠해 보세요.",
   "mk_hint_free": "마음대로 칠해 보세요. 그냥 플레이를 눌러도 돼요.",
-  "mk_done": "이제 나만의 캐릭터예요. 준비되면 플레이를 누르세요."
+  "mk_done": "이제 나만의 캐릭터예요. 준비되면 플레이를 누르세요.",
+  "reply_won": "{me}, {name}에게 {a}–{b} 승리! 이제 당신 차례예요. 30초 안에 3번 밟아 보세요.",
+  "reply_lost": "{me}, {name}에게 {a}–{b} 패배. 이제 당신 차례예요. 30초 안에 3번 밟아 보세요.",
+  "reply_draw": "{me} vs {name}, {a}–{b} 무승부. 이제 당신 차례예요. 30초 안에 3번 밟아 보세요.",
+  "challenge_back": "맞도전하기"
  },
  "nl": {
   "page_title": "Spriteer — Drie frames. Elk spel.",
@@ -757,7 +797,11 @@ export const STRINGS = {
   "mk_sub": "Tik om te kleuren. Wat je kleurt, zie je terug in alle drie de frames: Stil, Lopen, Doodgaan.",
   "mk_hint": "Wat dacht je van een druppel rood onder de mond? Of kleur gewoon wat je wilt.",
   "mk_hint_free": "Kleur wat je wilt – of druk meteen op Spelen.",
-  "mk_done": "Nu is hij van jou. Druk op Spelen als je zover bent."
+  "mk_done": "Nu is hij van jou. Druk op Spelen als je zover bent.",
+  "reply_won": "{me} versloeg {name} met {a}–{b}. Jouw beurt: spring er in 30 seconden 3 keer op.",
+  "reply_lost": "{me} verloor met {a}–{b} van {name}. Jouw beurt: spring er in 30 seconden 3 keer op.",
+  "reply_draw": "{me} en {name} speelden {a}–{b} gelijk. Jouw beurt: spring er in 30 seconden 3 keer op.",
+  "challenge_back": "Terug uitdagen"
  },
  "pt-BR": {
   "page_title": "Spriteer — Três quadros. Todo jogo.",
@@ -826,7 +870,11 @@ export const STRINGS = {
   "mk_sub": "Toque para pintar. O que você pintar aparece nos três quadros: Parado, Andar e Morrer.",
   "mk_hint": "Que tal uma gota de vermelho embaixo da boca? Ou pinte o que quiser.",
   "mk_hint_free": "Pinte o que quiser — ou é só apertar Jogar.",
-  "mk_done": "Agora é seu. Aperte Jogar quando quiser."
+  "mk_done": "Agora é seu. Aperte Jogar quando quiser.",
+  "reply_won": "{me} venceu {name} por {a}–{b}. Sua vez: pise nele 3 vezes em 30 segundos.",
+  "reply_lost": "{me} perdeu para {name} por {a}–{b}. Sua vez: pise nele 3 vezes em 30 segundos.",
+  "reply_draw": "{me} e {name} empataram em {a}–{b}. Sua vez: pise nele 3 vezes em 30 segundos.",
+  "challenge_back": "Devolver o desafio"
  },
  "ru": {
   "page_title": "Spriteer — Три кадра. Любая игра.",
@@ -899,7 +947,11 @@ export const STRINGS = {
   "mk_sub": "Нажимай, чтобы рисовать. Твой рисунок появится во всех трёх кадрах: «Стоит», «Идёт», «Умереть».",
   "mk_hint": "Может, капельку красного под ртом? Или рисуй что угодно.",
   "mk_hint_free": "Рисуй что хочешь — или сразу жми «Играть».",
-  "mk_done": "Теперь он твой. Жми «Играть», когда захочешь."
+  "mk_done": "Теперь он твой. Жми «Играть», когда захочешь.",
+  "reply_won": "Победа {me} над {name} со счётом {a}–{b}. Ваш ход: прыгните на него 3 раза за 30 секунд.",
+  "reply_lost": "Поражение {me} от {name} со счётом {a}–{b}. Ваш ход: прыгните на него 3 раза за 30 секунд.",
+  "reply_draw": "Ничья между {me} и {name}: {a}–{b}. Ваш ход: прыгните на него 3 раза за 30 секунд.",
+  "challenge_back": "Бросить ответный вызов"
  },
  "sv": {
   "page_title": "Spriteer — Tre bilder. Varje spel.",
@@ -968,7 +1020,11 @@ export const STRINGS = {
   "mk_sub": "Tryck för att måla. Det du målar syns i alla tre rutorna – Stilla, Gå, Dö.",
   "mk_hint": "Vad sägs om en droppe rött under munnen? Eller måla vad du vill.",
   "mk_hint_free": "Måla vad du vill – eller tryck direkt på Spela.",
-  "mk_done": "Nu är den din. Tryck på Spela när du är redo."
+  "mk_done": "Nu är den din. Tryck på Spela när du är redo.",
+  "reply_won": "{me} slog {name} med {a}–{b}. Din tur: hoppa på den 3 gånger inom 30 sekunder.",
+  "reply_lost": "{me} förlorade mot {name} med {a}–{b}. Din tur: hoppa på den 3 gånger inom 30 sekunder.",
+  "reply_draw": "{me} och {name} spelade oavgjort {a}–{b}. Din tur: hoppa på den 3 gånger inom 30 sekunder.",
+  "challenge_back": "Utmana tillbaka"
  },
  "th": {
   "page_title": "Spriteer — สามเฟรม ทุกเกม",
@@ -1037,7 +1093,11 @@ export const STRINGS = {
   "mk_sub": "แตะเพื่อระบายสี สิ่งที่คุณวาดจะโผล่ในทั้งสามเฟรม — อยู่นิ่ง เดิน ตาย",
   "mk_hint": "ลองแต้มสีแดงสักหยดใต้ปากดูไหม หรือจะวาดอะไรก็ได้ตามใจ",
   "mk_hint_free": "วาดอะไรก็ได้ตามใจ หรือจะกด เล่น เลยก็ได้",
-  "mk_done": "ตอนนี้เป็นของคุณแล้ว พร้อมเมื่อไหร่ก็กด เล่น ได้เลย"
+  "mk_done": "ตอนนี้เป็นของคุณแล้ว พร้อมเมื่อไหร่ก็กด เล่น ได้เลย",
+  "reply_won": "{me} ชนะ {name} {a}–{b} ตาคุณแล้ว: กระโดดเหยียบมัน 3 ครั้งใน 30 วินาที",
+  "reply_lost": "{me} แพ้ {name} {a}–{b} ตาคุณแล้ว: กระโดดเหยียบมัน 3 ครั้งใน 30 วินาที",
+  "reply_draw": "{me} กับ {name} เสมอกัน {a}–{b} ตาคุณแล้ว: กระโดดเหยียบมัน 3 ครั้งใน 30 วินาที",
+  "challenge_back": "ท้ากลับ"
  },
  "tr": {
   "page_title": "Spriteer — Üç kare. Her oyun.",
@@ -1106,7 +1166,11 @@ export const STRINGS = {
   "mk_sub": "Boyamak için dokun. Boyadığın her şey üç karede de görünür: Duruyor, Yürü, Öl.",
   "mk_hint": "Ağzın altına bir damla kırmızıya ne dersin? Ya da istediğin her şeyi boya.",
   "mk_hint_free": "İstediğini boya — ya da doğrudan Oyna’ya bas.",
-  "mk_done": "Artık senin. Hazır olunca Oyna’ya bas."
+  "mk_done": "Artık senin. Hazır olunca Oyna’ya bas.",
+  "reply_won": "{me}, {name} karşısında {a}–{b} kazandı. Sıra sende: 30 saniyede 3 kez üstüne zıpla.",
+  "reply_lost": "{me}, {name} karşısında {a}–{b} kaybetti. Sıra sende: 30 saniyede 3 kez üstüne zıpla.",
+  "reply_draw": "{me} ile {name} {a}–{b} berabere kaldı. Sıra sende: 30 saniyede 3 kez üstüne zıpla.",
+  "challenge_back": "Sen de meydan oku"
  },
  "vi": {
   "page_title": "Spriteer — Ba khung. Mọi trò chơi.",
@@ -1175,7 +1239,11 @@ export const STRINGS = {
   "mk_sub": "Chạm để tô. Nét bạn tô sẽ hiện ở cả ba khung — Đứng yên, Đi, Chết.",
   "mk_hint": "Thử chấm một giọt đỏ dưới miệng xem — hoặc tô gì tùy thích.",
   "mk_hint_free": "Tô gì tùy thích — hoặc bấm Chơi luôn.",
-  "mk_done": "Giờ nó là của bạn rồi. Sẵn sàng thì bấm Chơi nhé."
+  "mk_done": "Giờ nó là của bạn rồi. Sẵn sàng thì bấm Chơi nhé.",
+  "reply_won": "{me} đã thắng {name} {a}–{b}. Đến lượt bạn: giẫm lên nó 3 lần trong 30 giây.",
+  "reply_lost": "{me} đã thua {name} {a}–{b}. Đến lượt bạn: giẫm lên nó 3 lần trong 30 giây.",
+  "reply_draw": "{me} và {name} hòa {a}–{b}. Đến lượt bạn: giẫm lên nó 3 lần trong 30 giây.",
+  "challenge_back": "Thách đấu lại"
  },
  "zh-Hans": {
   "page_title": "Spriteer — 三帧，每个游戏。",
@@ -1244,7 +1312,11 @@ export const STRINGS = {
   "mk_sub": "点一下就能涂色。你画的会出现在全部三帧里——站立、行走、倒下。",
   "mk_hint": "在嘴巴下面点一滴红色试试？或者随便画点什么。",
   "mk_hint_free": "想画什么都行——或者直接点“开始”。",
-  "mk_done": "现在它是你的了。准备好就点“开始”。"
+  "mk_done": "现在它是你的了。准备好就点“开始”。",
+  "reply_won": "{me} 以 {a}–{b} 击败了 {name}。轮到你了：30 秒内踩它 3 次。",
+  "reply_lost": "{me} 以 {a}–{b} 输给了 {name}。轮到你了：30 秒内踩它 3 次。",
+  "reply_draw": "{me} 和 {name} 以 {a}–{b} 打成平手。轮到你了：30 秒内踩它 3 次。",
+  "challenge_back": "反向挑战"
  },
  "zh-Hant": {
   "page_title": "Spriteer — 三格，每個遊戲。",
@@ -1313,6 +1385,10 @@ export const STRINGS = {
   "mk_sub": "點一下就能上色。你畫的會出現在全部三格裡——站立、行走、倒下。",
   "mk_hint": "在嘴巴下面點一滴紅色試試？或者隨意畫點什麼。",
   "mk_hint_free": "想畫什麼都行——或者直接按「開始」。",
-  "mk_done": "現在它是你的了。準備好就按「開始」。"
+  "mk_done": "現在它是你的了。準備好就按「開始」。",
+  "reply_won": "{me} 以 {a}–{b} 擊敗了 {name}。輪到你了：30 秒內踩它 3 次。",
+  "reply_lost": "{me} 以 {a}–{b} 輸給了 {name}。輪到你了：30 秒內踩它 3 次。",
+  "reply_draw": "{me} 和 {name} 以 {a}–{b} 打成平手。輪到你了：30 秒內踩它 3 次。",
+  "challenge_back": "反向挑戰"
  }
 };
