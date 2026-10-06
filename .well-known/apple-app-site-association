@@ -1,0 +1,12 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["39P72BL7K9.com.swiftian.Spriteer"],
+        "components": [
+          { "/": "/c/*", "comment": "challenge links carry a Skin PNG after # — the app opens them" }
+        ]
+      }
+    ]
+  }
+}

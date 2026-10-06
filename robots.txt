@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Disallow: /c/
+Sitemap: https://spriteer.com/sitemap.xml

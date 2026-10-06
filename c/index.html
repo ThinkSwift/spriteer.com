@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>A Spriteer challenge</title>
+  <meta name="description" content="Fill four dots and your 8×8 character walks. Win a stomp duel, move it into your house, challenge a friend.">
+  <link rel="canonical" href="https://spriteer.com/">
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta name="apple-itunes-app" content="app-id=6796374506">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Spriteer — Three frames. Every game.">
+  <meta property="og:description" content="Fill four dots. Watch it walk.">
+  <meta property="og:image" content="https://spriteer.com/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="/css/site.css">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"SoftwareApplication","name":"Spriteer","operatingSystem":"iOS, iPadOS, macOS",
+   "applicationCategory":"GameApplication","url":"https://apps.apple.com/app/id6796374506","image":"https://spriteer.com/icon-app.png",
+   "author":{"@type":"Organization","name":"Swiftian Inc.","url":"https://swiftian.com/"}}
+  </script>
+</head>
+<body>
+  <div class="wrap">
+    <header class="top">
+      <img src="/icon-app.png" alt="" width="36" height="36">
+      <span class="brand">Spriteer</span>
+      <a class="btn gold store" data-store="web-sp-top" href="https://apps.apple.com/app/id6796374506" target="_blank" rel="noopener">Get the app</a>
+    </header>
+
+    <section id="challenge" class="panel" hidden>
+      <canvas id="challenge-art" width="96" height="96" aria-hidden="true"></canvas>
+      <div>
+        <h2 id="challenge-name">A challenge</h2>
+        <p class="lede">Make your own fighter below — four dots — then stomp it 3 times in 30 seconds.</p>
+      </div>
+    </section>
+
+    <section id="draw" class="panel">
+      <h1>Three frames. Every game.</h1>
+      <p class="lede">Every character is Idle · Walk · Die. Fill the four dots on Walk and watch it walk.</p>
+      <div class="frames">
+        <div class="frame"><span class="label">Idle</span><canvas id="cell-idle" aria-label="Idle frame"></canvas></div>
+        <div class="frame walk"><span class="label">Walk</span><canvas id="cell-walk" aria-label="Walk frame"></canvas></div>
+        <div class="frame"><span class="label">Die</span><canvas id="cell-die" aria-label="Die frame"></canvas></div>
+        <div class="frame preview"><span class="label">Live</span><canvas id="preview" aria-label="Walking preview"></canvas></div>
+      </div>
+      <div id="goal"><span id="goal-count">0/4</span><span id="goal-note">Tap the blinking dots on Walk.</span></div>
+      <div id="palette" aria-label="Colors"></div>
+      <div class="row">
+        <input id="name" maxlength="24" aria-label="Name" value="Hero">
+        <button id="play" disabled>Play ▶</button>
+        <button id="another" class="ghost">Another sketch</button>
+      </div>
+    </section>
+
+    <section id="duel" class="panel" hidden>
+      <div class="row" style="justify-content:space-between">
+        <h2 id="rival-name">Stomp duel</h2>
+        <button id="quit" class="ghost" aria-label="Close the duel">Close</button>
+      </div>
+      <canvas id="arena" aria-label="Stomp duel"></canvas>
+      <div class="pad">
+        <div class="row"><button data-key="left" aria-label="Move left">◀</button><button data-key="right" aria-label="Move right">▶</button></div>
+        <button class="jump" data-key="jump" aria-label="Jump">JUMP</button>
+      </div>
+      <div class="keys"><kbd>←</kbd><kbd>→</kbd> / <kbd>A</kbd><kbd>D</kbd> Move · <kbd>Space</kbd> <kbd>↑</kbd> <kbd>W</kbd> Jump · <kbd>Esc</kbd> Close · Pad: A Jump, B Close</div>
+      <div id="result" hidden>
+        <div id="result-line"></div>
+        <div class="row">
+          <button id="share-last" class="gold btn">Challenge a friend</button>
+          <button id="rematch">Rematch</button>
+          <button id="draw-next" class="ghost">Draw another</button>
+          <button id="to-house" class="ghost">Your house</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="house" class="panel">
+      <h2>Your house</h2>
+      <p class="lede">Everyone you finish moves in. Pythoneer's Pys, pets and fish live here too.</p>
+      <canvas id="room" aria-label="Your house"></canvas>
+      <div class="counts mono"><span id="house-count"></span><span id="py-count"></span></div>
+      <div class="door">
+        <img src="https://pythoneer.io/icon-app.png" alt="" width="44" height="44">
+        <div style="flex:1">The shelf, the tank and the pets are empty until you bring them from <b>Pythoneer</b>. Your house goes with you.</div>
+        <a id="to-py" class="btn ghost" href="https://pythoneer.io/?ct=sp-house">Visit</a>
+      </div>
+      <div id="residents"></div>
+      <div class="row" style="margin-top:14px">
+        <a class="btn gold" data-store="web-sp-house" href="https://apps.apple.com/app/id6796374506" target="_blank" rel="noopener">Take them to the app</a>
+        <button id="download" class="ghost">Save house as Skin PNG</button>
+      </div>
+    </section>
+
+    <footer>
+      <span>© 2026 Spriteer · <a href="https://swiftian.com">Swiftian Inc.</a></span>
+      <a href="/privacy/">Privacy</a>
+      <a href="https://pythoneer.io">Pythoneer</a>
+    </footer>
+  </div>
+  <div id="toast" hidden></div>
+  <script type="module" src="/js/track.js"></script>
+  <script type="module" src="/js/main.js"></script>
+</body>
+</html>
