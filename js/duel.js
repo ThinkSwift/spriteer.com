@@ -39,6 +39,7 @@ export class Duel {
     this.onEnd = onEnd;
     this.keys = { left: false, right: false, jump: false };
     this.tiles = { grass: tile("Grass"), dirt: tile("Dirt"), plank: tile("Wood") };
+    for (const f of [this.you, this.rival]) { f.y = (ROWS - 2) * T; f.ground = true; }   // start on the floor, visible through the countdown
     this.tick = 0; this.countdown = 200; this.left = RULES.seconds * 60; this.over = false;
     this.ai = { think: 0, dir: -1, jump: false };
     this.bindKeys();
@@ -183,7 +184,7 @@ export class Duel {
     for (const [r, a, b] of PLATFORMS) for (let x = a; x <= b; x++) drawFrame(ctx, this.tiles.plank, x * T * s, r * T * s, s);
 
     for (const f of [this.rival, this.you]) {
-      const blink = (!f.alive && f.down < 18 && Math.floor(f.down / 3) % 2) || (f.alive && f.safe > 0 && Math.floor(f.safe / 4) % 2);
+      const blink = (!f.alive && f.down < 18 && Math.floor(f.down / 3) % 2) || (this.countdown === 0 && f.alive && f.safe > 0 && Math.floor(f.safe / 4) % 2);
       if (!blink) drawFrame(ctx, this.frameOf(f), f.x * s, f.y * s, s, f.facing < 0);
     }
     // a marker over your character
