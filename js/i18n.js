@@ -1,5 +1,5 @@
 // Web copy in the apps' 19 UI locales (founder.md §로케일: UI 19). Same file on spriteer.com and pythoneer.io/night.
-// The language comes from ?lang= or the browser; anything else falls back to English.
+// The language comes from ?lang=, the home page's pick, or the browser; anything else falls back to English.
 import { STRINGS } from "./strings.js";
 
 const SUPPORTED = Object.keys(STRINGS);
@@ -8,6 +8,10 @@ function pick() {
   try {
     const q = new URLSearchParams(location.search).get("lang");
     if (q && SUPPORTED.includes(q)) return q;
+    // The language picked on the site's home page (pythoneer.io keeps it as site_lang; "pt" there is pt-BR here).
+    const saved = localStorage.getItem("site_lang");
+    const mapped = saved === "pt" ? "pt-BR" : saved;
+    if (mapped && SUPPORTED.includes(mapped)) return mapped;
   } catch {}
   for (const raw of navigator.languages || [navigator.language || "en"]) {
     const l = String(raw).toLowerCase();
