@@ -5,6 +5,7 @@ import { Duel, RULES } from "./duel.js";
 import { Room, member, moveIn, addGuest, framesOf, spHalf, doorToPythoneer, receiveDoor } from "./house.js";
 import * as Skin from "./skinpng.js";
 import { track } from "./track.js";
+import { t, tn, applyI18n } from "./i18n.js";
 
 const APP_STORE = "https://apps.apple.com/app/id6796374506";
 const SKETCHES = ["hero", "slime", "ghost", "duck", "goblin", "skeleton", "bat", "crab", "zombie", "monkey", "snake", "spider", "mole", "bee", "jelly"];
@@ -61,7 +62,7 @@ function buildPalette() {
     const b = document.createElement("button");
     b.className = "swatch" + (v === 0 ? " eraser" : "");
     b.style.background = v ? hex(v) : "";
-    b.setAttribute("aria-label", v ? "Color " + hex(v) : "Eraser");
+    b.setAttribute("aria-label", v ? hex(v) : "⌫");
     b.dataset.v = String(v);
     b.onclick = () => { state.color = v; markPalette(); };
     p.appendChild(b);
@@ -125,13 +126,13 @@ function paintAt(k, ev) {
   if (before === state.color) return;
   state.frames[k][i] = state.color;
   if (!state.painted) { state.painted = true; track("first_stroke", { base: state.base }, { onlyOnce: true }); }
-  if (state.autoStart) { clearTimeout(state.autoStart); state.autoStart = null; $("#goal-note").textContent = "Press Play when ready."; }
+  if (state.autoStart) { clearTimeout(state.autoStart); state.autoStart = null; $("#goal-note").textContent = t("goal_ready"); }
   const wasDone = state.done;
   updateGoal();
   if (!wasDone && filled() === state.targets.length) {
     state.done = true;
     track("walk_done", { base: state.base });
-    $("#goal-note").textContent = "It walks! The duel starts in a moment…";
+    $("#goal-note").textContent = t("goal_walks");
     state.autoStart = setTimeout(() => startDuel(), 1600);
   }
 }
@@ -170,7 +171,7 @@ function startDuel(fighter) {
   if (isEmpty(you.idle) || isEmpty(you.walk) || isEmpty(you.die)) return;
   show("duel");
   $("#result").hidden = true;
-  $("#rival-name").textContent = state.challenger ? `${state.challenger.name} challenges you` : `Stomp the rival ${RULES.stomps} times in ${RULES.seconds} seconds`;
+  $("#rival-name").textContent = state.challenger ? t("challenge_name", { name: state.challenger.name }) : t("rival_line");
   state.duel?.stop();
   const fresh = !fighter;
   state.duel = new Duel($("#arena"), you, rivalFrames(), (r) => endDuel(r, fresh ? you : null));
@@ -180,16 +181,16 @@ function startDuel(fighter) {
 }
 
 function endDuel(r, newcomer) {
-  let line = r.draw ? `A draw, ${r.you}–${r.rival}.` : r.won ? `You won ${r.you}–${r.rival}!` : `The rival won ${r.rival}–${r.you}.`;
+  let line = t(r.draw ? "result_draw" : r.won ? "result_won" : "result_lost", { a: r.you, b: r.rival });
   if (newcomer) {
     const m = member("web:" + Date.now().toString(36), state.name, newcomer, "Web");
     const n = moveIn(m);
     state.last = m;
     track("move_in", { n: String(n) });
-    line += ` ${state.name} moved into your house · ${n}`;
+    line += " " + t("moved_in", { name: state.name, n });
     newSketchAfter();
   }
-  if (state.challenger && addGuest(state.challenger.member)) line += ` ${state.challenger.name} stays as your guest.`;
+  if (state.challenger && addGuest(state.challenger.member)) line += " " + t("guest_stays", { name: state.challenger.name });
   $("#result-line").textContent = line;
   $("#result").hidden = false;
   state.room?.refresh();
@@ -215,12 +216,12 @@ async function linkFor(m) {
 
 async function share(m) {
   const url = await linkFor(m);
-  const text = `${m.name} challenges you. Stomp it 3 times in 30 seconds.`;
+  const text = t("share_text", { name: m.name });
   track("link_share", { n: String(spHalf().residents.length) });
   if (navigator.share) {
     try { await navigator.share({ title: "Spriteer", text, url }); return; } catch (e) { if (e?.name === "AbortError") return; }
   }
-  try { await navigator.clipboard.writeText(url); toast("Link copied"); } catch { prompt("Copy this link", url); }
+  try { await navigator.clipboard.writeText(url); toast(t("link_copied")); } catch { prompt(t("copy_prompt"), url); }
 }
 
 async function downloadHouse() {
@@ -258,7 +259,7 @@ async function readChallenge() {
     state.challenger = { name, frames: fr, member: member("guest:" + m[1].slice(-24), name, fr, skin.name) };
     track("link_open", {});
     $("#challenge").hidden = false;
-    $("#challenge-name").textContent = `${name} challenges you`;
+    $("#challenge-name").textContent = t("challenge_name", { name });
     const c = $("#challenge-art"), ctx = c.getContext("2d");
     c.width = c.height = 96; ctx.imageSmoothingEnabled = false;
     let t = 0;
@@ -266,7 +267,7 @@ async function readChallenge() {
     loop();
   } catch (e) {
     $("#challenge").hidden = false;
-    $("#challenge-name").textContent = "This link could not be read. Ask for a fresh one.";
+    $("#challenge-name").textContent = t("bad_link");
   }
 }
 
@@ -274,8 +275,8 @@ async function readChallenge() {
 
 function renderHouse() {
   const h = spHalf(), counts = state.room?.counts();
-  $("#house-count").textContent = h.residents.length ? `${h.residents.length} resident${h.residents.length > 1 ? "s" : ""}${h.guests.length ? ` · ${h.guests.length} guest${h.guests.length > 1 ? "s" : ""}` : ""}` : "No one lives here yet — fill four dots above.";
-  if (counts) $("#py-count").textContent = `Pys ${counts.pys[0]}/${counts.pys[1]} · Pets ${counts.pets[0]}/${counts.pets[1]} · Fish ${counts.fish[0]}/${counts.fish[1]}`;
+  $("#house-count").textContent = h.residents.length ? tn("residents", h.residents.length) + (h.guests.length ? " · " + tn("guests", h.guests.length) : "") : t("house_empty");
+  if (counts) $("#py-count").textContent = t("py_counts", { a: counts.pys[0], b: counts.pys[1], c: counts.pets[0], d: counts.pets[1], e: counts.fish[0], f: counts.fish[1] });
   const list = $("#residents");
   list.innerHTML = "";
   const people = [...h.residents.map((m) => ({ m, guest: false })).reverse(), ...h.guests.map((m) => ({ m, guest: true })).reverse()];
@@ -287,13 +288,13 @@ function renderHouse() {
     const ctx = c.getContext("2d"); ctx.imageSmoothingEnabled = false;
     drawFrame(ctx, framesOf(m).idle, 0, 0, 8);
     const name = document.createElement("div"); name.className = "rname"; name.textContent = m.name;
-    const tag = document.createElement("div"); tag.className = "rtag"; tag.textContent = guest ? "Guest" : "Resident";
+    const tag = document.createElement("div"); tag.className = "rtag"; tag.textContent = t(guest ? "tag_guest" : "tag_resident");
     const row = document.createElement("div"); row.className = "ractions";
-    const duel = document.createElement("button"); duel.textContent = "Duel"; duel.onclick = () => startDuel(framesOf(m));
-    const sh = document.createElement("button"); sh.textContent = "Challenge"; sh.onclick = () => share(m);
+    const duel = document.createElement("button"); duel.textContent = t("btn_duel"); duel.onclick = () => startDuel(framesOf(m));
+    const sh = document.createElement("button"); sh.textContent = t("btn_challenge"); sh.onclick = () => share(m);
     row.append(duel, sh);
     if (!guest) {
-      const app = document.createElement("a"); app.textContent = "Open in app"; app.className = "rapp";
+      const app = document.createElement("a"); app.textContent = t("btn_open_app"); app.className = "rapp";
       linkFor(m).then((u) => { app.href = u; });
       row.append(app);
     }
@@ -312,9 +313,9 @@ function show(which) {
 }
 
 function toast(text) {
-  const t = $("#toast");
-  t.textContent = text; t.hidden = false;
-  clearTimeout(t._h); t._h = setTimeout(() => { t.hidden = true; }, 1800);
+  const el = $("#toast");
+  el.textContent = text; el.hidden = false;
+  clearTimeout(el._h); el._h = setTimeout(() => { el.hidden = true; }, 1800);
 }
 
 function bindDuelControls() {
@@ -333,6 +334,7 @@ function bindDuelControls() {
 }
 
 async function boot() {
+  applyI18n(location.pathname.startsWith("/c") ? "page_title_c" : "page_title");
   await receiveDoor(location.hash);
   bindEditor();
   bindDuelControls();

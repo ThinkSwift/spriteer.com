@@ -10,13 +10,21 @@
   <div class="wrap">
     <header class="top"><img src="/icon-app.png" alt="" width="36" height="36"><a class="brand" href="/" style="color:inherit;text-decoration:none">Spriteer</a></header>
     <section class="panel">
-      <h1>Privacy</h1>
-      <p>What you draw and your house stay in this browser. Nothing is uploaded.</p>
-      <p>A challenge link carries your character after the <code>#</code>. That part of a link never reaches our server; whoever you send it to can see the character.</p>
-      <p>We count anonymous page events (for example "a duel started") with a random number made fresh for each visit. No cookies, no accounts, no IP addresses kept.</p>
-      <p>The Spriteer app has its own policy in the App Store listing. Questions: <a href="mailto:hello@swiftian.com">hello@swiftian.com</a>.</p>
+      <h1 data-i18n="privacy_title">Privacy</h1>
+      <p data-i18n="privacy_p1">What you draw and your house stay in this browser. Nothing is uploaded.</p>
+      <p data-i18n="privacy_p2">A challenge link carries your character after the #. That part of a link never reaches our server; whoever you send it to can see the character.</p>
+      <p data-i18n="privacy_p3">We count anonymous page events (for example "a duel started") with a random number made fresh for each visit. No cookies, no accounts, no IP addresses kept.</p>
+      <p id="p4">The Spriteer app has its own policy in the App Store listing. Questions: <a href="mailto:hello@swiftian.com">hello@swiftian.com</a>.</p>
     </section>
     <footer><span>© 2026 Spriteer · <a href="https://swiftian.com">Swiftian Inc.</a></span></footer>
   </div>
+  <script type="module">
+    import { t, applyI18n } from "/js/i18n.js";
+    applyI18n("privacy_title");
+    const [before, after] = t("privacy_p4", { email: "\u0000" }).split("\u0000");
+    const p = document.getElementById("p4"), a = document.createElement("a");
+    a.href = "mailto:hello@swiftian.com"; a.textContent = "hello@swiftian.com";
+    p.replaceChildren(document.createTextNode(before), a, document.createTextNode(after ?? ""));
+  </script>
 </body>
 </html>

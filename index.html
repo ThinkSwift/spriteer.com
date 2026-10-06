@@ -26,77 +26,77 @@
     <header class="top">
       <img src="/icon-app.png" alt="" width="36" height="36">
       <span class="brand">Spriteer</span>
-      <a class="btn gold store" data-store="web-sp-top" href="https://apps.apple.com/app/id6796374506" target="_blank" rel="noopener">Get the app</a>
+      <a class="btn gold store" data-store="web-sp-top" href="https://apps.apple.com/app/id6796374506" target="_blank" rel="noopener" data-i18n="get_app">Get the app</a>
     </header>
 
     <section id="challenge" class="panel" hidden>
       <canvas id="challenge-art" width="96" height="96" aria-hidden="true"></canvas>
       <div>
-        <h2 id="challenge-name">A challenge</h2>
-        <p class="lede">Make your own fighter below — four dots — then stomp it 3 times in 30 seconds.</p>
+        <h2 id="challenge-name" data-i18n="challenge_default">A challenge</h2>
+        <p class="lede" data-i18n="challenge_lede">Make your own fighter below — four dots — then stomp it 3 times in 30 seconds.</p>
       </div>
     </section>
 
     <section id="draw" class="panel">
-      <h1>Three frames. Every game.</h1>
-      <p class="lede">Every character is Idle · Walk · Die. Fill the four dots on Walk and watch it walk.</p>
+      <h1 data-i18n="h1">Three frames. Every game.</h1>
+      <p class="lede" data-i18n="lede">Every character is Idle · Walk · Die. Fill the four dots on Walk and watch it walk.</p>
       <div class="frames">
-        <div class="frame"><span class="label">Idle</span><canvas id="cell-idle" aria-label="Idle frame"></canvas></div>
-        <div class="frame walk"><span class="label">Walk</span><canvas id="cell-walk" aria-label="Walk frame"></canvas></div>
-        <div class="frame"><span class="label">Die</span><canvas id="cell-die" aria-label="Die frame"></canvas></div>
-        <div class="frame preview"><span class="label">Live</span><canvas id="preview" aria-label="Walking preview"></canvas></div>
+        <div class="frame"><span class="label" data-i18n="idle">Idle</span><canvas id="cell-idle" data-i18n-aria="idle"></canvas></div>
+        <div class="frame walk"><span class="label" data-i18n="walk">Walk</span><canvas id="cell-walk" data-i18n-aria="walk"></canvas></div>
+        <div class="frame"><span class="label" data-i18n="die">Die</span><canvas id="cell-die" data-i18n-aria="die"></canvas></div>
+        <div class="frame preview"><span class="label" data-i18n="live">Live</span><canvas id="preview" data-i18n-aria="live"></canvas></div>
       </div>
-      <div id="goal"><span id="goal-count">0/4</span><span id="goal-note">Tap the blinking dots on Walk.</span></div>
+      <div id="goal"><span id="goal-count">0/4</span><span id="goal-note" data-i18n="goal_tap">Tap the blinking dots on Walk.</span></div>
       <div id="palette" aria-label="Colors"></div>
       <div class="row">
-        <input id="name" maxlength="24" aria-label="Name" value="Hero">
-        <button id="play" disabled>Play ▶</button>
-        <button id="another" class="ghost">Another sketch</button>
+        <input id="name" maxlength="24" data-i18n-aria="name_label" value="Hero">
+        <button id="play" disabled data-i18n="play">Play ▶</button>
+        <button id="another" class="ghost" data-i18n="another">Another sketch</button>
       </div>
     </section>
 
     <section id="duel" class="panel" hidden>
       <div class="row" style="justify-content:space-between">
-        <h2 id="rival-name">Stomp duel</h2>
-        <button id="quit" class="ghost" aria-label="Close the duel">Close</button>
+        <h2 id="rival-name" data-i18n="duel_title">Stomp duel</h2>
+        <button id="quit" class="ghost" data-i18n="close">Close</button>
       </div>
       <canvas id="arena" aria-label="Stomp duel"></canvas>
       <div class="pad">
-        <div class="row"><button data-key="left" aria-label="Move left">◀</button><button data-key="right" aria-label="Move right">▶</button></div>
-        <button class="jump" data-key="jump" aria-label="Jump">JUMP</button>
+        <div class="row"><button data-key="left" data-i18n-aria="move_left">◀</button><button data-key="right" data-i18n-aria="move_right">▶</button></div>
+        <button class="jump" data-key="jump" data-i18n="jump">JUMP</button>
       </div>
-      <div class="keys"><kbd>←</kbd><kbd>→</kbd> / <kbd>A</kbd><kbd>D</kbd> Move · <kbd>Space</kbd> <kbd>↑</kbd> <kbd>W</kbd> Jump · <kbd>Esc</kbd> Close · Pad: A Jump, B Close</div>
+      <div class="keys" data-i18n="keys_line">← → / A D  Move · Space ↑ W  Jump · Esc  Close · Pad: A Jump, B Close</div>
       <div id="result" hidden>
         <div id="result-line"></div>
         <div class="row">
-          <button id="share-last" class="gold btn">Challenge a friend</button>
-          <button id="rematch">Rematch</button>
-          <button id="draw-next" class="ghost">Draw another</button>
-          <button id="to-house" class="ghost">Your house</button>
+          <button id="share-last" class="gold btn" data-i18n="challenge_friend">Challenge a friend</button>
+          <button id="rematch" data-i18n="rematch">Rematch</button>
+          <button id="draw-next" class="ghost" data-i18n="draw_another">Draw another</button>
+          <button id="to-house" class="ghost" data-i18n="your_house">Your house</button>
         </div>
       </div>
     </section>
 
     <section id="house" class="panel">
-      <h2>Your house</h2>
-      <p class="lede">Everyone you finish moves in. Pythoneer's Pys, pets and fish live here too.</p>
-      <canvas id="room" aria-label="Your house"></canvas>
+      <h2 data-i18n="your_house">Your house</h2>
+      <p class="lede" data-i18n="house_lede">Everyone you finish moves in. Pythoneer's Pys, pets and fish live here too.</p>
+      <canvas id="room" data-i18n-aria="your_house"></canvas>
       <div class="counts mono"><span id="house-count"></span><span id="py-count"></span></div>
       <div class="door">
         <img src="https://pythoneer.io/icon-app.png" alt="" width="44" height="44">
-        <div style="flex:1">The shelf, the tank and the pets are empty until you bring them from <b>Pythoneer</b>. Your house goes with you.</div>
-        <a id="to-py" class="btn ghost" href="https://pythoneer.io/?ct=sp-house">Visit</a>
+        <div style="flex:1" data-i18n="door_sp">The shelf, the tank and the pets are empty until you bring them from Pythoneer. Your house goes with you.</div>
+        <a id="to-py" class="btn ghost" href="https://pythoneer.io/?ct=sp-house" data-i18n="visit">Visit</a>
       </div>
       <div id="residents"></div>
       <div class="row" style="margin-top:14px">
-        <a class="btn gold" data-store="web-sp-house" href="https://apps.apple.com/app/id6796374506" target="_blank" rel="noopener">Take them to the app</a>
-        <button id="download" class="ghost">Save house as Skin PNG</button>
+        <a class="btn gold" data-store="web-sp-house" href="https://apps.apple.com/app/id6796374506" target="_blank" rel="noopener" data-i18n="take_to_app">Take them to the app</a>
+        <button id="download" class="ghost" data-i18n="save_png">Save house as Skin PNG</button>
       </div>
     </section>
 
     <footer>
       <span>© 2026 Spriteer · <a href="https://swiftian.com">Swiftian Inc.</a></span>
-      <a href="/privacy/">Privacy</a>
+      <a href="/privacy/" data-i18n="privacy">Privacy</a>
       <a href="https://pythoneer.io">Pythoneer</a>
     </footer>
   </div>

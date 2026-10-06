@@ -2,6 +2,7 @@
 // Every frame of the three-frame standard is used: Idle standing, Walk moving, Die when stomped.
 // The same rules are the app's Cast Battle (SPRITEER.md, founder 2026-10-06).
 import { tile, drawFrame } from "./pixels.js";
+import { t } from "./i18n.js";
 
 export const RULES = { stomps: 3, seconds: 30 };
 const COLS = 20, ROWS = 12, T = 8;
@@ -201,15 +202,15 @@ export class Duel {
     ctx.fillStyle = "#211f40";
     ctx.font = `bold ${Math.round(7 * s)}px ui-monospace, Menlo, monospace`;
     ctx.textBaseline = "top";
-    ctx.textAlign = "left"; ctx.fillText(`YOU ${this.you.score}`, 4 * s, 3 * s);
-    ctx.textAlign = "right"; ctx.fillText(`${this.rival.score} RIVAL`, (W - 4) * s, 3 * s);
+    ctx.textAlign = "left"; ctx.fillText(t("hud_you", { n: this.you.score }), 4 * s, 3 * s);
+    ctx.textAlign = "right"; ctx.fillText(t("hud_rival", { n: this.rival.score }), (W - 4) * s, 3 * s);
     ctx.textAlign = "center"; ctx.fillText(`${Math.max(0, Math.ceil(this.left / 60))}`, (W / 2) * s, 3 * s);
     if (this.countdown > 0) {
       const n = Math.ceil((this.countdown - 50) / 50);
       ctx.font = `bold ${Math.round(20 * s)}px ui-monospace, Menlo, monospace`;
-      ctx.fillText(n > 0 ? String(n) : "GO", (W / 2) * s, (H / 2 - 12) * s);
+      ctx.fillText(n > 0 ? String(n) : t("hud_go"), (W / 2) * s, (H / 2 - 12) * s);
       ctx.font = `bold ${Math.round(6 * s)}px ui-monospace, Menlo, monospace`;
-      ctx.fillText(`Stomp ${RULES.stomps} times · ${RULES.seconds}s`, (W / 2) * s, (H / 2 + 12) * s);
+      ctx.fillText(t("hud_rule"), (W / 2) * s, (H / 2 + 12) * s);
     }
   }
 }
