@@ -184,21 +184,30 @@ function bindEditor() {
 
 function rivalFrames() {
   if (state.challenger) return state.challenger.frames;
+  return monsterFrames();
+}
+
+function monsterFrames() {
   const pool = RIVALS.filter((r) => r !== state.base);
   return character(pool[Math.floor(Math.random() * pool.length)]);
 }
 
-function startDuel(fighter) {
+// A resident fights a monster; a guest is the rival and your newest resident fights it — never the friend's
+// character as your own fighter (UX sim 2026-10-07, same rule as the app's DuelSheet).
+function startDuel(fighter, guest) {
   const you = fighter || state.frames;
   if (isEmpty(you.idle) || isEmpty(you.walk) || isEmpty(you.die)) return;
   show("duel");
   $("#result").hidden = true;
-  $("#rival-name").textContent = state.challenger ? t("challenge_name", { name: state.challenger.name }) : t("rival_line");
+  $("#rival-name").textContent = guest ? t("challenge_name", { name: guest.name })
+    : !fighter && state.challenger ? t("challenge_name", { name: state.challenger.name }) : t("rival_line");
   state.duel?.stop();
   const fresh = !fighter;
-  state.duel = new Duel($("#arena"), you, rivalFrames(), (r) => endDuel(r, fresh ? you : null));
+  const rival = guest ? guest.frames : fresh ? rivalFrames() : monsterFrames();
+  state.lastDuel = { fighter, guest };
+  state.duel = new Duel($("#arena"), you, rival, (r) => endDuel(r, fresh ? you : null));
   state.duel.onClose = () => { state.duel?.stop(); show(fresh ? "draw" : "house"); };
-  track("arcade_play", { base: state.base, challenge: state.challenger ? "1" : "0", marked: state.painted ? "1" : "0" });
+  track("duel_start", { base: state.base, vs: guest ? "guest" : fresh && state.challenger ? "challenge" : "monster", marked: state.painted ? "1" : "0" });
   $("#duel").scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
@@ -284,8 +293,8 @@ async function readChallenge() {
     $("#challenge-name").textContent = t("challenge_name", { name });
     const c = $("#challenge-art"), ctx = c.getContext("2d");
     c.width = c.height = 96; ctx.imageSmoothingEnabled = false;
-    let t = 0;
-    const loop = () => { ctx.clearRect(0, 0, 96, 96); drawFrame(ctx, Math.floor(t++ / 16) % 2 ? fr.walk : fr.idle, 8, 8, 10); requestAnimationFrame(loop); };
+    let tick = 0;   // not "t": a block-scoped t shadowed the i18n t() above, and every link read as broken
+    const loop = () => { ctx.clearRect(0, 0, 96, 96); drawFrame(ctx, Math.floor(tick++ / 16) % 2 ? fr.walk : fr.idle, 8, 8, 10); requestAnimationFrame(loop); };
     loop();
   } catch (e) {
     $("#challenge").hidden = false;
@@ -312,17 +321,39 @@ function renderHouse() {
     const name = document.createElement("div"); name.className = "rname"; name.textContent = m.name;
     const tag = document.createElement("div"); tag.className = "rtag"; tag.textContent = t(guest ? "tag_guest" : "tag_resident");
     const row = document.createElement("div"); row.className = "ractions";
-    const duel = document.createElement("button"); duel.textContent = t("btn_duel"); duel.onclick = () => startDuel(framesOf(m));
+    const duel = document.createElement("button"); duel.textContent = t("btn_duel");
+    duel.onclick = () => guest ? startDuel(myFighter(), { name: m.name, frames: framesOf(m) }) : startDuel(framesOf(m));
     const sh = document.createElement("button"); sh.textContent = t("btn_challenge"); sh.onclick = () => share(m);
     row.append(duel, sh);
-    if (!guest) {
-      const app = document.createElement("a"); app.textContent = t("btn_open_app"); app.className = "rapp";
-      linkFor(m).then((u) => { app.href = u; });
+    if (!guest && APPLE) {
+      // A link to spriteer.com from spriteer.com never leaves Safari (Universal Links skip same-site taps), so the
+      // app's own scheme carries the same Skin PNG; without the app, the App Store opens instead.
+      const app = document.createElement("a"); app.textContent = t("btn_open_app"); app.className = "rapp"; app.href = "#";
+      app.onclick = (e) => { e.preventDefault(); openInApp(m); };
       row.append(app);
     }
     card.append(c, name, tag, row);
     list.append(card);
   }
+}
+
+const APPLE = /iPhone|iPad|Macintosh/.test(navigator.userAgent);
+
+function myFighter() {
+  const h = spHalf();
+  const last = h.residents[h.residents.length - 1];
+  return last ? framesOf(last) : state.frames;
+}
+
+async function openInApp(m) {
+  const u = await linkFor(m);
+  track("open_app", {});
+  const frag = u.slice(u.indexOf("#"));
+  const t0 = Date.now();
+  window.location.href = "spriteer://c/?own=1" + frag;
+  setTimeout(() => {
+    if (document.visibilityState === "visible" && Date.now() - t0 < 2500) window.location.href = APP_STORE + "?ct=web-sp-open";
+  }, 1400);
 }
 
 // ---------------------------------------------------------------- page
@@ -348,7 +379,10 @@ function bindDuelControls() {
     b.addEventListener("pointerdown", on);
     b.addEventListener("pointerup", off); b.addEventListener("pointerleave", off); b.addEventListener("pointercancel", off);
   }
-  $("#rematch").onclick = () => startDuel(state.last ? framesOf(state.last) : undefined);
+  $("#rematch").onclick = () => {
+    const d = state.lastDuel || {};
+    startDuel(d.guest ? d.fighter : state.last ? framesOf(state.last) : d.fighter, d.guest);
+  };
   $("#share-last").onclick = () => state.last && share(state.last);
   $("#draw-next").onclick = () => { show("draw"); $("#draw").scrollIntoView({ behavior: "smooth" }); };
   $("#to-house").onclick = () => $("#house").scrollIntoView({ behavior: "smooth" });
