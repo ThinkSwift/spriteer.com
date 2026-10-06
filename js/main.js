@@ -343,7 +343,7 @@ async function boot() {
   $("#to-py").onclick = async (e) => {
     e.preventDefault();
     track("house_door", { to: "py" });
-    location.href = await doorToPythoneer("https://pythoneer.io/?ct=sp-house");
+    location.href = await doorToPythoneer("https://pythoneer.io/night/?ct=sp-house");
   };
   new IntersectionObserver((es, o) => {
     if (es.some((e) => e.isIntersecting)) { const c = state.room.counts(); track("house_open", { residents: String(c.residents), guests: String(c.guests) }); o.disconnect(); }

@@ -6,6 +6,8 @@ import { TILES } from "./art.js";
 import { tile, drawFrame, drawSilhouette, encodeFrame, decodeFrame, character } from "./pixels.js";
 
 const SP_KEY = "spriteer.house.sp", PY_KEY = "spriteer.house.py";
+/** Which half this site owns (HOUSE.md §0): spriteer.com writes the residents, pythoneer.io the exhibits. Same file on both sites. */
+export const OWNER = /pythoneer/.test(location.hostname) ? "py" : "sp";
 export const ROOM = { w: 34, h: 10 };
 export const RESIDENTS_IN_ROOM = 8;
 const FLOOR = ROOM.h - 2;
@@ -70,23 +72,47 @@ async function unpack(text) {
   return JSON.parse(await new Response(st).text());
 }
 
-/** Link to the Pythoneer site carrying this half. */
-export async function doorToPythoneer(base = "https://pythoneer.io/") {
-  return base + "#house=" + (await pack({ sp: spHalf() }));
+/** Link to the other site carrying this site's half (only the owner's half ever travels out). */
+export async function doorTo(base) {
+  const half = OWNER === "sp" ? { sp: spHalf() } : { py: pyHalf() || emptyPy() };
+  return base + "#house=" + (await pack(half));
 }
-/** Reads `#house=` (a half from the other site). Keeps the newer copy. Returns true when something arrived. */
+export const doorToPythoneer = (base = "https://pythoneer.io/") => doorTo(base);
+/** Reads `#house=` — the other site's half. Keeps the newer copy; never overwrites this site's own half. */
 export async function receiveDoor(hash) {
   const m = /[#&]house=([A-Za-z0-9_-]+)/.exec(hash || "");
   if (!m) return false;
   try {
     const got = await unpack(m[1]);
-    if (got && got.py && (got.py.v ?? 1) <= 1) {
-      const mine = pyHalf();
-      if (!mine || (got.py.savedAt || "") > (mine.savedAt || "")) store(PY_KEY, got.py);
+    const other = OWNER === "sp" ? "py" : "sp", key = OWNER === "sp" ? PY_KEY : SP_KEY;
+    const half = got && got[other];
+    if (half && (half.v ?? 1) <= 1) {
+      const mine = load(key);
+      if (!mine || (half.savedAt || "") > (mine.savedAt || "")) store(key, half);
       return true;
     }
   } catch {}
   return false;
+}
+
+// --- Pythoneer's half (pythoneer.io only writes it) ---------------------------------------------
+
+const PET_SPOTS = [["duck", "surface"], ["crab", "surface"], ["bee", "sky"], ["bat", "underground"], ["slime", "deep"], ["hatchling", "underground"]];
+const FISH_SPOTS = [["fish#0", "surface"], ["fish#1", "surface"], ["fish#2", "surface"], ["fish#3", "underground"], ["fish#4", "underground"], ["fish#5", "deep"]];
+export function emptyPy() {
+  return { v: 1, savedAt: nowISO(), world: "web",
+    pys: { total: 38, have: [], missing: [] },
+    pets: { total: 6, have: [], missing: PET_SPOTS.map(([id, where]) => ({ id, where })) },
+    fish: { total: 6, have: [], missing: FISH_SPOTS.map(([id, where]) => ({ id, where })) } };
+}
+/** A caught Py goes on the shelf (pythoneer.io). Returns how many Pys are home. */
+export function bringPyHome(m) {
+  if (OWNER !== "py") return 0;
+  const h = pyHalf() || emptyPy();
+  h.pys.have = (h.pys.have || []).filter((p) => p.id !== m.id).concat([m]);
+  h.savedAt = nowISO();
+  store(PY_KEY, h);
+  return h.pys.have.length;
 }
 
 // --- the room ---------------------------------------------------------------------------------
