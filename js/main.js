@@ -1,7 +1,7 @@
 // spriteer.com — a finished character that already walks; add your own mark, it shows in all three frames;
 // play the duel; it moves into your house. The same loop as the app's first run (SPRITEER.md, founder 2026-10-06:
 // nothing is required — the first example works untouched, and whatever you change stands out).
-import { sprite, character, hasSprite, drawFrame, hex, isEmpty } from "./pixels.js";
+import { sprite, tile, character, hasSprite, drawFrame, hex, isEmpty } from "./pixels.js";
 import { Duel, RULES } from "./duel.js";
 import { Room, member, moveIn, addGuest, framesOf, spHalf, doorToPythoneer, receiveDoor } from "./house.js";
 import * as Skin from "./skinpng.js";
@@ -12,7 +12,7 @@ const APP_STORE = "https://apps.apple.com/app/id6796374506";
 const SKETCHES = ["hero", "slime", "ghost", "duck", "goblin", "skeleton", "bat", "crab", "zombie", "monkey", "snake", "spider", "mole", "bee", "jelly"];
 const RIVALS = ["goblin", "skeleton", "zombie", "slime", "ghost", "spider"];
 const RED = 0xd81e2cff >>> 0;
-const EXTRA = [RED, 0xffffffff, 0x211f40ff, 0xf7c230ff, 0x3882d9ff, 0x559e3dff, 0x7870dbff].map((v) => v >>> 0);
+const EXTRA = [RED, 0xffffffff, 0xf7c230ff, 0x3882d9ff, 0x559e3dff, 0x7870dbff].map((v) => v >>> 0);   // no navy: it vanishes on the dark page
 const $ = (s) => document.querySelector(s);
 const cap = (s) => s.replace(/^u\//, "").replace(/^npc_/, "").replace(/^\w/, (c) => c.toUpperCase());
 
@@ -115,16 +115,34 @@ function paintCanvas(c, f, k, now) {
 function drawEditor() {
   const now = performance.now();
   const { ctx, s } = paintCanvas($("#big"), state.frames.idle, "idle", now);
-  if (state.hint && !state.painted && Math.floor(now / 600) % 2) {     // a soft blink where the suggestion is
-    ctx.fillStyle = "rgba(216,30,44,0.45)"; ctx.fillRect(state.hint.x * s, state.hint.y * s, s, s);
+  if (state.hint && !state.painted) {   // the suggestion stays visible: a dashed square, red breathing inside
+    const breath = 0.25 + 0.45 * (0.5 + 0.5 * Math.sin(now / 330));
+    ctx.fillStyle = `rgba(216,30,44,${breath})`; ctx.fillRect(state.hint.x * s, state.hint.y * s, s, s);
+    ctx.setLineDash([s / 6, s / 8]); ctx.lineWidth = Math.max(2, s / 12); ctx.strokeStyle = "#ffffff";
+    ctx.strokeRect(state.hint.x * s + 2, state.hint.y * s + 2, s - 4, s - 4); ctx.setLineDash([]);
   }
-  for (const k of CELLS) paintCanvas(document.getElementById("cell-" + k), state.frames[k], k, now);
-  const p = $("#preview"), pc = p.getContext("2d");
-  const ps = Math.min(512, Math.round(p.getBoundingClientRect().width * (window.devicePixelRatio || 1))) || 128;
-  if (p.width !== ps) { p.width = ps; p.height = ps; }
-  pc.clearRect(0, 0, ps, ps);
-  const step = Math.floor(now / 260) % 2;
-  drawFrame(pc, step ? state.frames.walk : state.frames.idle, ps * 0.1, ps * 0.1, (ps * 0.8) / 8);
+  drawStage($("#stage"), now / 1000);
+}
+
+/** The character lives on a strip of grass: it walks (Idle ↔ Walk); every 6 s a slime knocks it over (Die). */
+const GRASS = tile("Grass"), SLIME = [sprite("slime_idle"), sprite("slime_walk")];
+function drawStage(c, t) {
+  const dpr = window.devicePixelRatio || 1, r = c.getBoundingClientRect();
+  const W = Math.min(2400, Math.round(r.width * dpr)) || 600, H = Math.min(600, Math.round(r.height * dpr)) || 136;
+  if (c.width !== W || c.height !== H) { c.width = W; c.height = H; }
+  const ctx = c.getContext("2d"); ctx.imageSmoothingEnabled = false;
+  const s = H / 3.2 / 8, T = 8 * s, ground = H - T;
+  ctx.fillStyle = "#8fc3f0"; ctx.fillRect(0, 0, W, H);
+  for (let x = 0; x < W; x += T) drawFrame(ctx, GRASS, x, ground, s);
+  const cycle = t % 6, walked = Math.floor(t / 6) * 3.4 + Math.min(cycle, 3) + Math.max(0, cycle - 5.6);
+  const span = W - T - 16 * dpr, u = (walked * 34 * dpr) % (span * 2);
+  const heroX = 8 * dpr + (u < span ? u : span * 2 - u), facing = u < span;
+  const speed = W / 2.4, slimeX = W - (cycle - 3) * speed;
+  const hit = 3 + Math.max(0, W - heroX - T * 0.7) / speed;
+  const down = cycle >= hit && cycle < hit + 1, moving = cycle < 3 || cycle >= 5.6;
+  if (cycle > 3 && cycle < 5.6) drawFrame(ctx, SLIME[Math.floor(t * 6) % 2], slimeX, ground - T, s);
+  const f = down ? state.frames.die : (moving && Math.floor(t * 4) % 2 ? state.frames.walk : state.frames.idle);
+  drawFrame(ctx, f, heroX, ground - T, s, !facing);
 }
 
 function setPixel(f, x, y, v) { if (x >= 0 && x < 8 && y >= 0 && y < 8) f[y * 8 + x] = v; }

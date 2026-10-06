@@ -99,3 +99,8 @@ footer { color: var(--ink-soft); font-size: 13px; padding: 24px 0 40px; display:
 
 #goal { flex-wrap: nowrap; align-items: flex-start; }
 #goal .hint-dot { margin-top: 4px; }
+
+/* the first screen: a stage where the character lives, then one canvas to make it yours */
+#stage { width: 100%; height: 136px; display: block; border: 2px solid rgba(255,255,255,0.35); image-rendering: pixelated; margin-top: 8px; }
+#draw #big { width: min(72%, 320px); margin: 10px auto 4px; }
+#draw .mk-title { text-align: center; margin: 14px 0 4px; }
