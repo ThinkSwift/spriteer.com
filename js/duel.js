@@ -1,6 +1,8 @@
 // Stomp Duel — your character against a rival, 30 seconds, first to three stomps.
 // Every frame of the three-frame standard is used: Idle standing, Walk moving, Die when stomped.
 // The same rules are the app's Cast Battle (SPRITEER.md, founder 2026-10-06).
+// Bodies are the visible art, not the 8×8 cell (2026-10-07): a slime fills rows 2–6, so it used to float a pixel
+// and be stomped in the air; and side by side the push (0.8) lost to walking (1.15), so fighters walked through.
 import { tile, drawFrame } from "./pixels.js";
 import { t } from "./i18n.js";
 
@@ -12,21 +14,45 @@ const DOWN_TICKS = 55, SAFE_TICKS = 60;   // after getting up, a second of safet
 // One-way platforms: [row, fromCol, toCol]. The floor is row 11.
 const PLATFORMS = [[8, 2, 6], [8, 13, 17], [5, 7, 12]];
 
-function solidBelow(x, yFeet, vy) {
+function solidBelow(f, vy) {
+  const yFeet = f.feet;
   if (yFeet >= (ROWS - 1) * T) return (ROWS - 1) * T;
   if (vy < 0) return null;
   for (const [r, a, b] of PLATFORMS) {
     const top = r * T;
-    if (yFeet >= top && yFeet - vy <= top + 0.01 && x + 6 > a * T && x + 2 < (b + 1) * T) return top;
+    if (yFeet >= top && yFeet - vy <= top + 0.01 && f.x1 - 2 > a * T && f.x0 + 2 < (b + 1) * T) return top;
   }
   return null;
 }
 
+/** Visible rows/columns of a frame: [left, right) columns, top row, bottom row — or null when empty. */
+function bounds(fr) {
+  let l = 8, r = 0, t = 8, b = -1;
+  for (let i = 0; i < 64; i++) if (fr && (fr[i] & 0xff)) {
+    const x = i % 8, y = (i / 8) | 0;
+    l = Math.min(l, x); r = Math.max(r, x + 1); t = Math.min(t, y); b = Math.max(b, y);
+  }
+  return b < 0 ? null : { l, r, t, b };
+}
+
+/** The body: Idle and Walk together (a walk that bobs keeps its bob). drop = empty rows under the feet,
+ *  so the art is drawn standing on the ground; Die sits on its own lowest row. */
+export function bodyOf(frames) {
+  const i = bounds(frames.idle), w = bounds(frames.walk), d = bounds(frames.die);
+  const u = i && w ? { l: Math.min(i.l, w.l), r: Math.max(i.r, w.r), t: Math.min(i.t, w.t), b: Math.max(i.b, w.b) } : i || w || { l: 0, r: 8, t: 0, b: 7 };
+  return { l: u.l, r: u.r, top: u.t, drop: 7 - u.b, dieDrop: d ? 7 - d.b : 7 - u.b };
+}
+
 class Fighter {
   constructor(frames, x, facing) {
-    this.f = frames; this.spawnX = x; this.facing = facing;
+    this.f = frames; this.spawnX = x; this.facing = facing; this.body = bodyOf(frames);
     this.score = 0; this.reset();
   }
+  /** World box of what you see: x0..x1 across (mirrored when facing left), head..feet down. */
+  get x0() { return this.x + (this.facing < 0 ? 8 - this.body.r : this.body.l); }
+  get x1() { return this.x + (this.facing < 0 ? 8 - this.body.l : this.body.r); }
+  get head() { return this.y + this.body.drop + this.body.top; }
+  get feet() { return this.y + T; }
   reset() { this.x = this.spawnX; this.y = 0; this.vx = 0; this.vy = 0; this.ground = false; this.down = 0; this.anim = 0; this.safe = SAFE_TICKS; }
   get alive() { return this.down === 0; }
 }
@@ -105,8 +131,7 @@ export class Duel {
     this.think();
     this.move(this.you, this.keys);
     this.move(this.rival, this.ai);
-    this.contact(this.you, this.rival);
-    this.contact(this.rival, this.you);
+    if (!this.stomp(this.you, this.rival) && !this.stomp(this.rival, this.you)) this.separate(this.you, this.rival);
     if (this.you.score >= RULES.stomps || this.rival.score >= RULES.stomps || this.left <= 0) this.finish();
   }
 
@@ -137,26 +162,37 @@ export class Duel {
     f.vy = Math.min(MAX_FALL, f.vy + GRAVITY);
     f.x = Math.max(0, Math.min(W - T, f.x + f.vx));
     f.y += f.vy;
-    const land = solidBelow(f.x, f.y + T, f.vy);
+    const land = solidBelow(f, f.vy);
     if (land !== null && f.vy >= 0) { f.y = land - T; f.vy = 0; f.ground = true; }
     else f.ground = false;
     if (f.vx) f.anim++;
   }
 
-  contact(a, b) {
-    if (!a.alive || !b.alive || b.safe > 0) return;
-    const overlapX = a.x + 7 > b.x + 1 && a.x + 1 < b.x + 7;
-    const feet = a.y + T;
-    if (overlapX && a.vy > 0 && feet >= b.y && feet <= b.y + 5) {
-      b.down = DOWN_TICKS; b.vx = 0;
-      a.vy = BOUNCE; a.score++;
-      this.flash = { x: b.x, y: b.y, t: 18 };
-      return;
-    }
-    if (overlapX && Math.abs(a.y - b.y) < 6) {                    // side by side: push apart
-      const push = a.x < b.x ? -0.8 : 0.8;
-      a.x = Math.max(0, Math.min(W - T, a.x + push));
-    }
+  /** a's feet came down onto b's visible head this tick (judged against where both were a tick ago). */
+  stomp(a, b) {
+    if (!a.alive || !b.alive || b.safe > 0) return false;
+    const across = Math.min(a.x1, b.x1) - Math.max(a.x0, b.x0);
+    if (across <= 1 || a.vy <= b.vy) return false;
+    const head = b.head;
+    if (a.feet < head || a.feet - a.vy > head - b.vy + 2) return false;
+    b.down = DOWN_TICKS; b.vx = 0;
+    a.y = head - T; a.vy = BOUNCE; a.score++;                     // the feet meet the head: no sinking in at full speed
+    this.flash = { x: b.x0 - 2, y: head - 2, t: 18 };
+    return true;
+  }
+
+  /** Bodies are solid side to side: an overlap is split between the two (a wall takes no share). */
+  separate(a, b) {
+    if (!a.alive || !b.alive) return;
+    const across = Math.min(a.x1, b.x1) - Math.max(a.x0, b.x0);
+    const down = Math.min(a.feet, b.feet) - Math.max(a.head, b.head);
+    if (across <= 0 || down <= 1) return;
+    const [l, r] = a.x0 + a.x1 <= b.x0 + b.x1 ? [a, b] : [b, a];
+    const clamp = (f) => { f.x = Math.max(0, Math.min(W - T, f.x)); };
+    const lx = l.x; l.x -= across / 2; clamp(l);
+    r.x += across - (lx - l.x); clamp(r);
+    const left = Math.min(l.x1, r.x1) - Math.max(l.x0, r.x0);   // r hit the wall: l takes the rest
+    if (left > 0) { l.x -= left; clamp(l); }
   }
 
   finish() {
@@ -186,17 +222,17 @@ export class Duel {
 
     for (const f of [this.rival, this.you]) {
       const blink = (!f.alive && f.down < 18 && Math.floor(f.down / 3) % 2) || (this.countdown === 0 && f.alive && f.safe > 0 && Math.floor(f.safe / 4) % 2);
-      if (!blink) drawFrame(ctx, this.frameOf(f), f.x * s, f.y * s, s, f.facing < 0);
+      if (!blink) drawFrame(ctx, this.frameOf(f), f.x * s, (f.y + (f.alive ? f.body.drop : f.body.dieDrop)) * s, s, f.facing < 0);
     }
     // a marker over your character
     if (this.you.alive) {
       ctx.fillStyle = "#f7c230";
-      const mx = (this.you.x + 3) * s, my = (this.you.y - 4) * s;
+      const mx = ((this.you.x0 + this.you.x1) / 2 - 1) * s, my = (this.you.head - 4) * s;
       ctx.fillRect(mx, my, 2 * s, 2 * s);
     }
     if (this.flash && this.flash.t-- > 0) {
       ctx.fillStyle = `rgba(255,255,255,${this.flash.t / 18})`;
-      ctx.fillRect((this.flash.x - 2) * s, (this.flash.y - 2) * s, 12 * s, 12 * s);
+      ctx.fillRect(this.flash.x * s, this.flash.y * s, 12 * s, 12 * s);
     }
     // HUD
     ctx.fillStyle = "#211f40";
