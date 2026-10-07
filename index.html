@@ -14,7 +14,7 @@
   <meta property="og:description" content="Make it yours. Watch it walk.">
   <meta property="og:image" content="https://spriteer.com/og.png">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="stylesheet" href="/css/site.css?v=5">
+  <link rel="stylesheet" href="/css/site.css?v=6">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"SoftwareApplication","name":"Spriteer","operatingSystem":"iOS, iPadOS, macOS",
    "applicationCategory":"GameApplication","url":"https://apps.apple.com/app/id6796374506","image":"https://spriteer.com/icon-app.png",
@@ -33,25 +33,36 @@
       <canvas id="challenge-art" width="96" height="96" aria-hidden="true"></canvas>
       <div>
         <h2 id="challenge-name" data-i18n="challenge_default">A challenge</h2>
-        <p class="lede" data-i18n="challenge_lede">Your fighter is ready below — make it yours or just press Play. Then stomp the challenger 3 times in 30 seconds.</p>
+        <p class="lede" data-i18n="challenge_lede">Your fighter is ready below — tap one dot to make it yours, then press Play. Stomp the challenger 3 times in 30 seconds.</p>
       </div>
     </section>
 
     <section id="draw" class="panel">
       <h1 data-i18n="h1">Three frames. Every game.</h1>
+      <div class="step mono">1/2</div>
       <canvas id="stage" data-i18n-aria="live"></canvas>
       <h2 class="mk-title" data-i18n="mk_title">Make it yours.</h2>
-      <div id="goal"><span class="hint-dot" aria-hidden="true"></span><span id="goal-note" data-i18n="mk_hint">Try a drop of red under the mouth — or paint anything you like.</span></div>
+      <div id="goal"><span class="hint-dot" aria-hidden="true"></span><span id="goal-note" data-i18n="mk_hint">Tap the blinking dot — or any dot you like.</span></div>
+      <div id="mk-result" hidden>
+        <div class="minis">
+          <div><canvas id="mini-idle"></canvas><span class="label" data-i18n="idle">Idle</span></div>
+          <div><canvas id="mini-walk"></canvas><span class="label" data-i18n="walk">Walk</span></div>
+          <div><canvas id="mini-die"></canvas><span class="label" data-i18n="die">Die</span></div>
+        </div>
+        <p data-i18n="mk_result">Look — your mark stands, walks and falls with it.</p>
+      </div>
       <canvas id="big" data-i18n-aria="mk_title"></canvas>
       <div id="palette" aria-label="Colors"></div>
       <div class="row">
         <input id="name" maxlength="24" data-i18n-aria="name_label" value="Hero">
-        <button id="play" class="gold btn" data-i18n="play">Play ▶</button>
+        <button id="start-over" class="ghost" data-i18n="start_over" hidden>Start over</button>
+        <button id="play" class="gold btn" data-i18n="mk_locked" disabled>Tap a dot first</button>
         <button id="another" class="ghost" data-i18n="another">Another sketch</button>
       </div>
     </section>
 
     <section id="duel" class="panel" hidden>
+      <div class="step mono">2/2</div>
       <div class="row" style="justify-content:space-between">
         <h2 id="rival-name" data-i18n="duel_title">Stomp duel</h2>
         <button id="quit" class="ghost" data-i18n="close">Close</button>
@@ -98,6 +109,6 @@
   </div>
   <div id="toast" hidden></div>
   <script type="module" src="/js/track.js"></script>
-  <script type="module" src="/js/main.js?v=6"></script>
+  <script type="module" src="/js/main.js?v=7"></script>
 </body>
 </html>

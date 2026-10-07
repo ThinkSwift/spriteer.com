@@ -1,6 +1,6 @@
-// spriteer.com — a finished character that already walks; add your own mark, it shows in all three frames;
-// play the duel; it moves into your house. The same loop as the app's first run (SPRITEER.md, founder 2026-10-06:
-// nothing is required — the first example works untouched, and whatever you change stands out).
+// spriteer.com — the app's first run, step for step (SPRITEER.md, founder 2026-10-07 "the web the same as the app").
+// 1/2: a finished character walks; one blinking dot guides you. Put one dot anywhere and see what it did — it shows
+// in Idle, Walk and Die — and Play unlocks (the locked button says why). 2/2: the duel; it moves into your house.
 import { sprite, tile, character, hasSprite, drawFrame, hex, isEmpty } from "./pixels.js";
 import { Duel, RULES } from "./duel.js";
 import { Room, member, moveIn, addGuest, framesOf, spHalf, doorToPythoneer, receiveDoor } from "./house.js";
@@ -17,7 +17,7 @@ const $ = (s) => document.querySelector(s);
 const cap = (s) => s.replace(/^u\//, "").replace(/^npc_/, "").replace(/^\w/, (c) => c.toUpperCase());
 
 const state = {
-  base: "hero", frames: null, shift: {}, hint: null, marks: [], color: RED, painted: false,
+  base: "hero", frames: null, start: null, shift: {}, hint: null, marks: [], color: RED, painted: false,
   name: "Hero", challenger: null, duel: null, room: null,
 };
 
@@ -38,14 +38,15 @@ function align(idle, other) {
   return best;
 }
 
-/** A suggestion, never a requirement: the pixel just under the mouth (the lowest dark run in the face). */
+/** The guide: the pixel just under the mouth (the lowest dark run in the face). Any other dot counts too. */
 function mouthHint(idle) {
   const dark = (v) => (v & 0xff) && ((v >>> 24) + ((v >>> 16) & 0xff) + ((v >>> 8) & 0xff)) < 120;
   for (let y = 6; y >= 3; y--) {
     for (let x = 0; x < 8; x++) {
       if (!dark(idle[y * 8 + x])) continue;
       const below = (y + 1) * 8 + x;
-      if (y + 1 < 8 && (idle[below] & 0xff) && !dark(idle[below])) return { x, y: y + 1 };
+      // Already red there: red on red changes nothing, so no guide — any dot works.
+      if (y + 1 < 8 && (idle[below] & 0xff) && !dark(idle[below])) return (idle[below] | 0xff) >>> 0 === RED ? null : { x, y: y + 1 };
     }
   }
   return null;
@@ -54,6 +55,7 @@ function mouthHint(idle) {
 function startSketch(base) {
   state.base = base;
   state.frames = character(base);
+  state.start = { idle: [...state.frames.idle], walk: [...state.frames.walk], die: [...state.frames.die] };
   state.shift = { idle: [0, 0], walk: align(state.frames.idle, state.frames.walk), die: align(state.frames.idle, state.frames.die) };
   state.hint = mouthHint(state.frames.idle);
   state.marks = []; state.painted = false;
@@ -62,7 +64,26 @@ function startSketch(base) {
   state.color = RED;
   buildPalette(); markPalette();
   $("#goal-note").textContent = t(state.hint ? "mk_hint" : "mk_hint_free");
+  stepUI();
   drawEditor();
+}
+
+/** Before the first dot: the guide, and Play locked with its reason. After: what the dot did, and Play. */
+function stepUI() {
+  const p = state.painted;
+  $("#draw").classList.toggle("painted", p);
+  $("#goal").hidden = p;
+  $("#mk-result").hidden = !p;
+  $("#start-over").hidden = !p;
+  $("#play").disabled = !p;
+  $("#play").textContent = t(p ? "play" : "mk_locked");
+}
+
+/** Back to the character as the sketch started — your marks go, nothing else does. */
+function startOver() {
+  state.frames = { idle: [...state.start.idle], walk: [...state.start.walk], die: [...state.start.die] };
+  state.marks = []; state.painted = false; state.color = RED;
+  markPalette(); stepUI();
 }
 
 function paletteColors() {
@@ -92,7 +113,7 @@ function markPalette() {
 // ---------------------------------------------------------------- editor: one big canvas, three frames follow
 
 const CELLS = ["idle", "walk", "die"];
-function paintCanvas(c, f, k, now) {
+function paintCanvas(c, f, k, now, keepLast = false) {
   const ctx = c.getContext("2d");
   // Size from the laid-out box, capped — a canvas without its CSS (a stale cache) must not grow itself every frame.
   const size = Math.min(1024, Math.round(c.getBoundingClientRect().width * (window.devicePixelRatio || 1))) || 256;
@@ -103,12 +124,14 @@ function paintCanvas(c, f, k, now) {
   drawFrame(ctx, f, 0, 0, s);
   // Your marks glow for a moment in every frame they landed in.
   const [dx, dy] = state.shift[k] || [0, 0];
-  for (const m of state.marks) {
-    const age = now - m.at; if (age > 1400) continue;
-    const X = m.x + dx, Y = m.y + dy; if (X < 0 || X > 7 || Y < 0 || Y > 7) continue;
+  state.marks.forEach((m, i) => {
+    let age = now - m.at;
+    if (keepLast && i === state.marks.length - 1) age = Math.min(age, 800);   // the newest stays softly outlined
+    if (age > 1400) return;
+    const X = m.x + dx, Y = m.y + dy; if (X < 0 || X > 7 || Y < 0 || Y > 7) return;
     ctx.strokeStyle = `rgba(247,194,48,${1 - age / 1400})`; ctx.lineWidth = Math.max(2, s / 6);
     ctx.strokeRect(X * s + ctx.lineWidth / 2, Y * s + ctx.lineWidth / 2, s - ctx.lineWidth, s - ctx.lineWidth);
-  }
+  });
   return { ctx, s };
 }
 
@@ -121,6 +144,7 @@ function drawEditor() {
     ctx.setLineDash([s / 6, s / 8]); ctx.lineWidth = Math.max(2, s / 12); ctx.strokeStyle = "#ffffff";
     ctx.strokeRect(state.hint.x * s + 2, state.hint.y * s + 2, s - 4, s - 4); ctx.setLineDash([]);
   }
+  if (state.painted) for (const k of CELLS) paintCanvas($("#mini-" + k), state.frames[k], k, now, true);
   drawStage($("#stage"), now / 1000);
 }
 
@@ -158,7 +182,7 @@ function paintAt(ev) {
     state.painted = true;
     track("first_stroke", { base: state.base }, { onlyOnce: true });
     track("first_mark", { base: state.base, hint: state.hint && state.hint.x === x && state.hint.y === y ? "1" : "0" }, { onlyOnce: true });
-    $("#goal-note").textContent = t("mk_done");
+    stepUI();
   }
 }
 
@@ -171,6 +195,7 @@ function bindEditor() {
   c.addEventListener("pointercancel", () => { down = false; });
   $("#name").addEventListener("input", (e) => { state.name = e.target.value.trim().slice(0, 24) || cap(state.base); });
   $("#play").onclick = () => startDuel();
+  $("#start-over").onclick = () => startOver();
   $("#another").onclick = () => {
     const i = SKETCHES.indexOf(state.base);
     startSketch(SKETCHES[(i + 1) % SKETCHES.length]);
@@ -195,6 +220,7 @@ function monsterFrames() {
 // A resident fights a monster; a guest is the rival and your newest resident fights it — never the friend's
 // character as your own fighter (UX sim 2026-10-07, same rule as the app's DuelSheet).
 function startDuel(fighter, guest, mine) {
+  if (!fighter && !state.painted) return;            // 2/2 opens after the first dot (the button says so)
   const you = fighter || state.frames;
   if (isEmpty(you.idle) || isEmpty(you.walk) || isEmpty(you.die)) return;
   show("duel");

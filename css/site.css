@@ -104,3 +104,14 @@ footer { color: var(--ink-soft); font-size: 13px; padding: 24px 0 40px; display:
 #stage { width: 100%; height: 136px; display: block; border: 2px solid rgba(255,255,255,0.35); image-rendering: pixelated; margin-top: 8px; }
 #draw #big { width: min(72%, 320px); margin: 10px auto 4px; }
 #draw .mk-title { text-align: center; margin: 14px 0 4px; }
+
+/* two steps (same as the app's first run): 1/2 one dot, see it in all three frames · 2/2 the duel */
+.step { font-weight: 900; font-size: 13px; color: var(--ink-soft); margin: 2px 0 0; }
+#draw .step { color: #b8860b; }
+@media (prefers-color-scheme: dark) { #draw .step { color: var(--gold); } }
+#draw.painted #stage { border: 3px solid var(--gold); }
+#mk-result { text-align: center; margin: 12px 0 6px; }
+#mk-result .minis { grid-template-columns: repeat(3, 64px); justify-content: center; gap: 14px; }
+#mk-result .label { margin: 4px 0 0; }
+#mk-result p { margin: 8px 0 0; font-weight: 800; color: var(--coral); }
+#play:disabled { color: #fff; box-shadow: none; }
