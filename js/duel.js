@@ -172,7 +172,7 @@ export class Duel {
   stomp(a, b) {
     if (!a.alive || !b.alive || b.safe > 0) return false;
     const across = Math.min(a.x1, b.x1) - Math.max(a.x0, b.x0);
-    if (across <= 1 || a.vy <= b.vy) return false;
+    if (across <= 1 || a.vy <= 0 || a.vy <= b.vy) return false;   // a falls: a head rising into standing feet is no stomp
     const head = b.head;
     if (a.feet < head || a.feet - a.vy > head - b.vy + 2) return false;
     b.down = DOWN_TICKS; b.vx = 0;
