@@ -129,9 +129,10 @@ export class Duel {
     this.left--;
     this.pollPad();
     this.think();
+    const youWasLeft = this.you.x0 + this.you.x1 <= this.rival.x0 + this.rival.x1;   // sides from before the move: narrow fighters cross in one tick
     this.move(this.you, this.keys);
     this.move(this.rival, this.ai);
-    if (!this.stomp(this.you, this.rival) && !this.stomp(this.rival, this.you)) this.separate(this.you, this.rival);
+    if (!this.stomp(this.you, this.rival) && !this.stomp(this.rival, this.you)) this.separate(this.you, this.rival, youWasLeft);
     if (this.you.score >= RULES.stomps || this.rival.score >= RULES.stomps || this.left <= 0) this.finish();
   }
 
@@ -182,12 +183,12 @@ export class Duel {
   }
 
   /** Bodies are solid side to side: an overlap is split between the two (a wall takes no share). */
-  separate(a, b) {
+  separate(a, b, aWasLeft) {
     if (!a.alive || !b.alive) return;
     const across = Math.min(a.x1, b.x1) - Math.max(a.x0, b.x0);
     const down = Math.min(a.feet, b.feet) - Math.max(a.head, b.head);
     if (across <= 0 || down <= 1) return;
-    const [l, r] = a.x0 + a.x1 <= b.x0 + b.x1 ? [a, b] : [b, a];
+    const [l, r] = (aWasLeft ?? a.x0 + a.x1 <= b.x0 + b.x1) ? [a, b] : [b, a];
     const clamp = (f) => { f.x = Math.max(0, Math.min(W - T, f.x)); };
     const lx = l.x; l.x -= across / 2; clamp(l);
     r.x += across - (lx - l.x); clamp(r);
