@@ -2,7 +2,7 @@
 // 1/2: a finished character walks; one blinking dot guides you. Put one dot anywhere and see what it did — it shows
 // in Idle, Walk and Die — and Play unlocks (the locked button says why). 2/2: the duel; it moves into your house.
 import { sprite, tile, character, hasSprite, drawFrame, hex, isEmpty } from "./pixels.js";
-import { Duel, RULES } from "./duel.js?v=10";
+import { Duel, RULES } from "./duel.js?v=11";
 import { Room, member, moveIn, addGuest, framesOf, spHalf, doorToPythoneer, receiveDoor } from "./house.js";
 import * as Skin from "./skinpng.js";
 import { track } from "./track.js";

@@ -185,15 +185,18 @@ export class Duel {
   /** Bodies are solid side to side: an overlap is split between the two (a wall takes no share). */
   separate(a, b, aWasLeft) {
     if (!a.alive || !b.alive) return;
-    const across = Math.min(a.x1, b.x1) - Math.max(a.x0, b.x0);
     const down = Math.min(a.feet, b.feet) - Math.max(a.head, b.head);
-    if (across <= 0 || down <= 1) return;
+    if (down <= 1) return;
+    if (aWasLeft === undefined && Math.min(a.x1, b.x1) - Math.max(a.x0, b.x0) <= 0) return;
     const [l, r] = (aWasLeft ?? a.x0 + a.x1 <= b.x0 + b.x1) ? [a, b] : [b, a];
+    // However far the left one has gone into (or past — narrow fighters skip clean past in one tick) the right one.
+    const push = l.x1 - r.x0;
+    if (push <= 0) return;
     const clamp = (f) => { f.x = Math.max(0, Math.min(W - T, f.x)); };
-    const lx = l.x; l.x -= across / 2; clamp(l);
-    r.x += across - (lx - l.x); clamp(r);
-    const left = Math.min(l.x1, r.x1) - Math.max(l.x0, r.x0);   // r hit the wall: l takes the rest
-    if (left > 0) { l.x -= left; clamp(l); }
+    const lx = l.x; l.x -= push / 2; clamp(l);
+    r.x += push - (lx - l.x); clamp(r);
+    const rest = l.x1 - r.x0;                                     // r hit the wall: l takes the rest
+    if (rest > 0) { l.x -= rest; clamp(l); }
   }
 
   finish() {
