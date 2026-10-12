@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Spriteer — Support</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="stylesheet" href="/css/site.css?v=3">
+</head>
+<body>
+  <div class="wrap">
+    <header class="top"><img src="/icon-app.png" alt="" width="36" height="36"><a class="brand" href="/" style="color:inherit;text-decoration:none">Spriteer</a></header>
+    <section class="panel">
+      <h1 data-i18n="support_title">Support</h1>
+      <p id="p1">Questions, a bug, an idea? Write to <a href="mailto:hello@swiftian.com">hello@swiftian.com</a>. We read every message and answer.</p>
+      <p data-i18n="support_p2">In the app, Settings ▸ Ask a question sends us a note, and the reply comes back to the same place.</p>
+    </section>
+    <footer><span>© 2026 Spriteer · <a href="https://swiftian.com">Swiftian Inc.</a></span> <a href="/privacy/" data-i18n="privacy">Privacy</a></footer>
+  </div>
+  <script type="module">
+    import { t, applyI18n } from "/js/i18n.js";
+    applyI18n("support_title");
+    const [before, after] = t("support_p1", { email: "\u0000" }).split("\u0000");
+    const p = document.getElementById("p1"), a = document.createElement("a");
+    a.href = "mailto:hello@swiftian.com"; a.textContent = "hello@swiftian.com";
+    p.replaceChildren(document.createTextNode(before), a, document.createTextNode(after ?? ""));
+  </script>
+</body>
+</html>
