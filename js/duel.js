@@ -4,7 +4,7 @@
 // Bodies are the visible art, not the 8×8 cell (2026-10-07): a slime fills rows 2–6, so it used to float a pixel
 // and be stomped in the air; and side by side the push (0.8) lost to walking (1.15), so fighters walked through.
 import { tile, drawFrame } from "./pixels.js";
-import { t } from "./i18n.js";
+import { t } from "./i18n.js?v=2";
 
 export const RULES = { stomps: 3, seconds: 30 };
 const COLS = 20, ROWS = 12, T = 8;

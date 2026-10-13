@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="zh-Hant" data-lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Spriteer — 三格，每個遊戲。</title>
+  <meta name="description" content="你的 8×8 角色會走、會倒下、還會站起來。把它變成你的，贏下踩踏對決，讓它住進你的家，再向朋友下戰帖。">
+  <link rel="canonical" href="https://spriteer.com/zh-hant/">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta name="apple-itunes-app" content="app-id=6796374506">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Spriteer — 三格，每個遊戲。">
+  <meta property="og:description" content="你的 8×8 角色會走、會倒下、還會站起來。把它變成你的，贏下踩踏對決，讓它住進你的家，再向朋友下戰帖。">
+  <meta property="og:image" content="https://spriteer.com/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="/css/site.css?v=7">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"SoftwareApplication","name":"Spriteer","operatingSystem":"iOS, iPadOS, macOS",
+   "applicationCategory":"GameApplication","url":"https://apps.apple.com/app/id6796374506","image":"https://spriteer.com/icon-app.png",
+   "author":{"@type":"Organization","name":"Swiftian Inc.","url":"https://swiftian.com/"}}
+  </script>
+  <!-- family-ld:start -->
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Organization", "@id": "https://swiftian.com/#org", "name": "Swiftian Inc.", "url": "https://swiftian.com/", "logo": "https://swiftian.com/apple-touch-icon.png", "sameAs": ["https://pythoneer.io/", "https://spriteer.com/", "https://iflipbook.com/", "https://coordigo.com/"]}</script>
+  <!-- family-ld:end -->
+  <!-- hreflang:start -->
+  <link rel="alternate" hreflang="en" href="https://spriteer.com/zh-hant/">
+  <link rel="alternate" hreflang="ar" href="https://spriteer.com/ar/">
+  <link rel="alternate" hreflang="de" href="https://spriteer.com/de/">
+  <link rel="alternate" hreflang="es" href="https://spriteer.com/es/">
+  <link rel="alternate" hreflang="fr" href="https://spriteer.com/fr/">
+  <link rel="alternate" hreflang="hi" href="https://spriteer.com/hi/">
+  <link rel="alternate" hreflang="id" href="https://spriteer.com/id/">
+  <link rel="alternate" hreflang="it" href="https://spriteer.com/it/">
+  <link rel="alternate" hreflang="ja" href="https://spriteer.com/ja/">
+  <link rel="alternate" hreflang="ko" href="https://spriteer.com/ko/">
+  <link rel="alternate" hreflang="nl" href="https://spriteer.com/nl/">
+  <link rel="alternate" hreflang="pt-BR" href="https://spriteer.com/pt-br/">
+  <link rel="alternate" hreflang="ru" href="https://spriteer.com/ru/">
+  <link rel="alternate" hreflang="sv" href="https://spriteer.com/sv/">
+  <link rel="alternate" hreflang="th" href="https://spriteer.com/th/">
+  <link rel="alternate" hreflang="tr" href="https://spriteer.com/tr/">
+  <link rel="alternate" hreflang="vi" href="https://spriteer.com/vi/">
+  <link rel="alternate" hreflang="zh-Hans" href="https://spriteer.com/zh-hans/">
+  <link rel="alternate" hreflang="zh-Hant" href="https://spriteer.com/zh-hant/">
+  <link rel="alternate" hreflang="x-default" href="https://spriteer.com/zh-hant/">
+  <!-- hreflang:end -->
+</head>
+<body>
+  <div class="wrap">
+    <header class="top">
+      <img src="/icon-app.png" alt="" width="36" height="36">
+      <span class="brand">Spriteer</span>
+      <a class="btn gold store" data-store="web-sp-top" href="https://apps.apple.com/app/id6796374506" target="_blank" rel="noopener" data-i18n="get_app">取得 App</a>
+    </header>
+
+    <section id="challenge" class="panel" hidden>
+      <canvas id="challenge-art" width="96" height="96" aria-hidden="true"></canvas>
+      <div>
+        <h2 id="challenge-name" data-i18n="challenge_default">一個挑戰</h2>
+        <p class="lede" data-i18n="challenge_lede">你的角色已在下方就位——點一個點，讓它成為你的，然後點「開始」。在 30 秒內踩中挑戰者 3 次。</p>
+      </div>
+    </section>
+
+    <section id="draw" class="panel">
+      <h1 data-i18n="h1">三格，每個遊戲。</h1>
+      <div class="step mono">1/2</div>
+      <canvas id="stage" data-i18n-aria="live"></canvas>
+      <h2 class="mk-title" data-i18n="mk_title">加上你的風格。</h2>
+      <div id="goal"><span class="hint-dot" aria-hidden="true"></span><span id="goal-note" data-i18n="mk_hint">點一下閃爍的點——或任何你喜歡的點。</span></div>
+      <div id="mk-result" hidden>
+        <div class="minis">
+          <div><canvas id="mini-idle"></canvas><span class="label" data-i18n="idle">站立</span></div>
+          <div><canvas id="mini-walk"></canvas><span class="label" data-i18n="walk">行走</span></div>
+          <div><canvas id="mini-die"></canvas><span class="label" data-i18n="die">倒下</span></div>
+        </div>
+        <p data-i18n="mk_result">你看——你點的這一筆會跟著它站著、走路、倒下。</p>
+      </div>
+      <canvas id="big" data-i18n-aria="mk_title"></canvas>
+      <div id="palette" aria-label="Colors"></div>
+      <div class="row">
+        <input id="name" maxlength="24" data-i18n-aria="name_label" value="Hero">
+        <button id="start-over" class="ghost" data-i18n="start_over" hidden>重新開始</button>
+        <button id="play" class="gold btn" data-i18n="mk_locked" disabled>先點一個點</button>
+        <button id="another" class="ghost" data-i18n="another">換一張草圖</button>
+      </div>
+    </section>
+
+    <section id="duel" class="panel" hidden>
+      <div class="step mono">2/2</div>
+      <div class="row" style="justify-content:space-between">
+        <h2 id="rival-name" data-i18n="duel_title">踩頭對決</h2>
+        <button id="quit" class="ghost" data-i18n="close">關閉</button>
+      </div>
+      <canvas id="arena" aria-label="Stomp duel"></canvas>
+      <div class="pad">
+        <div class="row"><button data-key="left" data-i18n-aria="move_left">◀</button><button data-key="right" data-i18n-aria="move_right">▶</button></div>
+        <button class="jump" data-key="jump" data-i18n="jump">跳</button>
+      </div>
+      <div class="keys" data-i18n="keys_line">← → / A D 移動 · Space ↑ W 跳 · Esc 關閉 · 手把：A 跳，B 關閉</div>
+      <div id="result" hidden>
+        <div id="result-line"></div>
+        <div class="row">
+          <button id="share-last" class="gold btn" data-i18n="challenge_friend">向朋友挑戰</button>
+          <button id="rematch" data-i18n="rematch">再來一局</button>
+          <button id="draw-next" class="ghost" data-i18n="draw_another">再畫一個</button>
+          <button id="to-house" class="ghost" data-i18n="your_house">你的家</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="house" class="panel">
+      <h2 data-i18n="your_house">你的家</h2>
+      <p class="lede" data-i18n="house_lede">你完成的每個角色都會搬進來。Pythoneer 的派、寵物和魚也住在這裡。</p>
+      <canvas id="room" data-i18n-aria="your_house"></canvas>
+      <div class="counts mono"><span id="house-count"></span><span id="py-count"></span></div>
+      <div class="door">
+        <img src="https://pythoneer.io/icon-app.png" alt="" width="44" height="44">
+        <div style="flex:1" data-i18n="door_sp">架子、魚缸和寵物都是空的，等你從 Pythoneer 把牠們帶來。你的家跟著你走。</div>
+        <a id="to-py" class="btn ghost" href="https://pythoneer.io/zh-hant/?ct=sp-house" data-i18n="visit">去看看</a>
+      </div>
+      <div id="residents"></div>
+      <div class="row" style="margin-top:14px">
+        <a class="btn gold" data-store="web-sp-house" href="https://apps.apple.com/app/id6796374506" target="_blank" rel="noopener" data-i18n="take_to_app">帶到 App 裡</a>
+        <button id="download" class="ghost" data-i18n="save_png">將家儲存為 Skin PNG</button>
+      </div>
+    </section>
+
+    <section id="app40" class="panel app40">
+      <video src="/media/sp40-preview.mp4" poster="/media/sp40-poster.jpg" autoplay muted loop playsinline preload="metadata" data-i18n-aria="app40_title"></video>
+      <div>
+        <h2 data-i18n="app40_title">Spriteer 4.0</h2>
+        <p class="lede" data-i18n="app40_note">在 App 裡：你畫的每一個角色、與 Pythoneer 共用的家，還有接收朋友挑戰的對決機。</p>
+        <p class="mono review" data-i18n="app40_review">目前正在 App Store 審核中——上架前 App Store 中仍是 3.1。</p>
+        <a class="btn gold" data-store="web-sp-app40" href="https://apps.apple.com/app/id6796374506" target="_blank" rel="noopener" data-i18n="get_app">取得 App</a>
+      </div>
+    </section>
+
+    <!-- family:start -->
+    <style>:where(.more){margin:40px 0 0;padding-top:20px;border-top:1px solid currentColor;border-color:rgba(127,127,127,.25)}:where(.more) h2{font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;opacity:.7;margin:0 0 10px}:where(.more .site-row){display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;padding:6px 0;font-size:14px}:where(.more .site-row) a{font-weight:600;text-decoration:none}:where(.more .site-row) .d{opacity:.75}:where(.more .site-row) .fam-new{font-weight:600}</style>
+    <section class="more" id="family">
+      <h2 data-fam="moreTitle">我們的其他作品</h2>
+      <div class="site-row"><a href="https://pythoneer.io/zh-hant/?ct=web-sp-py">pythoneer.io</a> <span class="d" data-fam="pyDesc">一次一塊</span> <span class="fam-new" data-fam="pyNew">4.0 —— 一整個世界等你探索，即將推出</span></div>
+      <div class="site-row"><a href="https://swiftian.com/?ct=web-sp-sw">swiftian.com</a> <span class="d" data-fam="swDesc">Chillfriends 漫畫朗讀</span></div>
+      <div class="site-row"><a href="https://iflipbook.com/zh-hant/?ct=web-sp-if">iflipbook.com</a> <span class="d" data-fam="ifDesc">Otto 的翻頁日記</span> <span class="fam-new" data-fam="ifNew">萬聖節 —— Otto 在夜晚舞台上跳舞，10 月 17 日起</span></div>
+      <div class="site-row"><a href="https://coordigo.com/?ct=web-sp-co">coordigo.com</a> <span class="d" data-fam="coDesc">風景在指尖浮現</span> <span class="fam-new" data-fam="coNew">萬聖節 —— 八幅畫講一個故事，10 月 17 日起</span></div>
+    </section>
+    <script>(function(){var T={"ar":{"moreTitle":"المزيد منّا","swDesc":"قصص Chillfriends المصوّرة، مقروءة بصوت عالٍ","pyDesc":"مربّع تلو الآخر","spDesc":"ارسم مقاتلًا بحجم 8×8 واربح مبارزة الدَّوس","ifDesc":"مذكّرات Otto المتحرّكة","coDesc":"منظر طبيعي يظهر تحت إصبعك","pyNew":"الإصدار 4.0 — عالم كامل لتستكشفه، قريبًا","spNew":"الإصدار 4.0 — مقاتلك ينتقل إلى بيت Pythoneer","ifNew":"الهالوين — Otto يرقص على مسرح الليل، ابتداءً من 17 أكتوبر","coNew":"الهالوين — حكاية في ثماني لوحات، ابتداءً من 17 أكتوبر"},"de":{"moreTitle":"Mehr von uns","swDesc":"Chillfriends-Comics, vorgelesen","pyDesc":"Stein für Stein","spDesc":"zeichne einen 8×8-Kämpfer, gewinne das Stampf-Duell","ifDesc":"Ottos Daumenkino-Tagebuch","coDesc":"eine Landschaft erscheint unter deinem Finger","pyNew":"4.0 — eine ganze Welt zum Erkunden, bald da","spNew":"4.0 — dein Kämpfer zieht in das Haus in Pythoneer","ifNew":"Halloween — Otto tanzt auf der Nachtbühne, ab 17. Oktober","coNew":"Halloween — eine Geschichte in acht Bildern, ab 17. Oktober"},"es":{"moreTitle":"Más de nosotros","swDesc":"cómics de Chillfriends, leídos en voz alta","pyDesc":"una casilla a la vez","spDesc":"dibuja un luchador de 8×8 y gana el duelo de pisotones","ifDesc":"el diario animado de Otto","coDesc":"un paisaje aparece bajo tu dedo","pyNew":"4.0: todo un mundo por explorar, muy pronto","spNew":"4.0: tu luchador se muda a la casa de Pythoneer","ifNew":"Halloween: Otto baila en el escenario nocturno, desde el 17 de octubre","coNew":"Halloween: una historia en ocho imágenes, desde el 17 de octubre"},"fr":{"moreTitle":"Nos autres créations","swDesc":"les BD Chillfriends, lues à voix haute","pyDesc":"une tuile à la fois","spDesc":"dessine un combattant 8×8, gagne le duel d'écrasement","ifDesc":"le journal en flipbook d'Otto","coDesc":"un paysage apparaît sous ton doigt","pyNew":"4.0 — tout un monde à explorer, bientôt","spNew":"4.0 — ton combattant emménage dans la maison de Pythoneer","ifNew":"Halloween — Otto danse sur la scène de nuit, dès le 17 octobre","coNew":"Halloween — une histoire en huit images, dès le 17 octobre"},"hi":{"moreTitle":"हमारी और रचनाएँ","swDesc":"Chillfriends कॉमिक्स, पढ़कर सुनाई गईं","pyDesc":"एक-एक टाइल करके","spDesc":"8×8 योद्धा बनाओ, कुचलने वाला मुक़ाबला जीतो","ifDesc":"Otto की फ़्लिपबुक डायरी","coDesc":"उँगली के नीचे उभरता एक दृश्य","pyNew":"4.0 — खोजने को पूरी दुनिया, जल्द आ रहा है","spNew":"4.0 — आपका योद्धा Pythoneer के घर में आ बसता है","ifNew":"हैलोवीन — Otto रात के मंच पर नाचता है, 17 अक्टूबर से","coNew":"हैलोवीन — आठ चित्रों में एक कहानी, 17 अक्टूबर से"},"id":{"moreTitle":"Karya kami lainnya","swDesc":"komik Chillfriends, dibacakan","pyDesc":"satu ubin demi satu ubin","spDesc":"gambar petarung 8×8, menangkan duel injak","ifDesc":"buku harian flipbook Otto","coDesc":"pemandangan muncul di bawah jarimu","pyNew":"4.0 — satu dunia utuh untuk dijelajahi, segera hadir","spNew":"4.0 — petarungmu pindah ke rumah di Pythoneer","ifNew":"Halloween — Otto menari di panggung malam, mulai 17 Oktober","coNew":"Halloween — kisah dalam delapan gambar, mulai 17 Oktober"},"it":{"moreTitle":"Altro da noi","swDesc":"i fumetti di Chillfriends, letti ad alta voce","pyDesc":"una tessera alla volta","spDesc":"disegna un lottatore 8×8, vinci il duello a pestoni","ifDesc":"il diario flipbook di Otto","coDesc":"un paesaggio affiora sotto il dito","pyNew":"4.0 — un mondo intero da esplorare, in arrivo","spNew":"4.0 — il tuo lottatore si trasferisce nella casa di Pythoneer","ifNew":"Halloween — Otto balla sul palco notturno, dal 17 ottobre","coNew":"Halloween — una storia in otto immagini, dal 17 ottobre"},"ja":{"moreTitle":"私たちのほかの作品","swDesc":"チルフレンズ・コミックスの朗読","pyDesc":"タイルひとつずつ","spDesc":"8×8のファイターを描いて、踏みつけ対決に勝とう","ifDesc":"Ottoのパラパラ日記","coDesc":"指の先から風景が現れる","pyNew":"4.0 — 探検できる世界がまるごと。まもなく登場","spNew":"4.0 — あなたのファイターが Pythoneer の家に引っ越し","ifNew":"ハロウィン — Ottoが夜の舞台で踊る。10月17日から","coNew":"ハロウィン — 8枚の絵でつづる物語。10月17日から"},"ko":{"moreTitle":"우리가 만드는 것들","swDesc":"칠프렌즈 코믹스, 소리 내어 읽기","pyDesc":"한 번에 타일 하나","spDesc":"8×8 파이터를 그리고 밟기 결투에서 이기기","ifDesc":"Otto의 플립북 일기","coDesc":"손끝에서 풍경이 떠오른다","pyNew":"4.0 — 탐험할 세계 하나가 통째로, 곧 나옵니다","spNew":"4.0 — 내 파이터가 Pythoneer의 집으로 이사","ifNew":"할로윈 — Otto가 밤 무대에서 춤춘다, 10월 17일부터","coNew":"할로윈 — 그림 여덟 장으로 된 이야기, 10월 17일부터"},"nl":{"moreTitle":"Meer van ons","swDesc":"Chillfriends-strips, voorgelezen","pyDesc":"tegel voor tegel","spDesc":"teken een 8×8-vechter, win het stampduel","ifDesc":"Otto's flipboekdagboek","coDesc":"een landschap verschijnt onder je vinger","pyNew":"4.0 — een hele wereld om te verkennen, binnenkort","spNew":"4.0 — je vechter verhuist naar het huis in Pythoneer","ifNew":"Halloween — Otto danst op het nachtpodium, vanaf 17 oktober","coNew":"Halloween — een verhaal in acht plaatjes, vanaf 17 oktober"},"pt":{"moreTitle":"Mais do estúdio","swDesc":"quadrinhos Chillfriends, lidos em voz alta","pyDesc":"um bloco de cada vez","spDesc":"desenhe um lutador 8×8 e vença o duelo de pisões","ifDesc":"o diário em flipbook do Otto","coDesc":"uma paisagem aparece sob o seu dedo","pyNew":"4.0 — um mundo inteiro para explorar, em breve","spNew":"4.0 — seu lutador se muda para a casa do Pythoneer","ifNew":"Halloween — Otto dança no palco noturno, a partir de 17 de outubro","coNew":"Halloween — uma história em oito imagens, a partir de 17 de outubro"},"ru":{"moreTitle":"Ещё от нас","swDesc":"комиксы Chillfriends, прочитанные вслух","pyDesc":"по плитке за раз","spDesc":"нарисуй бойца 8×8 и победи в дуэли-топталке","ifDesc":"флипбук-дневник Otto","coDesc":"пейзаж проступает под пальцем","pyNew":"4.0 — целый мир для исследования, скоро","spNew":"4.0 — твой боец переезжает в дом в Pythoneer","ifNew":"Хэллоуин — Otto танцует на ночной сцене, с 17 октября","coNew":"Хэллоуин — история в восьми картинах, с 17 октября"},"sv":{"moreTitle":"Mer från oss","swDesc":"Chillfriends-serier, upplästa","pyDesc":"en ruta i taget","spDesc":"rita en 8×8-kämpe, vinn stampduellen","ifDesc":"Ottos blädderblocksdagbok","coDesc":"ett landskap träder fram under fingret","pyNew":"4.0 — en hel värld att utforska, snart","spNew":"4.0 — din kämpe flyttar in i huset i Pythoneer","ifNew":"Halloween — Otto dansar på nattscenen, från 17 oktober","coNew":"Halloween — en berättelse i åtta bilder, från 17 oktober"},"th":{"moreTitle":"ผลงานอื่นของเรา","swDesc":"การ์ตูน Chillfriends อ่านออกเสียง","pyDesc":"ทีละช่อง","spDesc":"วาดนักสู้ขนาด 8×8 แล้วชนะดวลกระทืบ","ifDesc":"ไดอารี่ฟลิปบุ๊กของOtto","coDesc":"ทิวทัศน์ปรากฏขึ้นใต้ปลายนิ้ว","pyNew":"4.0 — โลกทั้งใบให้สำรวจ เร็ว ๆ นี้","spNew":"4.0 — นักสู้ของคุณย้ายเข้าบ้านใน Pythoneer","ifNew":"ฮาโลวีน — Ottoเต้นบนเวทียามค่ำ ตั้งแต่ 17 ตุลาคม","coNew":"ฮาโลวีน — เรื่องเล่าในภาพแปดภาพ ตั้งแต่ 17 ตุลาคม"},"tr":{"moreTitle":"Diğer işlerimiz","swDesc":"Chillfriends çizgi romanları, sesli okunuyor","pyDesc":"her seferinde bir karo","spDesc":"8×8 bir dövüşçü çiz, ezme düellosunu kazan","ifDesc":"Otto'nun kipkitap günlüğü","coDesc":"parmağının altında bir manzara beliriyor","pyNew":"4.0 — keşfedilecek koca bir dünya, çok yakında","spNew":"4.0 — dövüşçün Pythoneer'daki eve taşınıyor","ifNew":"Cadılar Bayramı — Otto gece sahnesinde dans ediyor, 17 Ekim'den itibaren","coNew":"Cadılar Bayramı — sekiz resimde bir hikâye, 17 Ekim'den itibaren"},"vi":{"moreTitle":"Thêm từ chúng tôi","swDesc":"truyện tranh Chillfriends, đọc thành tiếng","pyDesc":"từng ô một","spDesc":"vẽ chiến binh 8×8, thắng trận đấu giẫm","ifDesc":"nhật ký flipbook của Otto","coDesc":"phong cảnh hiện lên dưới ngón tay","pyNew":"4.0 — cả một thế giới để khám phá, sắp ra mắt","spNew":"4.0 — chiến binh của bạn dọn vào ngôi nhà trong Pythoneer","ifNew":"Halloween — Otto nhảy trên sân khấu đêm, từ 17 tháng 10","coNew":"Halloween — một câu chuyện qua tám bức tranh, từ 17 tháng 10"},"zh-hans":{"moreTitle":"我们的其他作品","swDesc":"Chillfriends 漫画朗读","pyDesc":"一次一块","spDesc":"画一个 8×8 斗士，赢下踩踏对决","ifDesc":"Otto 的翻页日记","coDesc":"风景在指尖浮现","pyNew":"4.0 —— 一整个世界等你探索，即将推出","spNew":"4.0 —— 你的斗士搬进 Pythoneer 的家","ifNew":"万圣节 —— Otto 在夜晚舞台上跳舞，10 月 17 日起","coNew":"万圣节 —— 八幅画讲一个故事，10 月 17 日起"},"zh-hant":{"moreTitle":"我們的其他作品","swDesc":"Chillfriends 漫畫朗讀","pyDesc":"一次一塊","spDesc":"畫一個 8×8 鬥士，贏下踩踏對決","ifDesc":"Otto 的翻頁日記","coDesc":"風景在指尖浮現","pyNew":"4.0 —— 一整個世界等你探索，即將推出","spNew":"4.0 —— 你的鬥士搬進 Pythoneer 的家","ifNew":"萬聖節 —— Otto 在夜晚舞台上跳舞，10 月 17 日起","coNew":"萬聖節 —— 八幅畫講一個故事，10 月 17 日起"}},A={"zh-tw":"zh-hant","zh-hk":"zh-hant","zh-mo":"zh-hant","zh-cn":"zh-hans","zh-sg":"zh-hans","zh":"zh-hans","pt-br":"pt","pt-pt":"pt","es-mx":"es","es-419":"es"};function pick(){var l=(document.documentElement.lang||navigator.language||'en').toLowerCase();return T[l]||T[A[l]]||T[l.split('-')[0]]||null}function apply(){var d=pick();document.querySelectorAll('[data-fam]').forEach(function(el){if(!el.hasAttribute('data-fam-en'))el.setAttribute('data-fam-en',el.textContent);var k=el.getAttribute('data-fam');el.textContent=(d&&d[k])||el.getAttribute('data-fam-en')})}apply();new MutationObserver(apply).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});document.addEventListener('DOMContentLoaded',apply)})();</script>
+    <!-- family:end -->
+    <footer>
+      <span>© 2026 Spriteer · <a href="https://swiftian.com">Swiftian Inc.</a></span>
+      <a href="/privacy/" data-i18n="privacy">隱私權</a>
+      <a href="/support/" data-i18n="support">說明</a>
+      <a href="https://pythoneer.io/zh-hant/">Pythoneer</a>
+    </footer>
+  </div>
+  <div id="toast" hidden></div>
+  <script type="module" src="/js/track.js"></script>
+  <script type="module" src="/js/main.js?v=13"></script>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "22ac580328004149a0c8370a0eeda913"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>

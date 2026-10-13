@@ -11,3 +11,4 @@ Static site on GitHub Pages. No build step.
 - `js/art.js` is generated from PythoneerEngineKit (Resources/Sprites + the survival tileset). Do not edit by hand.
 - `.well-known/apple-app-site-association` lets the Spriteer app open `/c/*` links.
 - Events go to the shared web events endpoint as `spriteer.com` (same names as the app's Usage events).
+- Language pages `/<lang>/` (18) are generated: after editing `index.html` or `js/strings.js`, run ops `web/locale-pages.py spriteer`, then refresh `c/index.html`. Each page names its language in `<html data-lang>`; `js/i18n.js` reads that first.

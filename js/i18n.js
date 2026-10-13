@@ -1,10 +1,13 @@
 // Web copy in the apps' 19 UI locales (founder.md §로케일: UI 19). Same file on spriteer.com and pythoneer.io/night.
 // The language comes from ?lang=, the home page's pick, or the browser; anything else falls back to English.
-import { STRINGS } from "./strings.js";
+import { STRINGS } from "./strings.js?v=2";
 
 const SUPPORTED = Object.keys(STRINGS);
 
 function pick() {
+  // A language page (/ja/, /ko/ …, written by ops web/locale-pages.py) names its language; it wins over everything.
+  const page = document.documentElement.dataset.lang;
+  if (page && SUPPORTED.includes(page)) return page;
   try {
     const q = new URLSearchParams(location.search).get("lang");
     if (q && SUPPORTED.includes(q)) return q;

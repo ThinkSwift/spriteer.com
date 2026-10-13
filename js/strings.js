@@ -80,7 +80,8 @@ export const STRINGS = {
   "start_over": "Start over",
   "app40_title": "Spriteer 4.0",
   "app40_note": "In the app: every character you draw, the house you share with Pythoneer, and the duel machine where friends' challenges land.",
-  "app40_review": "In App Store review now — the App Store has 3.1 until it's out."
+  "app40_review": "In App Store review now — the App Store has 3.1 until it's out.",
+  "meta_desc": "Your 8×8 character walks, falls and gets up. Make it yours, win a stomp duel, move it into your house, challenge a friend."
  },
  "ar": {
   "page_title": "Spriteer — ثلاثة إطارات. كل لعبة.",
@@ -162,7 +163,8 @@ export const STRINGS = {
   "start_over": "ابدأ من جديد",
   "app40_title": "Spriteer 4.0",
   "app40_note": "في التطبيق: كل شخصية ترسمها، والبيت الذي تتشاركه مع Pythoneer، وآلة المبارزة التي تصل إليها تحديات أصدقائك.",
-  "app40_review": "قيد المراجعة في App Store الآن — وحتى صدوره يبقى الإصدار 3.1 في App Store."
+  "app40_review": "قيد المراجعة في App Store الآن — وحتى صدوره يبقى الإصدار 3.1 في App Store.",
+  "meta_desc": "شخصيتك بحجم 8×8 تمشي وتسقط ثم تنهض. اجعلها لك، واربح مبارزة الدَّوس، وأسكنها بيتك، وتحدَّ صديقًا."
  },
  "de": {
   "page_title": "Spriteer — Drei Bilder. Jedes Spiel.",
@@ -244,7 +246,8 @@ export const STRINGS = {
   "start_over": "Neu anfangen",
   "app40_title": "Spriteer 4.0",
   "app40_note": "In der App: jede Figur, die du zeichnest, das Haus, das du mit Pythoneer teilst, und die Duellmaschine, an der die Herausforderungen deiner Freunde ankommen.",
-  "app40_review": "Gerade in der App-Store-Prüfung — bis dahin gibt es im App Store Version 3.1."
+  "app40_review": "Gerade in der App-Store-Prüfung — bis dahin gibt es im App Store Version 3.1.",
+  "meta_desc": "Deine 8×8-Figur läuft, fällt und steht wieder auf. Mach sie zu deiner, gewinne ein Stampf-Duell, lass sie bei dir einziehen, fordere einen Freund heraus."
  },
  "es": {
   "page_title": "Spriteer — Tres fotogramas. Cada juego.",
@@ -326,7 +329,8 @@ export const STRINGS = {
   "start_over": "Empezar de nuevo",
   "app40_title": "Spriteer 4.0",
   "app40_note": "En la app: todos los personajes que dibujes, la casa que compartes con Pythoneer y la máquina de duelos donde llegan los retos de tus amigos.",
-  "app40_review": "Ahora en revisión en el App Store; hasta que salga, el App Store tiene la 3.1."
+  "app40_review": "Ahora en revisión en el App Store; hasta que salga, el App Store tiene la 3.1.",
+  "meta_desc": "Tu personaje de 8×8 camina, se cae y se levanta. Hazlo tuyo, gana un duelo de pisotones, llévalo a tu casa y reta a un amigo."
  },
  "fr": {
   "page_title": "Spriteer — Trois images. Tous les jeux.",
@@ -408,7 +412,8 @@ export const STRINGS = {
   "start_over": "Recommencer",
   "app40_title": "Spriteer 4.0",
   "app40_note": "Dans l'app : tous les personnages que tu dessines, la maison que tu partages avec Pythoneer et la machine de duel où arrivent les défis de tes amis.",
-  "app40_review": "En cours d'examen sur l'App Store — d'ici sa sortie, l'App Store propose la 3.1."
+  "app40_review": "En cours d'examen sur l'App Store — d'ici sa sortie, l'App Store propose la 3.1.",
+  "meta_desc": "Ton personnage 8×8 marche, tombe et se relève. Fais-le tien, gagne un duel d'écrasement, installe-le chez toi, défie un ami."
  },
  "hi": {
   "page_title": "Spriteer — तीन फ़्रेम। हर गेम।",
@@ -490,7 +495,8 @@ export const STRINGS = {
   "start_over": "फिर से शुरू करें",
   "app40_title": "Spriteer 4.0",
   "app40_note": "ऐप में: आपके बनाए सारे किरदार, Pythoneer के साथ साझा घर, और वह मुक़ाबला मशीन जहाँ दोस्तों की चुनौतियाँ आती हैं।",
-  "app40_review": "अभी App Store समीक्षा में — आने तक App Store पर 3.1 है।"
+  "app40_review": "अभी App Store समीक्षा में — आने तक App Store पर 3.1 है।",
+  "meta_desc": "आपका 8×8 किरदार चलता है, गिरता है और फिर उठता है। उसे अपना बनाइए, कुचलने वाला मुक़ाबला जीतिए, उसे अपने घर में बसाइए और किसी दोस्त को चुनौती दीजिए।"
  },
  "id": {
   "page_title": "Spriteer — Tiga frame. Semua game.",
@@ -572,7 +578,8 @@ export const STRINGS = {
   "start_over": "Mulai dari awal",
   "app40_title": "Spriteer 4.0",
   "app40_note": "Di aplikasi: setiap karakter yang kamu gambar, rumah yang kamu bagi dengan Pythoneer, dan mesin duel tempat tantangan teman tiba.",
-  "app40_review": "Sedang ditinjau App Store — sampai rilis, App Store masih berisi versi 3.1."
+  "app40_review": "Sedang ditinjau App Store — sampai rilis, App Store masih berisi versi 3.1.",
+  "meta_desc": "Karakter 8×8-mu berjalan, jatuh, lalu bangkit. Jadikan milikmu, menangkan duel injak, bawa ke rumahmu, dan tantang teman."
  },
  "it": {
   "page_title": "Spriteer — Tre fotogrammi. Ogni gioco.",
@@ -654,7 +661,8 @@ export const STRINGS = {
   "start_over": "Ricomincia da capo",
   "app40_title": "Spriteer 4.0",
   "app40_note": "Nell'app: ogni personaggio che disegni, la casa che condividi con Pythoneer e la macchina dei duelli dove arrivano le sfide degli amici.",
-  "app40_review": "Ora in revisione sull'App Store: fino all'uscita, sull'App Store c'è la 3.1."
+  "app40_review": "Ora in revisione sull'App Store: fino all'uscita, sull'App Store c'è la 3.1.",
+  "meta_desc": "Il tuo personaggio 8×8 cammina, cade e si rialza. Rendilo tuo, vinci un duello a pestoni, portalo a casa tua e sfida un amico."
  },
  "ja": {
   "page_title": "Spriteer — 3コマで、どのゲームにも。",
@@ -736,7 +744,8 @@ export const STRINGS = {
   "start_over": "最初からやり直す",
   "app40_title": "Spriteer 4.0",
   "app40_note": "アプリでは：描いたキャラクター全員、Pythoneer と一緒に使う家、友だちの挑戦状が届く対決マシン。",
-  "app40_review": "現在 App Store で審査中です。公開までは App Store では 3.1 が配信されています。"
+  "app40_review": "現在 App Store で審査中です。公開までは App Store では 3.1 が配信されています。",
+  "meta_desc": "8×8のキャラクターが歩き、倒れ、また起き上がる。自分だけのものにして、踏みつけ対決に勝ち、家に迎え入れ、友だちに挑戦状を送ろう。"
  },
  "ko": {
   "page_title": "Spriteer — 세 장이면, 모든 게임.",
@@ -818,7 +827,8 @@ export const STRINGS = {
   "start_over": "처음부터 다시",
   "app40_title": "Spriteer 4.0",
   "app40_note": "앱에서는: 내가 그린 캐릭터 전부, Pythoneer와 함께 쓰는 집, 친구의 도전장이 도착하는 결투 기계.",
-  "app40_review": "지금 App Store 심사 중입니다 — 나오기 전까지 App Store에는 3.1이 있습니다."
+  "app40_review": "지금 App Store 심사 중입니다 — 나오기 전까지 App Store에는 3.1이 있습니다.",
+  "meta_desc": "8×8 캐릭터가 걷고, 쓰러지고, 다시 일어납니다. 내 것으로 만들고, 밟기 결투에서 이기고, 내 집에 들이고, 친구에게 도전장을 보내세요."
  },
  "nl": {
   "page_title": "Spriteer — Drie frames. Elk spel.",
@@ -900,7 +910,8 @@ export const STRINGS = {
   "start_over": "Opnieuw beginnen",
   "app40_title": "Spriteer 4.0",
   "app40_note": "In de app: elk personage dat je tekent, het huis dat je deelt met Pythoneer en de duelmachine waar de uitdagingen van vrienden binnenkomen.",
-  "app40_review": "Nu in App Store-beoordeling — tot de release staat 3.1 in de App Store."
+  "app40_review": "Nu in App Store-beoordeling — tot de release staat 3.1 in de App Store.",
+  "meta_desc": "Je 8×8-personage loopt, valt en staat weer op. Maak het van jou, win een stampduel, laat het bij je intrekken en daag een vriend uit."
  },
  "pt-BR": {
   "page_title": "Spriteer — Três quadros. Todo jogo.",
@@ -982,7 +993,8 @@ export const STRINGS = {
   "start_over": "Recomeçar",
   "app40_title": "Spriteer 4.0",
   "app40_note": "No app: todos os personagens que você desenha, a casa que você divide com o Pythoneer e a máquina de duelo onde chegam os desafios dos amigos.",
-  "app40_review": "Em análise na App Store agora — até sair, a App Store tem a 3.1."
+  "app40_review": "Em análise na App Store agora — até sair, a App Store tem a 3.1.",
+  "meta_desc": "Seu personagem 8×8 anda, cai e se levanta. Deixe-o com a sua cara, vença um duelo de pisões, leve-o para a sua casa e desafie um amigo."
  },
  "ru": {
   "page_title": "Spriteer — Три кадра. Любая игра.",
@@ -1068,7 +1080,8 @@ export const STRINGS = {
   "start_over": "Начать заново",
   "app40_title": "Spriteer 4.0",
   "app40_note": "В приложении: все нарисованные тобой персонажи, дом, общий с Pythoneer, и дуэльная машина, куда приходят вызовы друзей.",
-  "app40_review": "Сейчас на проверке в App Store — до выхода там версия 3.1."
+  "app40_review": "Сейчас на проверке в App Store — до выхода там версия 3.1.",
+  "meta_desc": "Твой персонаж 8×8 ходит, падает и встаёт. Сделай его своим, победи в дуэли-топталке, засели в свой дом и брось вызов другу."
  },
  "sv": {
   "page_title": "Spriteer — Tre bilder. Varje spel.",
@@ -1150,7 +1163,8 @@ export const STRINGS = {
   "start_over": "Börja om",
   "app40_title": "Spriteer 4.0",
   "app40_note": "I appen: varje figur du ritar, huset du delar med Pythoneer och duellmaskinen där vännernas utmaningar landar.",
-  "app40_review": "Granskas i App Store just nu — tills den släpps finns 3.1 i App Store."
+  "app40_review": "Granskas i App Store just nu — tills den släpps finns 3.1 i App Store.",
+  "meta_desc": "Din 8×8-figur går, faller och reser sig. Gör den till din, vinn en stampduell, låt den flytta in hos dig och utmana en vän."
  },
  "th": {
   "page_title": "Spriteer — สามเฟรม ทุกเกม",
@@ -1232,7 +1246,8 @@ export const STRINGS = {
   "start_over": "เริ่มใหม่",
   "app40_title": "Spriteer 4.0",
   "app40_note": "ในแอป: ตัวละครทุกตัวที่คุณวาด บ้านที่ใช้ร่วมกับ Pythoneer และเครื่องดวลที่คำท้าจากเพื่อนส่งมาถึง",
-  "app40_review": "กำลังอยู่ระหว่างการตรวจสอบของ App Store — ก่อนเปิดตัว App Store ยังเป็นเวอร์ชัน 3.1"
+  "app40_review": "กำลังอยู่ระหว่างการตรวจสอบของ App Store — ก่อนเปิดตัว App Store ยังเป็นเวอร์ชัน 3.1",
+  "meta_desc": "ตัวละคร 8×8 ของคุณเดิน ล้ม แล้วลุกขึ้น ทำให้เป็นของคุณ ชนะดวลกระทืบ พาเข้าบ้าน แล้วท้าเพื่อน"
  },
  "tr": {
   "page_title": "Spriteer — Üç kare. Her oyun.",
@@ -1314,7 +1329,8 @@ export const STRINGS = {
   "start_over": "Baştan başla",
   "app40_title": "Spriteer 4.0",
   "app40_note": "Uygulamada: çizdiğin her karakter, Pythoneer ile paylaştığın ev ve arkadaşlarının meydan okumalarının geldiği düello makinesi.",
-  "app40_review": "Şu anda App Store incelemesinde — çıkana kadar App Store'da 3.1 var."
+  "app40_review": "Şu anda App Store incelemesinde — çıkana kadar App Store'da 3.1 var.",
+  "meta_desc": "8×8 karakterin yürür, düşer ve kalkar. Onu kendine göre yap, ezme düellosunu kazan, evine taşı ve bir arkadaşına meydan oku."
  },
  "vi": {
   "page_title": "Spriteer — Ba khung. Mọi trò chơi.",
@@ -1396,7 +1412,8 @@ export const STRINGS = {
   "start_over": "Làm lại từ đầu",
   "app40_title": "Spriteer 4.0",
   "app40_note": "Trong ứng dụng: mọi nhân vật bạn vẽ, ngôi nhà chung với Pythoneer và cỗ máy đấu nơi lời thách đấu của bạn bè gửi đến.",
-  "app40_review": "Đang được App Store xét duyệt — trước khi ra mắt, App Store vẫn là bản 3.1."
+  "app40_review": "Đang được App Store xét duyệt — trước khi ra mắt, App Store vẫn là bản 3.1.",
+  "meta_desc": "Nhân vật 8×8 của bạn đi, ngã rồi đứng dậy. Biến nó thành của bạn, thắng trận đấu giẫm, đưa nó về nhà và thách đấu bạn bè."
  },
  "zh-Hans": {
   "page_title": "Spriteer — 三帧，每个游戏。",
@@ -1478,7 +1495,8 @@ export const STRINGS = {
   "start_over": "重新开始",
   "app40_title": "Spriteer 4.0",
   "app40_note": "在应用里：你画的每一个角色、与 Pythoneer 共用的家，还有接收朋友挑战的对决机。",
-  "app40_review": "目前正在 App Store 审核中——上线前 App Store 中仍是 3.1。"
+  "app40_review": "目前正在 App Store 审核中——上线前 App Store 中仍是 3.1。",
+  "meta_desc": "你的 8×8 角色会走、会倒下、还会站起来。把它变成你的，赢下踩踏对决，让它住进你的家，再向朋友下战书。"
  },
  "zh-Hant": {
   "page_title": "Spriteer — 三格，每個遊戲。",
@@ -1560,6 +1578,7 @@ export const STRINGS = {
   "start_over": "重新開始",
   "app40_title": "Spriteer 4.0",
   "app40_note": "在 App 裡：你畫的每一個角色、與 Pythoneer 共用的家，還有接收朋友挑戰的對決機。",
-  "app40_review": "目前正在 App Store 審核中——上架前 App Store 中仍是 3.1。"
+  "app40_review": "目前正在 App Store 審核中——上架前 App Store 中仍是 3.1。",
+  "meta_desc": "你的 8×8 角色會走、會倒下、還會站起來。把它變成你的，贏下踩踏對決，讓它住進你的家，再向朋友下戰帖。"
  }
 };
