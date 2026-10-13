@@ -115,3 +115,9 @@ footer { color: var(--ink-soft); font-size: 13px; padding: 24px 0 40px; display:
 #mk-result .label { margin: 4px 0 0; }
 #mk-result p { margin: 8px 0 0; font-weight: 800; color: var(--coral); }
 #play:disabled { color: #fff; box-shadow: none; }
+
+/* Spriteer 4.0 card (2026-10-13): the app's preview beside what 4.0 adds; the review line goes on release day */
+.app40 { display: flex; gap: 18px; align-items: flex-start; }
+.app40 video { width: 160px; flex: none; border-radius: 14px; background: #000; }
+.app40 .review { color: var(--ink-soft); font-size: 12px; margin: 6px 0 12px; }
+@media (max-width: 560px) { .app40 { flex-direction: column; align-items: center; } .app40 video { width: 62%; } }
