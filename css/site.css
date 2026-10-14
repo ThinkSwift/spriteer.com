@@ -106,9 +106,6 @@ footer { color: var(--ink-soft); font-size: 13px; padding: 24px 0 40px; display:
 #draw .mk-title { text-align: center; margin: 14px 0 4px; }
 
 /* two steps (same as the app's first run): 1/2 one dot, see it in all three frames · 2/2 the duel */
-.step { font-weight: 900; font-size: 13px; color: var(--ink-soft); margin: 2px 0 0; }
-#draw .step { color: #b8860b; }
-@media (prefers-color-scheme: dark) { #draw .step { color: var(--gold); } }
 #draw.painted #stage { border: 3px solid var(--gold); }
 #mk-result { text-align: center; margin: 12px 0 6px; }
 #mk-result .minis { grid-template-columns: repeat(3, 64px); justify-content: center; gap: 14px; }
@@ -117,7 +114,3 @@ footer { color: var(--ink-soft); font-size: 13px; padding: 24px 0 40px; display:
 #play:disabled { color: #fff; box-shadow: none; }
 
 /* Spriteer 4.0 card (2026-10-13): the app's preview beside what 4.0 adds; the review line goes on release day */
-.app40 { display: flex; gap: 18px; align-items: flex-start; }
-.app40 video { width: 160px; flex: none; border-radius: 14px; background: #000; }
-.app40 .review { color: var(--ink-soft); font-size: 12px; margin: 6px 0 12px; }
-@media (max-width: 560px) { .app40 { flex-direction: column; align-items: center; } .app40 video { width: 62%; } }
