@@ -14,7 +14,7 @@
   <meta property="og:description" content="हर मुद्रा का एक 8×8 फ़्रेम — नियम बस इतना। एक स्किन बनाओ और 38 असली खेल उसे तुरंत पहन लेते हैं। साझा करो, बदलो, Pythoneer भेजो।">
   <meta property="og:image" content="https://spriteer.com/og.png">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="stylesheet" href="/css/site.css?v=7">
+  <link rel="stylesheet" href="/css/site.css?v=8">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"SoftwareApplication","name":"Spriteer","operatingSystem":"iOS, iPadOS, macOS",
    "applicationCategory":"GameApplication","url":"https://apps.apple.com/app/id6796374506","image":"https://spriteer.com/icon-app.png",
@@ -67,13 +67,10 @@
       <canvas id="stage" data-i18n-aria="live"></canvas>
       <h2 class="mk-title" data-i18n="mk_title">इसे अपना बनाओ।</h2>
       <div id="goal"><span class="hint-dot" aria-hidden="true"></span><span id="goal-note" data-i18n="mk_hint">टिमटिमाते बिंदु को छुओ — या कोई भी बिंदु जो तुम्हें पसंद हो।</span></div>
-      <div id="mk-result" hidden>
-        <div class="minis">
-          <div><canvas id="mini-idle"></canvas><span class="label" data-i18n="idle">स्थिर</span></div>
-          <div><canvas id="mini-walk"></canvas><span class="label" data-i18n="walk">चलो</span></div>
-          <div><canvas id="mini-die"></canvas><span class="label" data-i18n="die">मरना</span></div>
-        </div>
-        <p data-i18n="mk_result">देखो — तुम्हारा निशान उसके साथ खड़ा होता है, चलता है और गिरता है।</p>
+      <div id="poses" role="tablist">
+        <button class="pose on" data-pose="idle" role="tab" aria-selected="true"><canvas></canvas><span class="label" data-i18n="idle">स्थिर</span></button>
+        <button class="pose" data-pose="walk" role="tab" aria-selected="false"><canvas></canvas><span class="label" data-i18n="walk">चलो</span></button>
+        <button class="pose" data-pose="die" role="tab" aria-selected="false"><canvas></canvas><span class="label" data-i18n="die">मरना</span></button>
       </div>
       <canvas id="big" data-i18n-aria="mk_title"></canvas>
       <div id="palette" aria-label="Colors"></div>
@@ -132,7 +129,7 @@
   </div>
   <div id="toast" hidden></div>
   <script type="module" src="/js/track.js"></script>
-  <script type="module" src="/js/main.js?v=13"></script>
+  <script type="module" src="/js/main.js?v=14"></script>
   <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "22ac580328004149a0c8370a0eeda913"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

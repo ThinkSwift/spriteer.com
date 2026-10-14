@@ -107,10 +107,14 @@ footer { color: var(--ink-soft); font-size: 13px; padding: 24px 0 40px; display:
 
 /* two steps (same as the app's first run): 1/2 one dot, see it in all three frames · 2/2 the duel */
 #draw.painted #stage { border: 3px solid var(--gold); }
-#mk-result { text-align: center; margin: 12px 0 6px; }
-#mk-result .minis { grid-template-columns: repeat(3, 64px); justify-content: center; gap: 14px; }
-#mk-result .label { margin: 4px 0 0; }
-#mk-result p { margin: 8px 0 0; font-weight: 800; color: var(--coral); }
+
+/* the pose strip (the app's): Idle · Walk · Die, each drawn on its own; the one on the big canvas is gold */
+#poses { display: grid; grid-template-columns: repeat(3, 72px); justify-content: center; gap: 12px; margin: 12px 0 0; }
+.pose { display: grid; gap: 5px; justify-items: center; padding: 6px 6px 7px; background: var(--panel); color: var(--ink);
+  border: 2px solid var(--line); box-shadow: 2px 2px 0 var(--shadow); }
+.pose canvas { width: 52px; aspect-ratio: 1; display: block; border: 2px solid var(--line); background: #fff; image-rendering: pixelated; }
+.pose .label { color: inherit; font-size: 11px; }
+.pose.on { background: var(--gold); color: #211f40; border-width: 3px; padding: 5px 5px 6px; }
 #play:disabled { color: #fff; box-shadow: none; }
 
 /* Spriteer 4.0 card (2026-10-13): the app's preview beside what 4.0 adds; the review line goes on release day */

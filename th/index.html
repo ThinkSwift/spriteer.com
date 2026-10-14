@@ -14,7 +14,7 @@
   <meta property="og:description" content="ท่าละหนึ่งเฟรม 8×8 กฎมีแค่นั้น วาดหนึ่งสกิน แล้วเกมของจริง 38 เกมก็สวมมันทันที แชร์ เปลี่ยน แล้วส่งต่อไปยัง Pythoneer">
   <meta property="og:image" content="https://spriteer.com/og.png">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="stylesheet" href="/css/site.css?v=7">
+  <link rel="stylesheet" href="/css/site.css?v=8">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"SoftwareApplication","name":"Spriteer","operatingSystem":"iOS, iPadOS, macOS",
    "applicationCategory":"GameApplication","url":"https://apps.apple.com/app/id6796374506","image":"https://spriteer.com/icon-app.png",
@@ -67,13 +67,10 @@
       <canvas id="stage" data-i18n-aria="live"></canvas>
       <h2 class="mk-title" data-i18n="mk_title">แต่งให้เป็นของคุณ</h2>
       <div id="goal"><span class="hint-dot" aria-hidden="true"></span><span id="goal-note" data-i18n="mk_hint">แตะจุดที่กะพริบ — หรือจุดไหนก็ได้ที่ชอบ</span></div>
-      <div id="mk-result" hidden>
-        <div class="minis">
-          <div><canvas id="mini-idle"></canvas><span class="label" data-i18n="idle">อยู่นิ่ง</span></div>
-          <div><canvas id="mini-walk"></canvas><span class="label" data-i18n="walk">เดิน</span></div>
-          <div><canvas id="mini-die"></canvas><span class="label" data-i18n="die">ตาย</span></div>
-        </div>
-        <p data-i18n="mk_result">ดูสิ — จุดของคุณยืน เดิน และล้มไปพร้อมกับมัน</p>
+      <div id="poses" role="tablist">
+        <button class="pose on" data-pose="idle" role="tab" aria-selected="true"><canvas></canvas><span class="label" data-i18n="idle">อยู่นิ่ง</span></button>
+        <button class="pose" data-pose="walk" role="tab" aria-selected="false"><canvas></canvas><span class="label" data-i18n="walk">เดิน</span></button>
+        <button class="pose" data-pose="die" role="tab" aria-selected="false"><canvas></canvas><span class="label" data-i18n="die">ตาย</span></button>
       </div>
       <canvas id="big" data-i18n-aria="mk_title"></canvas>
       <div id="palette" aria-label="Colors"></div>
@@ -132,7 +129,7 @@
   </div>
   <div id="toast" hidden></div>
   <script type="module" src="/js/track.js"></script>
-  <script type="module" src="/js/main.js?v=13"></script>
+  <script type="module" src="/js/main.js?v=14"></script>
   <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "22ac580328004149a0c8370a0eeda913"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

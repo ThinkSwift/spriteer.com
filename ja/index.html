@@ -14,7 +14,7 @@
   <meta property="og:description" content="ポーズごとに8×8の1枚 — ルールはそれだけ。スキンを描けば38の本物のゲームが即座に着ます。共有して、着替えて、Pythoneerへ。">
   <meta property="og:image" content="https://spriteer.com/og.png">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="stylesheet" href="/css/site.css?v=7">
+  <link rel="stylesheet" href="/css/site.css?v=8">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"SoftwareApplication","name":"Spriteer","operatingSystem":"iOS, iPadOS, macOS",
    "applicationCategory":"GameApplication","url":"https://apps.apple.com/app/id6796374506","image":"https://spriteer.com/icon-app.png",
@@ -67,13 +67,10 @@
       <canvas id="stage" data-i18n-aria="live"></canvas>
       <h2 class="mk-title" data-i18n="mk_title">自分だけのキャラに。</h2>
       <div id="goal"><span class="hint-dot" aria-hidden="true"></span><span id="goal-note" data-i18n="mk_hint">点滅している点をタップ。ほかの好きな点でもいい。</span></div>
-      <div id="mk-result" hidden>
-        <div class="minis">
-          <div><canvas id="mini-idle"></canvas><span class="label" data-i18n="idle">じっと</span></div>
-          <div><canvas id="mini-walk"></canvas><span class="label" data-i18n="walk">あるく</span></div>
-          <div><canvas id="mini-die"></canvas><span class="label" data-i18n="die">やられ</span></div>
-        </div>
-        <p data-i18n="mk_result">見て。あなたの印は、立つときも歩くときも倒れるときも一緒。</p>
+      <div id="poses" role="tablist">
+        <button class="pose on" data-pose="idle" role="tab" aria-selected="true"><canvas></canvas><span class="label" data-i18n="idle">じっと</span></button>
+        <button class="pose" data-pose="walk" role="tab" aria-selected="false"><canvas></canvas><span class="label" data-i18n="walk">あるく</span></button>
+        <button class="pose" data-pose="die" role="tab" aria-selected="false"><canvas></canvas><span class="label" data-i18n="die">やられ</span></button>
       </div>
       <canvas id="big" data-i18n-aria="mk_title"></canvas>
       <div id="palette" aria-label="Colors"></div>
@@ -132,7 +129,7 @@
   </div>
   <div id="toast" hidden></div>
   <script type="module" src="/js/track.js"></script>
-  <script type="module" src="/js/main.js?v=13"></script>
+  <script type="module" src="/js/main.js?v=14"></script>
   <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "22ac580328004149a0c8370a0eeda913"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

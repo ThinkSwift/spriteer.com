@@ -1,6 +1,7 @@
 // spriteer.com — the app's first run, step for step (SPRITEER.md, founder 2026-10-07 "the web the same as the app").
-// 1/2: a finished character walks; one blinking dot guides you. Put one dot anywhere and see what it did — it shows
-// in Idle, Walk and Die — and Play unlocks (the locked button says why). 2/2: the duel; it moves into your house.
+// 1/2: a finished character walks; one blinking dot guides you. Idle, Walk and Die are drawn one at a time, as in
+// the app's pose strip (Idle ghosts through the empty cells of the other two). One dot unlocks Play (the locked
+// button says why). 2/2: the duel; it moves into your house.
 import { sprite, tile, character, hasSprite, drawFrame, hex, isEmpty } from "./pixels.js";
 import { Duel, RULES } from "./duel.js?v=12";
 import { Room, member, moveIn, addGuest, framesOf, spHalf, doorToPythoneer, receiveDoor } from "./house.js";
@@ -17,26 +18,11 @@ const $ = (s) => document.querySelector(s);
 const cap = (s) => s.replace(/^u\//, "").replace(/^npc_/, "").replace(/^\w/, (c) => c.toUpperCase());
 
 const state = {
-  base: "hero", frames: null, start: null, shift: {}, hint: null, marks: [], color: RED, painted: false,
+  base: "hero", frames: null, start: null, pose: "idle", hint: null, marks: [], color: RED, painted: false,
   name: "Hero", challenger: null, duel: null, room: null,
 };
 
 // ---------------------------------------------------------------- the sketch: finished, yours to mark
-
-/** How a frame sits relative to Idle (a walk often steps a pixel over): the shift that lines most pixels up. */
-function align(idle, other) {
-  let best = [0, 0], score = -1;
-  for (let dy = -2; dy <= 2; dy++) for (let dx = -2; dx <= 2; dx++) {
-    let n = 0;
-    for (let y = 0; y < 8; y++) for (let x = 0; x < 8; x++) {
-      const v = idle[y * 8 + x]; if (!(v & 0xff)) continue;
-      const X = x + dx, Y = y + dy;
-      if (X >= 0 && X < 8 && Y >= 0 && Y < 8 && other[Y * 8 + X] === v) n++;
-    }
-    if (n > score || (n === score && Math.abs(dx) + Math.abs(dy) < Math.abs(best[0]) + Math.abs(best[1]))) { score = n; best = [dx, dy]; }
-  }
-  return best;
-}
 
 /** The guide: the pixel just under the mouth (the lowest dark run in the face). Any other dot counts too. */
 function mouthHint(idle) {
@@ -56,24 +42,22 @@ function startSketch(base) {
   state.base = base;
   state.frames = character(base);
   state.start = { idle: [...state.frames.idle], walk: [...state.frames.walk], die: [...state.frames.die] };
-  state.shift = { idle: [0, 0], walk: align(state.frames.idle, state.frames.walk), die: align(state.frames.idle, state.frames.die) };
   state.hint = mouthHint(state.frames.idle);
   state.marks = []; state.painted = false;
   state.name = cap(base);
   $("#name").value = state.name;
   state.color = RED;
-  buildPalette(); markPalette();
+  buildPalette(); markPalette(); setPose("idle");
   $("#goal-note").textContent = t(state.hint ? "mk_hint" : "mk_hint_free");
   stepUI();
   drawEditor();
 }
 
-/** Before the first dot: the guide, and Play locked with its reason. After: what the dot did, and Play. */
+/** Before the first dot: the guide, and Play locked with its reason. After: Start over, and Play. */
 function stepUI() {
   const p = state.painted;
   $("#draw").classList.toggle("painted", p);
   $("#goal").hidden = p;
-  $("#mk-result").hidden = !p;
   $("#start-over").hidden = !p;
   $("#play").disabled = !p;
   $("#play").textContent = t(p ? "play" : "mk_locked");
@@ -110,10 +94,21 @@ function markPalette() {
   for (const b of document.querySelectorAll(".swatch")) b.classList.toggle("on", Number(b.dataset.v) === state.color);
 }
 
-// ---------------------------------------------------------------- editor: one big canvas, three frames follow
+// ---------------------------------------------------------------- editor: one big canvas, one pose at a time
 
 const CELLS = ["idle", "walk", "die"];
-function paintCanvas(c, f, k, now, keepLast = false) {
+
+/** Which pose the big canvas edits. The strip above it shows all three; the one you draw is gold. */
+function setPose(k) {
+  state.pose = k;
+  for (const b of document.querySelectorAll(".pose")) {
+    const on = b.dataset.pose === k;
+    b.classList.toggle("on", on);
+    b.setAttribute("aria-selected", on ? "true" : "false");
+  }
+}
+
+function paintCanvas(c, f, k, now, keepLast = false, onion = null) {
   const ctx = c.getContext("2d");
   // Size from the laid-out box, capped — a canvas without its CSS (a stale cache) must not grow itself every frame.
   const size = Math.min(1024, Math.round(c.getBoundingClientRect().width * (window.devicePixelRatio || 1))) || 256;
@@ -121,14 +116,23 @@ function paintCanvas(c, f, k, now, keepLast = false) {
   const s = size / 8;
   ctx.clearRect(0, 0, size, size);
   for (let y = 0; y < 8; y++) for (let x = 0; x < 8; x++) { ctx.fillStyle = (x + y) % 2 ? "#f1f4fa" : "#ffffff"; ctx.fillRect(x * s, y * s, s, s); }
+  // Onion skin (the app's): Idle ghosts through the empty cells while you draw Walk or Die, so the pose stays on-model.
+  if (onion) {
+    ctx.globalAlpha = 0.22;
+    for (let y = 0; y < 8; y++) for (let x = 0; x < 8; x++) {
+      const v = onion[y * 8 + x];
+      if ((v & 0xff) && !(f[y * 8 + x] & 0xff)) { ctx.fillStyle = hex(v); ctx.fillRect(x * s, y * s, s, s); }
+    }
+    ctx.globalAlpha = 1;
+  }
   drawFrame(ctx, f, 0, 0, s);
-  // Your marks glow for a moment in every frame they landed in.
-  const [dx, dy] = state.shift[k] || [0, 0];
-  state.marks.forEach((m, i) => {
+  // Your marks glow for a moment in the pose they landed in.
+  const mine = state.marks.filter((m) => m.pose === k);
+  mine.forEach((m, i) => {
     let age = now - m.at;
-    if (keepLast && i === state.marks.length - 1) age = Math.min(age, 800);   // the newest stays softly outlined
+    if (keepLast && i === mine.length - 1) age = Math.min(age, 800);   // the newest stays softly outlined
     if (age > 1400) return;
-    const X = m.x + dx, Y = m.y + dy; if (X < 0 || X > 7 || Y < 0 || Y > 7) return;
+    const X = m.x, Y = m.y;
     ctx.strokeStyle = `rgba(247,194,48,${1 - age / 1400})`; ctx.lineWidth = Math.max(2, s / 6);
     ctx.strokeRect(X * s + ctx.lineWidth / 2, Y * s + ctx.lineWidth / 2, s - ctx.lineWidth, s - ctx.lineWidth);
   });
@@ -137,14 +141,15 @@ function paintCanvas(c, f, k, now, keepLast = false) {
 
 function drawEditor() {
   const now = performance.now();
-  const { ctx, s } = paintCanvas($("#big"), state.frames.idle, "idle", now);
-  if (state.hint && !state.painted) {   // the suggestion stays visible: a dashed square, red breathing inside
+  const k = state.pose;
+  const { ctx, s } = paintCanvas($("#big"), state.frames[k], k, now, false, k === "idle" ? null : state.frames.idle);
+  if (state.hint && !state.painted && k === "idle") {   // the suggestion stays visible: a dashed square, red breathing inside
     const breath = 0.25 + 0.45 * (0.5 + 0.5 * Math.sin(now / 330));
     ctx.fillStyle = `rgba(216,30,44,${breath})`; ctx.fillRect(state.hint.x * s, state.hint.y * s, s, s);
     ctx.setLineDash([s / 6, s / 8]); ctx.lineWidth = Math.max(2, s / 12); ctx.strokeStyle = "#ffffff";
     ctx.strokeRect(state.hint.x * s + 2, state.hint.y * s + 2, s - 4, s - 4); ctx.setLineDash([]);
   }
-  if (state.painted) for (const k of CELLS) paintCanvas($("#mini-" + k), state.frames[k], k, now, true);
+  for (const b of document.querySelectorAll(".pose")) paintCanvas(b.querySelector("canvas"), state.frames[b.dataset.pose], b.dataset.pose, now, true);
   drawStage($("#stage"), now / 1000);
 }
 
@@ -175,13 +180,14 @@ function paintAt(ev) {
   const c = $("#big"), r = c.getBoundingClientRect();
   const x = Math.floor(((ev.clientX - r.left) / r.width) * 8), y = Math.floor(((ev.clientY - r.top) / r.height) * 8);
   if (x < 0 || y < 0 || x > 7 || y > 7) return;
-  if (state.frames.idle[y * 8 + x] === state.color) return;
-  for (const k of CELLS) { const [dx, dy] = state.shift[k]; setPixel(state.frames[k], x + dx, y + dy, state.color); }
-  state.marks.push({ x, y, at: performance.now() });
+  const k = state.pose;
+  if (state.frames[k][y * 8 + x] === state.color) return;
+  setPixel(state.frames[k], x, y, state.color);
+  state.marks.push({ pose: k, x, y, at: performance.now() });
   if (!state.painted) {
     state.painted = true;
     track("first_stroke", { base: state.base }, { onlyOnce: true });
-    track("first_mark", { base: state.base, hint: state.hint && state.hint.x === x && state.hint.y === y ? "1" : "0" }, { onlyOnce: true });
+    track("first_mark", { base: state.base, pose: k, hint: k === "idle" && state.hint && state.hint.x === x && state.hint.y === y ? "1" : "0" }, { onlyOnce: true });
     stepUI();
   }
 }
@@ -196,6 +202,7 @@ function bindEditor() {
   $("#name").addEventListener("input", (e) => { state.name = e.target.value.trim().slice(0, 24) || cap(state.base); });
   $("#play").onclick = () => startDuel();
   $("#start-over").onclick = () => startOver();
+  for (const b of document.querySelectorAll(".pose")) b.onclick = () => setPose(b.dataset.pose);
   $("#another").onclick = () => {
     const i = SKETCHES.indexOf(state.base);
     startSketch(SKETCHES[(i + 1) % SKETCHES.length]);

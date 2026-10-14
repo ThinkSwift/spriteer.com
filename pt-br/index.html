@@ -14,7 +14,7 @@
   <meta property="og:description" content="Um quadro 8×8 por pose — essa é toda a regra. Desenhe uma skin e 38 jogos de verdade a vestem na hora. Compartilhe, troque, mande para o Pythoneer.">
   <meta property="og:image" content="https://spriteer.com/og.png">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="stylesheet" href="/css/site.css?v=7">
+  <link rel="stylesheet" href="/css/site.css?v=8">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"SoftwareApplication","name":"Spriteer","operatingSystem":"iOS, iPadOS, macOS",
    "applicationCategory":"GameApplication","url":"https://apps.apple.com/app/id6796374506","image":"https://spriteer.com/icon-app.png",
@@ -67,13 +67,10 @@
       <canvas id="stage" data-i18n-aria="live"></canvas>
       <h2 class="mk-title" data-i18n="mk_title">Deixe com a sua cara.</h2>
       <div id="goal"><span class="hint-dot" aria-hidden="true"></span><span id="goal-note" data-i18n="mk_hint">Toque no ponto piscando — ou em qualquer ponto que quiser.</span></div>
-      <div id="mk-result" hidden>
-        <div class="minis">
-          <div><canvas id="mini-idle"></canvas><span class="label" data-i18n="idle">Parado</span></div>
-          <div><canvas id="mini-walk"></canvas><span class="label" data-i18n="walk">Andar</span></div>
-          <div><canvas id="mini-die"></canvas><span class="label" data-i18n="die">Morrer</span></div>
-        </div>
-        <p data-i18n="mk_result">Olha só: sua marca fica de pé, anda e cai junto com ele.</p>
+      <div id="poses" role="tablist">
+        <button class="pose on" data-pose="idle" role="tab" aria-selected="true"><canvas></canvas><span class="label" data-i18n="idle">Parado</span></button>
+        <button class="pose" data-pose="walk" role="tab" aria-selected="false"><canvas></canvas><span class="label" data-i18n="walk">Andar</span></button>
+        <button class="pose" data-pose="die" role="tab" aria-selected="false"><canvas></canvas><span class="label" data-i18n="die">Morrer</span></button>
       </div>
       <canvas id="big" data-i18n-aria="mk_title"></canvas>
       <div id="palette" aria-label="Colors"></div>
@@ -132,7 +129,7 @@
   </div>
   <div id="toast" hidden></div>
   <script type="module" src="/js/track.js"></script>
-  <script type="module" src="/js/main.js?v=13"></script>
+  <script type="module" src="/js/main.js?v=14"></script>
   <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "22ac580328004149a0c8370a0eeda913"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>
