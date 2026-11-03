@@ -16,7 +16,7 @@
   <meta property="og:description" content="Un cuadro 8×8 por pose — esa es toda la regla. Dibuja una skin y treinta y ocho juegos reales la visten al instante. Compártela, cámbiala, envíala a Pythoneer.">
   <meta property="og:image" content="https://spriteer.com/og.png">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="stylesheet" href="/css/site.css?v=8">
+  <link rel="stylesheet" href="/css/site.css?v=9">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"SoftwareApplication","name":"Spriteer","operatingSystem":"iOS, iPadOS, macOS",
    "applicationCategory":"GameApplication","url":"https://apps.apple.com/app/id6796374506","image":"https://spriteer.com/icon-app.png",
@@ -50,11 +50,7 @@
 </head>
 <body>
   <div class="wrap">
-    <header class="top">
-      <img src="/icon-app.png" alt="" width="36" height="36">
-      <span class="brand">Spriteer</span>
-      <a class="btn gold store" data-store="web-sp-top" href="https://apps.apple.com/app/id6796374506?ct=web-sp-top" target="_blank" rel="noopener" data-i18n="get_app">Descargar la app</a>
-    </header>
+    <nav class="tabs-bar" aria-label="Spriteer"><img src="/icon-app.png" alt="" class="brand" width="32" height="32"><div class="tabs"><a class="tab" href="/" aria-current="page">Spriteer</a><a class="tab" href="/moments/">Moments</a></div></nav>
 
     <section id="challenge" class="panel" hidden>
       <canvas id="challenge-art" width="96" height="96" aria-hidden="true"></canvas>
@@ -122,6 +118,9 @@
         <button id="download" class="ghost" data-i18n="save_png">Guardar casa como Skin PNG</button>
       </div>
     </section>
+
+    <div class="store-row"><a class="appstore" href="https://apps.apple.com/app/id6796374506?ct=web-sp-home" target="_blank" rel="noopener"><img src="/icon-app.png" width="32" height="32" alt=""><span><small>Download on the</small><b>App Store</b></span></a></div>
+    <section class="sites" aria-label="Also from Swiftian"><a class="site" href="https://pythoneer.io/?ct=web-sp-py"><img src="/assets/links/pythoneer-32.png" srcset="/assets/links/pythoneer-32.png 1x, /assets/links/pythoneer-64.png 2x, /assets/links/pythoneer-96.png 3x" width="32" height="32" alt=""><span>pythoneer.io</span></a><a class="site" href="https://swiftian.com/?ct=web-sp-sw"><img src="/assets/links/swiftian-32.png" srcset="/assets/links/swiftian-32.png 1x, /assets/links/swiftian-64.png 2x, /assets/links/swiftian-96.png 3x" width="32" height="32" alt=""><span>swiftian.com</span></a></section>
 
     <footer>
       <span>© 2026 Spriteer · <a href="https://swiftian.com/es/">Swiftian Inc.</a></span>
