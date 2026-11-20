@@ -78,7 +78,11 @@ export const STRINGS = {
   "mk_result": "Look — your mark stands, walks and falls with it.",
   "mk_locked": "Tap a dot first",
   "start_over": "Start over",
-  "meta_desc": "Your 8×8 character walks, falls and gets up. Make it yours, win a stomp duel, move it into your house, challenge a friend."
+  "meta_desc": "Your 8×8 character walks, falls and gets up. Make it yours, win a stomp duel, move it into your house, challenge a friend.",
+  "new_page_t": "A page for each one.",
+  "new_page_s": "Play it, edit it, send a challenge, save its card.",
+  "new_cast_t": "Your cast.",
+  "new_cast_s": "Every character you made, as a card."
  },
  "ar": {
   "page_title": "Spriteer — ثلاثة إطارات. كل لعبة.",
@@ -158,7 +162,11 @@ export const STRINGS = {
   "mk_result": "انظر — علامتك تقف وتمشي وتسقط معه.",
   "mk_locked": "اضغط على نقطة أولًا",
   "start_over": "ابدأ من جديد",
-  "meta_desc": "شخصيتك بحجم 8×8 تمشي وتسقط ثم تنهض. اجعلها لك، واربح مبارزة الدَّوس، وأسكنها بيتك، وتحدَّ صديقًا."
+  "meta_desc": "شخصيتك بحجم 8×8 تمشي وتسقط ثم تنهض. اجعلها لك، واربح مبارزة الدَّوس، وأسكنها بيتك، وتحدَّ صديقًا.",
+  "new_page_t": "صفحة لكل شخصية.",
+  "new_page_s": "العبها، عدّلها، أرسل تحدّيًا، واحفظ بطاقتها.",
+  "new_cast_t": "طاقمك.",
+  "new_cast_s": "كل شخصية صنعتها، على شكل بطاقة."
  },
  "de": {
   "page_title": "Spriteer — Drei Bilder. Jedes Spiel.",
@@ -238,7 +246,11 @@ export const STRINGS = {
   "mk_result": "Schau – dein Punkt steht, geht und fällt mit.",
   "mk_locked": "Erst einen Punkt antippen",
   "start_over": "Neu anfangen",
-  "meta_desc": "Deine 8×8-Figur läuft, fällt und steht wieder auf. Mach sie zu deiner, gewinne ein Stampf-Duell, lass sie bei dir einziehen, fordere einen Freund heraus."
+  "meta_desc": "Deine 8×8-Figur läuft, fällt und steht wieder auf. Mach sie zu deiner, gewinne ein Stampf-Duell, lass sie bei dir einziehen, fordere einen Freund heraus.",
+  "new_page_t": "Eine Seite für jede Figur.",
+  "new_page_s": "Spielen, bearbeiten, herausfordern, Karte speichern.",
+  "new_cast_t": "Deine Besetzung.",
+  "new_cast_s": "Jede Figur, die du gemacht hast, als Karte."
  },
  "es": {
   "page_title": "Spriteer — Tres fotogramas. Cada juego.",
@@ -318,7 +330,11 @@ export const STRINGS = {
   "mk_result": "Mira: tu marca se queda de pie, camina y cae con él.",
   "mk_locked": "Primero toca un punto",
   "start_over": "Empezar de nuevo",
-  "meta_desc": "Tu personaje de 8×8 camina, se cae y se levanta. Hazlo tuyo, gana un duelo de pisotones, llévalo a tu casa y reta a un amigo."
+  "meta_desc": "Tu personaje de 8×8 camina, se cae y se levanta. Hazlo tuyo, gana un duelo de pisotones, llévalo a tu casa y reta a un amigo.",
+  "new_page_t": "Una página para cada uno.",
+  "new_page_s": "Juega, edita, envía un reto, guarda su tarjeta.",
+  "new_cast_t": "Tu reparto.",
+  "new_cast_s": "Cada personaje que hiciste, en una tarjeta."
  },
  "fr": {
   "page_title": "Spriteer — Trois images. Tous les jeux.",
@@ -398,7 +414,11 @@ export const STRINGS = {
   "mk_result": "Regarde : ta marque se tient debout, marche et tombe avec lui.",
   "mk_locked": "Touche d’abord un point",
   "start_over": "Recommencer",
-  "meta_desc": "Ton personnage 8×8 marche, tombe et se relève. Fais-le tien, gagne un duel d'écrasement, installe-le chez toi, défie un ami."
+  "meta_desc": "Ton personnage 8×8 marche, tombe et se relève. Fais-le tien, gagne un duel d'écrasement, installe-le chez toi, défie un ami.",
+  "new_page_t": "Une page pour chacun.",
+  "new_page_s": "Jouez-le, modifiez-le, lancez un défi, gardez sa carte.",
+  "new_cast_t": "Votre distribution.",
+  "new_cast_s": "Chaque personnage que vous avez créé, en carte."
  },
  "hi": {
   "page_title": "Spriteer — तीन फ़्रेम। हर गेम।",
@@ -478,7 +498,11 @@ export const STRINGS = {
   "mk_result": "देखो — तुम्हारा निशान उसके साथ खड़ा होता है, चलता है और गिरता है।",
   "mk_locked": "पहले एक बिंदु छुओ",
   "start_over": "फिर से शुरू करें",
-  "meta_desc": "आपका 8×8 किरदार चलता है, गिरता है और फिर उठता है। उसे अपना बनाइए, कुचलने वाला मुक़ाबला जीतिए, उसे अपने घर में बसाइए और किसी दोस्त को चुनौती दीजिए।"
+  "meta_desc": "आपका 8×8 किरदार चलता है, गिरता है और फिर उठता है। उसे अपना बनाइए, कुचलने वाला मुक़ाबला जीतिए, उसे अपने घर में बसाइए और किसी दोस्त को चुनौती दीजिए।",
+  "new_page_t": "हर किरदार का अपना पेज।",
+  "new_page_s": "खेलो, बदलो, चुनौती भेजो, उसका कार्ड सहेजो।",
+  "new_cast_t": "तुम्हारी टोली।",
+  "new_cast_s": "तुम्हारा बनाया हर किरदार, एक कार्ड में।"
  },
  "id": {
   "page_title": "Spriteer — Tiga frame. Semua game.",
@@ -558,7 +582,11 @@ export const STRINGS = {
   "mk_result": "Lihat — tandamu ikut berdiri, berjalan, dan jatuh bersamanya.",
   "mk_locked": "Ketuk satu titik dulu",
   "start_over": "Mulai dari awal",
-  "meta_desc": "Karakter 8×8-mu berjalan, jatuh, lalu bangkit. Jadikan milikmu, menangkan duel injak, bawa ke rumahmu, dan tantang teman."
+  "meta_desc": "Karakter 8×8-mu berjalan, jatuh, lalu bangkit. Jadikan milikmu, menangkan duel injak, bawa ke rumahmu, dan tantang teman.",
+  "new_page_t": "Satu halaman untuk masing-masing.",
+  "new_page_s": "Mainkan, ubah, kirim tantangan, simpan kartunya.",
+  "new_cast_t": "Para pemeranmu.",
+  "new_cast_s": "Setiap karakter buatanmu, dalam bentuk kartu."
  },
  "it": {
   "page_title": "Spriteer — Tre fotogrammi. Ogni gioco.",
@@ -638,7 +666,11 @@ export const STRINGS = {
   "mk_result": "Guarda: il tuo segno sta in piedi, cammina e cade con lui.",
   "mk_locked": "Prima tocca un punto",
   "start_over": "Ricomincia da capo",
-  "meta_desc": "Il tuo personaggio 8×8 cammina, cade e si rialza. Rendilo tuo, vinci un duello a pestoni, portalo a casa tua e sfida un amico."
+  "meta_desc": "Il tuo personaggio 8×8 cammina, cade e si rialza. Rendilo tuo, vinci un duello a pestoni, portalo a casa tua e sfida un amico.",
+  "new_page_t": "Una pagina per ognuno.",
+  "new_page_s": "Giocalo, modificalo, lancia una sfida, salva la sua carta.",
+  "new_cast_t": "Il tuo cast.",
+  "new_cast_s": "Ogni personaggio che hai creato, in una carta."
  },
  "ja": {
   "page_title": "Spriteer — 3コマで、どのゲームにも。",
@@ -718,7 +750,11 @@ export const STRINGS = {
   "mk_result": "見て。あなたの印は、立つときも歩くときも倒れるときも一緒。",
   "mk_locked": "まず点をひとつタップ",
   "start_over": "最初からやり直す",
-  "meta_desc": "8×8のキャラクターが歩き、倒れ、また起き上がる。自分だけのものにして、踏みつけ対決に勝ち、家に迎え入れ、友だちに挑戦状を送ろう。"
+  "meta_desc": "8×8のキャラクターが歩き、倒れ、また起き上がる。自分だけのものにして、踏みつけ対決に勝ち、家に迎え入れ、友だちに挑戦状を送ろう。",
+  "new_page_t": "キャラごとに、専用ページ。",
+  "new_page_s": "遊ぶ、直す、挑戦を送る、カードに残す。",
+  "new_cast_t": "あなたのキャスト。",
+  "new_cast_s": "作ったキャラが、全部カードに。"
  },
  "ko": {
   "page_title": "Spriteer — 세 장이면, 모든 게임.",
@@ -798,7 +834,11 @@ export const STRINGS = {
   "mk_result": "보세요. 찍은 점이 서고, 걷고, 쓰러질 때도 함께해요.",
   "mk_locked": "먼저 점 하나를 눌러요",
   "start_over": "처음부터 다시",
-  "meta_desc": "8×8 캐릭터가 걷고, 쓰러지고, 다시 일어납니다. 내 것으로 만들고, 밟기 결투에서 이기고, 내 집에 들이고, 친구에게 도전장을 보내세요."
+  "meta_desc": "8×8 캐릭터가 걷고, 쓰러지고, 다시 일어납니다. 내 것으로 만들고, 밟기 결투에서 이기고, 내 집에 들이고, 친구에게 도전장을 보내세요.",
+  "new_page_t": "캐릭터마다 자기 페이지.",
+  "new_page_s": "플레이하고, 고치고, 도전을 보내고, 카드로 저장하세요.",
+  "new_cast_t": "나만의 캐스트.",
+  "new_cast_s": "내가 만든 모든 캐릭터가 카드로."
  },
  "nl": {
   "page_title": "Spriteer — Drie frames. Elk spel.",
@@ -878,7 +918,11 @@ export const STRINGS = {
   "mk_result": "Kijk – je stip staat, loopt en valt mee.",
   "mk_locked": "Tik eerst op een punt",
   "start_over": "Opnieuw beginnen",
-  "meta_desc": "Je 8×8-personage loopt, valt en staat weer op. Maak het van jou, win een stampduel, laat het bij je intrekken en daag een vriend uit."
+  "meta_desc": "Je 8×8-personage loopt, valt en staat weer op. Maak het van jou, win een stampduel, laat het bij je intrekken en daag een vriend uit.",
+  "new_page_t": "Een pagina voor elk personage.",
+  "new_page_s": "Speel ermee, bewerk het, daag iemand uit, bewaar de kaart.",
+  "new_cast_t": "Jouw cast.",
+  "new_cast_s": "Elk personage dat je maakte, als kaart."
  },
  "pt-BR": {
   "page_title": "Spriteer — Três quadros. Todo jogo.",
@@ -958,7 +1002,11 @@ export const STRINGS = {
   "mk_result": "Olha só: sua marca fica de pé, anda e cai junto com ele.",
   "mk_locked": "Toque em um ponto primeiro",
   "start_over": "Recomeçar",
-  "meta_desc": "Seu personagem 8×8 anda, cai e se levanta. Deixe-o com a sua cara, vença um duelo de pisões, leve-o para a sua casa e desafie um amigo."
+  "meta_desc": "Seu personagem 8×8 anda, cai e se levanta. Deixe-o com a sua cara, vença um duelo de pisões, leve-o para a sua casa e desafie um amigo.",
+  "new_page_t": "Uma página para cada um.",
+  "new_page_s": "Jogue, edite, mande um desafio, salve o card.",
+  "new_cast_t": "Seu elenco.",
+  "new_cast_s": "Cada personagem que você fez, em um card."
  },
  "ru": {
   "page_title": "Spriteer — Три кадра. Любая игра.",
@@ -1042,7 +1090,11 @@ export const STRINGS = {
   "mk_result": "Смотри: твоя метка стоит, идёт и падает вместе с ним.",
   "mk_locked": "Сначала нажми на точку",
   "start_over": "Начать заново",
-  "meta_desc": "Твой персонаж 8×8 ходит, падает и встаёт. Сделай его своим, победи в дуэли-топталке, засели в свой дом и брось вызов другу."
+  "meta_desc": "Твой персонаж 8×8 ходит, падает и встаёт. Сделай его своим, победи в дуэли-топталке, засели в свой дом и брось вызов другу.",
+  "new_page_t": "Своя страница у каждого.",
+  "new_page_s": "Играйте, правьте, бросайте вызов, сохраняйте карточку.",
+  "new_cast_t": "Ваш состав.",
+  "new_cast_s": "Каждый созданный персонаж — на карточке."
  },
  "sv": {
   "page_title": "Spriteer — Tre bilder. Varje spel.",
@@ -1122,7 +1174,11 @@ export const STRINGS = {
   "mk_result": "Titta – ditt märke står, går och faller med den.",
   "mk_locked": "Tryck på en prick först",
   "start_over": "Börja om",
-  "meta_desc": "Din 8×8-figur går, faller och reser sig. Gör den till din, vinn en stampduell, låt den flytta in hos dig och utmana en vän."
+  "meta_desc": "Din 8×8-figur går, faller och reser sig. Gör den till din, vinn en stampduell, låt den flytta in hos dig och utmana en vän.",
+  "new_page_t": "En sida för varje figur.",
+  "new_page_s": "Spela, ändra, skicka en utmaning, spara kortet.",
+  "new_cast_t": "Din ensemble.",
+  "new_cast_s": "Varje figur du gjort, som ett kort."
  },
  "th": {
   "page_title": "Spriteer — สามเฟรม ทุกเกม",
@@ -1202,7 +1258,11 @@ export const STRINGS = {
   "mk_result": "ดูสิ — จุดของคุณยืน เดิน และล้มไปพร้อมกับมัน",
   "mk_locked": "แตะจุดก่อนหนึ่งจุด",
   "start_over": "เริ่มใหม่",
-  "meta_desc": "ตัวละคร 8×8 ของคุณเดิน ล้ม แล้วลุกขึ้น ทำให้เป็นของคุณ ชนะดวลกระทืบ พาเข้าบ้าน แล้วท้าเพื่อน"
+  "meta_desc": "ตัวละคร 8×8 ของคุณเดิน ล้ม แล้วลุกขึ้น ทำให้เป็นของคุณ ชนะดวลกระทืบ พาเข้าบ้าน แล้วท้าเพื่อน",
+  "new_page_t": "ทุกตัวละครมีหน้าของตัวเอง",
+  "new_page_s": "เล่น แก้ไข ส่งคำท้า และเก็บการ์ดไว้",
+  "new_cast_t": "ทีมนักแสดงของคุณ",
+  "new_cast_s": "ทุกตัวละครที่คุณสร้าง กลายเป็นการ์ด"
  },
  "tr": {
   "page_title": "Spriteer — Üç kare. Her oyun.",
@@ -1282,7 +1342,11 @@ export const STRINGS = {
   "mk_result": "Bak — işaretin onunla birlikte duruyor, yürüyor ve düşüyor.",
   "mk_locked": "Önce bir noktaya dokun",
   "start_over": "Baştan başla",
-  "meta_desc": "8×8 karakterin yürür, düşer ve kalkar. Onu kendine göre yap, ezme düellosunu kazan, evine taşı ve bir arkadaşına meydan oku."
+  "meta_desc": "8×8 karakterin yürür, düşer ve kalkar. Onu kendine göre yap, ezme düellosunu kazan, evine taşı ve bir arkadaşına meydan oku.",
+  "new_page_t": "Her biri için bir sayfa.",
+  "new_page_s": "Oyna, düzenle, meydan oku, kartını kaydet.",
+  "new_cast_t": "Senin kadron.",
+  "new_cast_s": "Yaptığın her karakter, bir kart olarak."
  },
  "vi": {
   "page_title": "Spriteer — Ba khung. Mọi trò chơi.",
@@ -1362,7 +1426,11 @@ export const STRINGS = {
   "mk_result": "Nhìn này — dấu của bạn đứng, đi và ngã cùng nó.",
   "mk_locked": "Chạm một chấm trước đã",
   "start_over": "Làm lại từ đầu",
-  "meta_desc": "Nhân vật 8×8 của bạn đi, ngã rồi đứng dậy. Biến nó thành của bạn, thắng trận đấu giẫm, đưa nó về nhà và thách đấu bạn bè."
+  "meta_desc": "Nhân vật 8×8 của bạn đi, ngã rồi đứng dậy. Biến nó thành của bạn, thắng trận đấu giẫm, đưa nó về nhà và thách đấu bạn bè.",
+  "new_page_t": "Mỗi nhân vật một trang.",
+  "new_page_s": "Chơi, sửa, gửi lời thách đấu, lưu thẻ của nó.",
+  "new_cast_t": "Dàn nhân vật của bạn.",
+  "new_cast_s": "Mọi nhân vật bạn tạo, thành một tấm thẻ."
  },
  "zh-Hans": {
   "page_title": "Spriteer — 三帧，每个游戏。",
@@ -1442,7 +1510,11 @@ export const STRINGS = {
   "mk_result": "看——你点的这一笔会跟着它站立、行走、倒下。",
   "mk_locked": "先点一个点",
   "start_over": "重新开始",
-  "meta_desc": "你的 8×8 角色会走、会倒下、还会站起来。把它变成你的，赢下踩踏对决，让它住进你的家，再向朋友下战书。"
+  "meta_desc": "你的 8×8 角色会走、会倒下、还会站起来。把它变成你的，赢下踩踏对决，让它住进你的家，再向朋友下战书。",
+  "new_page_t": "每个角色，一张专属页面。",
+  "new_page_s": "玩它、改它、发起挑战、保存卡片。",
+  "new_cast_t": "你的角色阵容。",
+  "new_cast_s": "你做的每个角色，都是一张卡片。"
  },
  "zh-Hant": {
   "page_title": "Spriteer — 三格，每個遊戲。",
@@ -1522,6 +1594,10 @@ export const STRINGS = {
   "mk_result": "你看——你點的這一筆會跟著它站著、走路、倒下。",
   "mk_locked": "先點一個點",
   "start_over": "重新開始",
-  "meta_desc": "你的 8×8 角色會走、會倒下、還會站起來。把它變成你的，贏下踩踏對決，讓它住進你的家，再向朋友下戰帖。"
+  "meta_desc": "你的 8×8 角色會走、會倒下、還會站起來。把它變成你的，贏下踩踏對決，讓它住進你的家，再向朋友下戰帖。",
+  "new_page_t": "每個角色，一張專屬頁面。",
+  "new_page_s": "玩它、改它、發起挑戰、保存卡片。",
+  "new_cast_t": "你的角色陣容。",
+  "new_cast_s": "你做的每個角色，都是一張卡片。"
  }
 };

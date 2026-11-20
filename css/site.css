@@ -147,3 +147,15 @@ nav.tabs-bar + h1 { margin-top: 24px; }
 @media (prefers-color-scheme: dark) {
   .wrap .am { --am-line: rgba(240, 233, 216, 0.22); --am-hover: rgba(240, 233, 216, 0.35); --am-cur-bg: rgba(240, 233, 216, 0.07); --am-cur-line: rgba(240, 233, 216, 0.75); }
 }
+
+/* 4.2: two new screens from the app, one iPad capture each (same scale), side by side — founder 2026-11-20 */
+.newin { position: relative; left: 50%; transform: translateX(-50%); width: min(1100px, calc(100vw - 32px));
+  display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin: 22px 0 8px; }
+.newin figure { margin: 0; }
+.newin .pic { border: 3px solid var(--line); box-shadow: 5px 5px 0 var(--shadow); border-radius: 4px; overflow: hidden; background: #e6f0fd; }
+.newin img { display: block; width: 100%; height: auto; aspect-ratio: 1950 / 1462; }
+.newin figcaption { padding: 14px 2px 0; }
+.newin .t { margin: 0; font: 800 clamp(20px, 2.6vw, 30px)/1.1 ui-monospace, Menlo, monospace; letter-spacing: -.01em; color: var(--ink); }
+.newin .s { margin: 6px 0 0; color: var(--ink-soft); font-size: 15px; line-height: 1.45; }
+.newin .cast .t { color: var(--coral); }
+@media (max-width: 760px) { .newin { grid-template-columns: 1fr; gap: 26px; margin-top: 16px; } }
